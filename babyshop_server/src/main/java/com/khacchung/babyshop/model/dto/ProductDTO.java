@@ -1,5 +1,7 @@
 package com.khacchung.babyshop.model.dto;
 
+import java.util.List;
+
 public class ProductDTO {
     private int id;
     private String name;
@@ -12,6 +14,8 @@ public class ProductDTO {
     private String color;
     private boolean isSize;
     private String size;
+
+    private List<Integer> listCatalogsId;
 
     public ProductDTO() {
     }
@@ -102,5 +106,13 @@ public class ProductDTO {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public List<Integer> getListCatalogsId() {
+        return listCatalogsId;
+    }
+
+    public void setListCatalogsId(List<Integer> listCatalogsId) {
+        this.listCatalogsId = listCatalogsId;
     }
 }

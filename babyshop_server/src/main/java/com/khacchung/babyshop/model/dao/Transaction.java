@@ -17,7 +17,7 @@ public class Transaction {
     @Column(name = "created_date")
     private Date createdDate;
     @Column(name = "status")
-    private boolean status;
+    private int status;
     @Column(name = "user_id")
     private int userId;
 
@@ -25,13 +25,6 @@ public class Transaction {
     private Collection<Cart> carts;
 
     public Transaction() {
-    }
-
-    public Transaction(int id, Date createdDate, boolean status, int userId) {
-        this.id = id;
-        this.createdDate = createdDate;
-        this.status = status;
-        this.userId = userId;
     }
 
     public int getId() {
@@ -50,11 +43,7 @@ public class Transaction {
         this.createdDate = createdDate;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -64,5 +53,17 @@ public class Transaction {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public Collection<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Collection<Cart> carts) {
+        this.carts = carts;
     }
 }

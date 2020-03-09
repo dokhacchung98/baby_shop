@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "`product`")
-@JsonIgnoreProperties(value = {"catalogs"})
+@JsonIgnoreProperties(value = {"catalogs", "carts"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,19 +43,6 @@ public class Product {
     private Collection<Catalog> catalogs;
 
     public Product() {
-    }
-
-    public Product(String name, long price, String description, int discount, String imagePath, boolean isHot, boolean isColor, String color, boolean isSize, String size) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.discount = discount;
-        this.imagePath = imagePath;
-        this.isHot = isHot;
-        this.isColor = isColor;
-        this.color = color;
-        this.isSize = isSize;
-        this.size = size;
     }
 
     public int getId() {

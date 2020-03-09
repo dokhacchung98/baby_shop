@@ -45,18 +45,6 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String username, String password, String name, String email, String address, Date createdDate, String phone, Role role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.createdDate = createdDate;
-        this.phone = phone;
-        this.role = role;
-    }
-
     public int getId() {
         return id;
     }

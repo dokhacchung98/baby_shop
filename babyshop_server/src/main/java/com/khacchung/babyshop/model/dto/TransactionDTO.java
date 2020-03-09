@@ -1,12 +1,15 @@
 package com.khacchung.babyshop.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class TransactionDTO {
     private int id;
     private Date createdDate;
-    private boolean status;
+    private int status;
     private int userId;
+
+    private List<Integer> listCartId;
 
     public TransactionDTO() {
     }
@@ -27,11 +30,7 @@ public class TransactionDTO {
         this.createdDate = createdDate;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -41,5 +40,17 @@ public class TransactionDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public List<Integer> getListCartId() {
+        return listCartId;
+    }
+
+    public void setListCartId(List<Integer> listCartId) {
+        this.listCartId = listCartId;
     }
 }
