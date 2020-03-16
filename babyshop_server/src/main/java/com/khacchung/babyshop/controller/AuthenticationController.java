@@ -8,6 +8,9 @@ import com.khacchung.babyshop.model.dao.User;
 import com.khacchung.babyshop.model.dto.*;
 import com.khacchung.babyshop.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,6 +46,34 @@ public class AuthenticationController {
                             loginRequestDTO.getPassword()
                     )
             );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String jwt = jwtTokenProvider.generateToken((CustomUserDetail) authentication.getPrincipal());
+            return new ResponeDataDTO.Builder<LoginResponeDTO>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withData(new LoginResponeDTO(jwt))
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/login-admin", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponeDataDTO<LoginResponeDTO> authenticateUserAdmin(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequestDTO.getUsername(),
+                            loginRequestDTO.getPassword()
+                    )
+            );
+            CustomUserDetail customUserDetail = (CustomUserDetail) authentication.getPrincipal();
+            if (!customUserDetail.getUser().getRole().getName().equals("ROLE_ADMIN")) {
+                return new ResponeDataDTO<>(Result.BAD_REQUEST);
+            }
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String jwt = jwtTokenProvider.generateToken((CustomUserDetail) authentication.getPrincipal());
@@ -121,5 +152,34 @@ public class AuthenticationController {
                     .build();
         }
         return new ResponeDataDTO<>(Result.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/admin/get-users", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<User>> getAllUser(@Param("page") int page, @Param("size") int size) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
+            Page<User> tmp = userService.getUser(PageRequest.of(page, size), userDetails.getUser().getId());
+            return new ResponeDataDTO.Builder<Page<User>>()
+                    .withData(tmp)
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .build();
+        }
+        return new ResponeDataDTO<>(Result.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/admin/delete-users", method = RequestMethod.GET)
+    public ResponeDataDTO<User> getAllUser(@Param("id") int id) {
+
+        User tmp = userService.deleteUser(id);
+        if (tmp == null) {
+            return new ResponeDataDTO<>(Result.NOT_FOUND);
+        }
+        return new ResponeDataDTO.Builder<User>()
+                .withData(tmp)
+                .withCode(Constants.SUCCESS_CODE)
+                .withMessage(Constants.SUCCESS_MSG)
+                .build();
     }
 }

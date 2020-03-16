@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "`product`")
-@JsonIgnoreProperties(value = {"catalogs", "carts"})
+@JsonIgnoreProperties(value = {"carts"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +28,19 @@ public class Product {
     @Column(name = "is_color")
     private boolean isColor;
     @Column(name = "color")
-    private String color;
+    private String colorValue;
     @Column(name = "is_size")
     private boolean isSize;
     @Column(name = "size")
-    private String size;
+    private String sizeValue;
 
     @OneToMany(mappedBy = "product")
     private Collection<Cart> carts;
-    @ManyToMany
+
+    @ManyToMany(targetEntity = Catalog.class, cascade = {CascadeType.ALL})
     @JoinTable(name = "product_catalog",
-            joinColumns = @JoinColumn(name = "catalog_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "catalog_id"))
     private Collection<Catalog> catalogs;
 
     public Product() {
@@ -109,12 +110,12 @@ public class Product {
         isColor = color;
     }
 
-    public String getColor() {
-        return color;
+    public String getColorValue() {
+        return colorValue;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setColorValue(String colorValue) {
+        this.colorValue = colorValue;
     }
 
     public boolean isSize() {
@@ -125,19 +126,27 @@ public class Product {
         isSize = size;
     }
 
-    public String getSize() {
-        return size;
+    public String getSizeValue() {
+        return sizeValue;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setSizeValue(String sizeValue) {
+        this.sizeValue = sizeValue;
     }
 
-    public Collection<Catalog> getCatalog() {
+    public Collection<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Collection<Cart> carts) {
+        this.carts = carts;
+    }
+
+    public Collection<Catalog> getCatalogs() {
         return catalogs;
     }
 
-    public void setCatalog(Collection<Catalog> catalogs) {
+    public void setCatalogs(Collection<Catalog> catalogs) {
         this.catalogs = catalogs;
     }
 }

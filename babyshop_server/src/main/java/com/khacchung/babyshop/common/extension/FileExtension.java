@@ -14,7 +14,7 @@ public class FileExtension {
             try {
                 bytes = file.getBytes();
                 String fileName = file.getOriginalFilename();
-                String fileLocation = new File("static\\images") + "\\" + fileName;
+                String fileLocation = new File("src\\main\\resources\\static\\images") + "\\" + fileName;
                 FileOutputStream fos = new FileOutputStream(fileLocation);
                 fos.write(bytes);
                 fos.close();

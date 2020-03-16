@@ -53,7 +53,7 @@ public class CatalogController {
     }
 
     @RequestMapping(value = "/admin/delete-catalog", method = RequestMethod.GET)
-    public ResponeDataDTO<String> getCatalogs(@Param("id") int id) {
+    public ResponeDataDTO<String> deleteCatalog(@Param("id") int id) {
         try {
             Catalog catalog = catalogService.deleteCatalog(id);
             ResponeDataDTO<String> tmp = new ResponeDataDTO<>(Result.SUCCESS);

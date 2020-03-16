@@ -16,7 +16,7 @@ public class Catalog {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "catalogs")
+    @ManyToMany(mappedBy = "catalogs", cascade = CascadeType.ALL)
     private Collection<Product> products;
 
     public Catalog() {

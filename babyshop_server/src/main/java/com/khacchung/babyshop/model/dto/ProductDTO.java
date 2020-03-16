@@ -5,15 +5,15 @@ import java.util.List;
 public class ProductDTO {
     private int id;
     private String name;
-    private long price;
-    private String description;
-    private int discount;
-    private String imagePath;
-    private boolean isHot;
-    private boolean isColor;
-    private String color;
-    private boolean isSize;
-    private String size;
+    private long price = 0;
+    private String description = "";
+    private int discount = 0;
+    private String imagePath = "";
+    private boolean hot = false;
+    private boolean color = false;
+    private String colorValue = "";
+    private boolean size = false;
+    private String sizeValue = "";
 
     private List<Integer> listCatalogsId;
 
@@ -69,43 +69,43 @@ public class ProductDTO {
     }
 
     public boolean isHot() {
-        return isHot;
+        return hot;
     }
 
     public void setHot(boolean hot) {
-        isHot = hot;
+        this.hot = hot;
     }
 
     public boolean isColor() {
-        return isColor;
-    }
-
-    public void setColor(boolean color) {
-        isColor = color;
-    }
-
-    public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(boolean color) {
         this.color = color;
     }
 
+    public String getColorValue() {
+        return colorValue;
+    }
+
+    public void setColorValue(String colorValue) {
+        this.colorValue = colorValue;
+    }
+
     public boolean isSize() {
-        return isSize;
-    }
-
-    public void setSize(boolean size) {
-        isSize = size;
-    }
-
-    public String getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(boolean size) {
         this.size = size;
+    }
+
+    public String getSizeValue() {
+        return sizeValue;
+    }
+
+    public void setSizeValue(String sizeValue) {
+        this.sizeValue = sizeValue;
     }
 
     public List<Integer> getListCatalogsId() {

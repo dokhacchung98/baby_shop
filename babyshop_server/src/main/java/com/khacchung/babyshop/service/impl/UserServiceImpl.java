@@ -7,6 +7,8 @@ import com.khacchung.babyshop.repository.UserRepository;
 import com.khacchung.babyshop.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,6 +71,31 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 user.setAddress(userInformationDTO.getAddress());
                 userRepository.save(user);
                 return user;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<User> getUser(Pageable pageable, int currentId) {
+        try {
+            Page<User> users = userRepository.getAllUser(pageable, currentId);
+            return  users;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public User deleteUser(int id) {
+        try {
+            User users = userRepository.findById(id).get();
+            if(users != null){
+                userRepository.delete(users);
+                return users;
             }
         } catch (Exception e) {
             logger.error(e.getMessage());

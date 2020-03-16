@@ -1,0 +1,9 @@
+export const REMOVE_USER_SS = 'REMOVE_USER_SS';
+export const REMOVE_USER_ER = 'REMOVE_USER_ER';
+export const CLOSE_MODAL = 'OCLOSE_USER';
+export const OPEN_DELETE = 'OPEN_DELETE_USER';
+export const FETCH_LIST_USER = 'FETCH_LIST_USER';
+export const FETCH_DATA = 'FETCH_LIST_USER_OK';
+export const MSG_ERR_DELETE= 'Xóa người dùng thất bại';
+export const MSG_SS_DELETE= 'Xóa người dùng thành công';
+export const MSG_ERR_GET = 'Lỗi lấy danh sách';

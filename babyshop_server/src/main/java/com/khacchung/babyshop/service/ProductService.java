@@ -5,14 +5,18 @@ import com.khacchung.babyshop.model.dto.FileUploadDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ProductService {
     String uploadImage(FileUploadDTO file);
 
-    Product createProduct(Product product);
+    Product createProduct(Product product, List<Integer> listCatalogId);
 
     Page<Product> getProducts(Pageable pageable);
 
-    Product updateProduct(Product product);
+    Product updateProduct(Product product, List<Integer> listCatalogId);
 
     Product deleteProduct(int productId);
+
+    Product getDetail(int id);
 }
