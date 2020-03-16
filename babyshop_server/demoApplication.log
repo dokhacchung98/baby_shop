@@ -10,3 +10,10 @@
 [http-nio-8080-exec-2] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
 [http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
 [http-nio-8080-exec-8] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-6] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-7] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-9] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-2] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-4] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-9] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-2] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement

@@ -9,7 +9,8 @@ import { closeModal, openDelete, getListUser } from './../../../state/user/UserA
 import DeleteUser from './delete/DeleteUser';
 
 class User extends Component {
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         this.fetchData(0);
     }
 

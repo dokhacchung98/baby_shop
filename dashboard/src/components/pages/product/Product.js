@@ -11,7 +11,8 @@ import DeleteProduct from './delete/DeleteProduct';
 import EditProduct from './edit/EditProduct';
 
 class Product extends Component {
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         this.fetchData(0);
         this.props.fetchListCatalog();
     }
@@ -117,7 +118,8 @@ class Product extends Component {
                                                             this.props.isFirst ? "paginate_button page-item previous disabled"
                                                                 : "paginate_button page-item previous"
                                                         } id="datable_1_previous">
-                                                            <a href="/#" aria-controls="datable_1" data-dt-idx={0} tabIndex={0} className="page-link" onClick={() => {
+                                                            <a href="/#" aria-controls="datable_1" data-dt-idx={0} tabIndex={0} className="page-link" onClick={(e) => {
+                                                                e.preventDefault();
                                                                 this.fetchData(this.props.currentPage - 1);
                                                             }}>Trước</a>
                                                         </li>
@@ -141,7 +143,8 @@ class Product extends Component {
                                                                 : "paginate_button page-item previous"
                                                         } id="datable_1_next">
                                                             <a href="/#" aria-controls="datable_1" data-dt-idx={7} tabIndex={0} className="page-link"
-                                                                onClick={() => {
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
                                                                     this.fetchData(this.props.currentPage + 1);
                                                                 }}>Sau</a>
                                                         </li>
@@ -153,12 +156,12 @@ class Product extends Component {
                                         <Popup open={this.props.openCreate}
                                             closeOnDocumentClick
                                             onClose={this.closeModal} modal><CreateProduct></CreateProduct></Popup>
-                                    
+
                                         <Popup open={this.props.openEdit}
                                             closeOnDocumentClick
                                             onClose={this.closeModal} modal><EditProduct></EditProduct></Popup>
 
-                                            <Popup open={this.props.openDelete}
+                                        <Popup open={this.props.openDelete}
                                             closeOnDocumentClick
                                             onClose={this.closeModal} modal><DeleteProduct></DeleteProduct></Popup>
                                     </div>

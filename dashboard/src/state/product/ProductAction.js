@@ -78,7 +78,7 @@ export function getListProduct(number) {
                     dispath(showAlertError(Type.MSG_ERR_GET));
                 }
                 if (res.data.code === 200) {
-                    if ((res.data.data.totalPages - 1) < number) {
+                    if ((res.data.data.totalPages - 1) < number && res.data.data.totalElements > 0) {
                         return dispath(getListProduct(number - 1));
                     }
                     dispath(fetchList(res.data.data.content,

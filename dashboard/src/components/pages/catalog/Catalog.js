@@ -11,7 +11,8 @@ import EditCatalog from './edit/EditCatalog';
 import DeleteCatalog from './delete/DeleteCatalog';
 
 class Catalog extends Component {
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         this.fetchData(0);
     }
 
@@ -113,7 +114,8 @@ class Catalog extends Component {
                                                             this.props.isFirst ? "paginate_button page-item previous disabled"
                                                                 : "paginate_button page-item previous"
                                                         } id="datable_1_previous">
-                                                            <a href="/#" aria-controls="datable_1" data-dt-idx={0} tabIndex={0} className="page-link" onClick={() => {
+                                                            <a href="/#" aria-controls="datable_1" data-dt-idx={0} tabIndex={0} className="page-link" onClick={(e) => {
+                                                                e.preventDefault();
                                                                 this.fetchData(this.props.currentPage - 1);
                                                             }}>Trước</a>
                                                         </li>
@@ -137,7 +139,8 @@ class Catalog extends Component {
                                                                 : "paginate_button page-item previous"
                                                         } id="datable_1_next">
                                                             <a href="/#" aria-controls="datable_1" data-dt-idx={7} tabIndex={0} className="page-link"
-                                                                onClick={() => {
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
                                                                     this.fetchData(this.props.currentPage + 1);
                                                                 }}>Sau</a>
                                                         </li>

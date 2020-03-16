@@ -157,7 +157,7 @@ class CreateProduct extends Component {
                                 </div>
 
                                 <div className="col-md-6 row">
-                                    <img src={this.state.imgSrc} className="mx-auto margin utility img-thumbnail" style={{ width: '150px', height: '150px' }} />
+                                    <img src={this.state.imgSrc} alt={`Baz taking a ${this.state.imgSrc}`} className="mx-auto margin utility img-thumbnail" style={{ width: '150px', height: '150px' }} />
                                 </div>
                             </div>
 
@@ -366,7 +366,7 @@ class CreateProduct extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isFetching: state.CatalogReducer.isFetching,
+        isFetching: state.ProductReducer.isFetching,
         listCatalog: state.ProductReducer.listCatalog
     }
 }

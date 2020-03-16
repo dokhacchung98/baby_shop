@@ -4,14 +4,12 @@ import * as Method from './../../utilities';
 import Store from './../Store';
 import { showAlertError, showAlertSuccess } from './../alert/ActionAlert';
 
-export function createBlog(name) {
+export function createBlog(data) {
     const page = Store.getState().BlogReducer.totalPage;
     return (dispath) => {
         dispath(loadding());
-        return callApi('admin/create-Blog', Method.POST,
-            {
-                'name': name
-            }, true).then(res => {
+        return callApi('admin/create-blog', Method.POST, data, true)
+            .then(res => {
                 if (res === undefined) {
                     dispath(createError());
                     dispath(showAlertError(Type.MSG_ERR_CREATE));
@@ -37,7 +35,7 @@ export function getListBlog(number) {
         number = 0;
     }
     return (dispath) => {
-        const parameter = `get-Blogs?page=${number}&size=${pageSize}`;
+        const parameter = `get-blogs?page=${number}&size=${pageSize}`;
         dispath(loadding());
         return callApi(parameter, Method.GET,
             null, false).then(res => {
@@ -45,7 +43,7 @@ export function getListBlog(number) {
                     dispath(showAlertError(Type.MSG_ERR_GET));
                 }
                 if (res.data.code === 200) {
-                    if ((res.data.data.totalPages - 1) < number) {
+                    if ((res.data.data.totalPages - 1) < number && res.data.data.totalElements > 0) {
                         return dispath(getListBlog(number - 1));
                     }
                     dispath(fetchList(res.data.data.content,
@@ -64,30 +62,28 @@ export function getListBlog(number) {
     }
 }
 
-export function editBlog(id, name) {
+export function editBlog(data) {
     const page = Store.getState().BlogReducer.pageNumber;
     return (dispath) => {
         dispath(loadding());
-        callApi('admin/update-Blog', Method.POST, {
-            'name': name,
-            'id': id
-        }, true).then(res => {
-            if (res === undefined) {
+        return callApi('admin/update-blog', Method.POST, data, true)
+            .then(res => {
+                if (res === undefined) {
+                    dispath(editError());
+                    dispath(showAlertError(Type.MSG_ERR_EDIT));
+                }
+                if (res.data.code === 200) {
+                    dispath(showAlertSuccess(Type.MSG_SS_EDIT));
+                    dispath(editSuccess(res));
+                    dispath(getListBlog(page));
+                } else {
+                    dispath(editError());
+                    dispath(showAlertError(Type.MSG_ERR_EDIT));
+                }
+            }).catch(() => {
                 dispath(editError());
                 dispath(showAlertError(Type.MSG_ERR_EDIT));
-            }
-            if (res.data.code === 200) {
-                dispath(showAlertSuccess(Type.MSG_SS_EDIT));
-                dispath(editSuccess(res));
-                dispath(getListBlog(page));
-            } else {
-                dispath(editError());
-                dispath(showAlertError(Type.MSG_ERR_EDIT));
-            }
-        }).catch(() => {
-            dispath(editError());
-            dispath(showAlertError(Type.MSG_ERR_EDIT));
-        });
+            });
     }
 }
 
@@ -95,7 +91,7 @@ export function removeBlog(id) {
     const page = Store.getState().BlogReducer.pageNumber;
     return (dispath) => {
         dispath(loadding());
-        callApi(`admin/delete-Blog?id=${id}`, Method.GET, null, true).then(res => {
+        callApi(`admin/delete-blog?id=${id}`, Method.GET, null, true).then(res => {
             if (res === undefined) {
                 dispath(removeError());
                 dispath(showAlertError(Type.MSG_ERR_DELETE));
@@ -129,46 +125,46 @@ export function fetchList(data, size, page, first, last, number) {
 
 export function loadding() {
     return {
-        type: Type.Blog_FETCHING
+        type: Type.BLOG_FETCHING
     }
 }
 
 export function createSuccess(data) {
     return {
-        type: Type.CREATE_Blog_SS,
+        type: Type.CREATE_BLOG_SS,
         data: data
     }
 }
 
 export function createError() {
     return {
-        type: Type.CREATE_Blog_ER,
+        type: Type.CREATE_BLOG_ER,
     }
 }
 
 export function editSuccess(data) {
     return {
-        type: Type.EDIT_Blog_SS,
+        type: Type.EDIT_BLOG_SS,
         data: data
     }
 }
 
 export function editError() {
     return {
-        type: Type.EDIT_Blog_ER,
+        type: Type.EDIT_BLOG_ER,
     }
 }
 
 export function removeSuccess(data) {
     return {
-        type: Type.REMOVE_Blog_SS,
+        type: Type.REMOVE_BLOG_SS,
         data: data
     }
 }
 
 export function removeError() {
     return {
-        type: Type.REMOVE_Blog_ER,
+        type: Type.REMOVE_BLOG_ER,
     }
 }
 

@@ -45,7 +45,7 @@ class EditProduct extends Component {
         }
 
         this.dataSize = this.state.listSizeSelect;
-        this.dataCatalog = this.state.listCatalogSelect;        
+        this.dataCatalog = this.state.listCatalogSelect;
 
         this.style = {
             chips: {
@@ -117,7 +117,7 @@ class EditProduct extends Component {
         this.setState({
             listSizeSelect: this.state.listSizeSelect.filter(t => t !== removedItem)
         })
-    }    
+    }
 
     onChangeValueColor(value) {
         if (this.state.listColor.some(t => t === value)) {
@@ -181,7 +181,7 @@ class EditProduct extends Component {
                                 </div>
 
                                 <div className="col-md-6 row">
-                                    <img src={this.state.imgSrc} className="mx-auto margin utility img-thumbnail" style={{ width: '150px', height: '150px' }} />
+                                    <img src={this.state.imgSrc} alt={`Baz taking a ${this.state.imgSrc}`} className="mx-auto margin utility img-thumbnail" style={{ width: '150px', height: '150px' }} />
                                 </div>
                             </div>
 
