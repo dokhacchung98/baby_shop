@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 public interface FeedbackService {
     Feedback createFeedback(Feedback feedback);
 
-    Page<Feedback> getBlogs(Pageable pageable);
+    Page<Feedback> getFeedbacks(Pageable pageable);
 
     Feedback getById(int id);
 }
