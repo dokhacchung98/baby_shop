@@ -17,7 +17,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -98,16 +97,15 @@ public class AuthenticationController {
                     .withCode(Constants.ERR_CODE_BAD_REQUEST)
                     .build();
         }
-        UserDetails userDetails = userService.registerUser(
+        CustomUserDetail userDetails = (CustomUserDetail) userService.registerUser(
                 registerRequestDTO.getUsername().trim()
                 , registerRequestDTO.getPassword().trim()
         );
         if (userDetails != null) {
-            ResponeDataDTO<LoginResponeDTO> tmp = authenticateUser(new LoginRequestDTO(userDetails.getUsername(),
-                    registerRequestDTO.getPassword().trim()));
+            String jwt = jwtTokenProvider.generateToken(userDetails);
             return new ResponeDataDTO.Builder<String>()
                     .withMessage(Constants.SUCCESS_MSG)
-                    .withData(tmp.getData().getToken())
+                    .withData(jwt)
                     .withCode(Constants.SUCCESS_CODE)
                     .build();
         } else {
