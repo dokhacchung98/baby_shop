@@ -19,7 +19,7 @@ export default class ItemView extends Component {
                 <div className="fr__product__inner">
                     <h4><a href="product-details.html">Largest Water Pot</a></h4>
                     <ul className="fr__pro__prize">
-                        <li className="old__prize">$30.3</li>
+                        <li className="old__prize" style={{textDecoration: 'line-through'}}>$30.3</li>
                         <li>$25.9</li>
                     </ul>
                 </div>

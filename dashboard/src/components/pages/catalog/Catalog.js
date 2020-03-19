@@ -90,8 +90,9 @@ class Catalog extends Component {
                                                                 </td>
                                                             </tr>
                                                         )}
-
-                                                    </tbody>}
+                                                        
+                                                    </tbody>
+                                                }
 
                                                 <tfoot>
                                                     <tr>

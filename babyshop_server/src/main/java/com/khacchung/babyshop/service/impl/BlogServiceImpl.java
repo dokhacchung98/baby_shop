@@ -75,4 +75,15 @@ public class BlogServiceImpl implements BlogService {
         }
         return null;
     }
+
+    @Override
+    public Page<Blog> searchBlog(Pageable pageable, String keyword) {
+        try {
+            Page<Blog> tmp = blogRepository.searchBlog(pageable, keyword);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

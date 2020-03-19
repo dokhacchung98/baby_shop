@@ -11,6 +11,8 @@ import com.khacchung.babyshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping(value = "/upload-image", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/upload-image", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public @ResponseBody
     ResponeDataDTO<String> uploadImage(FileUploadDTO file) {
         ResponeDataDTO<String> response = new ResponeDataDTO<>();
@@ -128,6 +131,57 @@ public class ProductController {
                     .withMessage(Constants.SUCCESS_MSG)
                     .withCode(Constants.SUCCESS_CODE)
                     .withData(product)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/get-product-by-type", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Product>> getProductListByType(@Param("page") int page,
+                                                              @Param("size") int size,
+                                                              @Param("idCatalog") int idCatalog,
+                                                              @Param("type") int type) {
+        Pageable pageable;
+        switch (type) {
+            case 1:
+                pageable = PageRequest.of(page, size, Sort.by("name"));
+                break;
+            case 2:
+                pageable = PageRequest.of(page, size, Sort.by("name").descending());
+                break;
+            case 3:
+                pageable = PageRequest.of(page, size, Sort.by("price"));
+                break;
+            case 4:
+                pageable = PageRequest.of(page, size, Sort.by("price").descending());
+                break;
+            default:
+                pageable = PageRequest.of(page, size);
+        }
+        try {
+
+            Page<Product> products = productService.getProductsByCatalog(pageable, idCatalog);
+            return new ResponeDataDTO.Builder<Page<Product>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(products)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/search-products", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Product>> getProductListByType(@Param("page") int page,
+                                                              @Param("size") int size,
+                                                              @Param("keyword") String keyword) {
+        try {
+            Page<Product> products = productService.searchProduct(PageRequest.of(page, size), keyword);
+            return new ResponeDataDTO.Builder<Page<Product>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(products)
                     .build();
         } catch (Exception e) {
             return new ResponeDataDTO<>(Result.BAD_REQUEST);

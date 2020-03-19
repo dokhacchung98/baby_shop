@@ -9,6 +9,8 @@ import com.khacchung.babyshop.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,9 +45,17 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/get-blogs", method = RequestMethod.GET)
-    public ResponeDataDTO<Page<Blog>> getBlogs(@Param("page") int page, @Param("size") int size) {
+    public ResponeDataDTO<Page<Blog>> getBlogs(@Param("page") int page, @Param("size") int size, @Param("type") int type) {
         try {
-            Page<Blog> catalogs = blogService.getBlogs(PageRequest.of(page, size));
+            Pageable pageable;
+            switch (type) {
+                case 1:
+                    pageable = PageRequest.of(page, size, Sort.by("id").descending());
+                    break;
+                default:
+                    pageable = PageRequest.of(page, size);
+            }
+            Page<Blog> catalogs = blogService.getBlogs(pageable);
             return new ResponeDataDTO.Builder<Page<Blog>>()
                     .withCode(Constants.SUCCESS_CODE)
                     .withMessage(Constants.SUCCESS_MSG)
@@ -96,6 +106,20 @@ public class BlogController {
                         .build();
             }
             return new ResponeDataDTO<>(Result.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/search-blog", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Blog>> searchBlog(@Param("page") int page, @Param("size") int size, @Param("keyword") String keyword) {
+        try {
+            Page<Blog> catalogs = blogService.searchBlog(PageRequest.of(page, size), keyword);
+            return new ResponeDataDTO.Builder<Page<Blog>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(catalogs)
+                    .build();
         } catch (Exception e) {
             return new ResponeDataDTO<>(Result.BAD_REQUEST);
         }

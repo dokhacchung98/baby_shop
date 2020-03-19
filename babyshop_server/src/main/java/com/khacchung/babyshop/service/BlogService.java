@@ -14,4 +14,6 @@ public interface BlogService {
     Blog deleteBlog(int blogId);
 
     Blog getBlogById(int blogId);
+
+    Page<Blog> searchBlog(Pageable pageable, String keyword);
 }

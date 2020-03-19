@@ -7,14 +7,20 @@ import Contact from './../pages/contact';
 import NotFound from './../pages/not_found';
 import Product from './../pages/product';
 import Blogs from './../pages/blogs';
+import { getDetailUser } from './../../state/auth/auth_action';
 
 class MyRouter extends Component {
+    componentWillMount() {
+        this.props.getInfoUserLogin();
+    }
+
+
     render() {
         return (
             <Switch>
                 <Route exact path="/" component={Home}></Route>
                 <Route exact path="/contact" component={Contact}></Route>
-                <Route exact path="/products" component={Product}></Route>
+                <Route exact path="/danh-muc-:slug.:id" component={Product}></Route>
                 <Route exact path="/blogs" component={Blogs}></Route>
                 <Route exact path="/search" component={Home}></Route>
                 <Route exact path="/user" component={Home}></Route>
@@ -30,8 +36,16 @@ class MyRouter extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isAuthenticated: state.authReducer.isAuthenticated
+        isAuthenticated: state.authReducer.isAuthenticated,
     }
 }
 
-export default connect(mapStateToProps)(MyRouter);
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        getInfoUserLogin: () => {
+            dispatch(getDetailUser())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyRouter);

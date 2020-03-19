@@ -16,8 +16,6 @@ const authReducer = (state = initState, action) => {
         case Type.SEND_REQ:
             return { ...state, isLoading: true };
         case Type.LOGIN_SS:
-            localStorage.setItem(Ulti.AUTH, action.data);
-            window.location.reload();
             return { ...state, isLoading: false, data: action.data, err: '', isAuthenticated: true };
         case Type.LOGIN_ER:
             return { ...state, isLoading: false, err: action.err };

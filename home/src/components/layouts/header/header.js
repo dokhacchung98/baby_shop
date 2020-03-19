@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { openMenu, openSearch } from './../../../state/app/app_action';
+import { getListCatalog } from './../../../state/catalog/catalog_action';
+import { to_slug } from './../../../utilities/slug';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
     constructor(props) {
@@ -11,6 +14,7 @@ class Header extends Component {
             isOpenMunuMobile2: false
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+        this.fetchDataCatalog();
     }
 
     componentDidMount() {
@@ -38,6 +42,10 @@ class Header extends Component {
         });
     }
 
+    fetchDataCatalog() {
+        this.props.fetchListDataCatalog();
+    }
+
     render() {
         return (
             <header id="htc__header" className="htc__header__area header--one">
@@ -54,18 +62,26 @@ class Header extends Component {
                                 <div className="col-md-7 col-lg-8 col-sm-5 col-xs-3">
                                     <nav className="main__menu__nav hidden-xs hidden-sm">
                                         <ul className="main__menu" style={{ justifyContent: 'space-evenly' }}>
-                                            <li><a href="/">Trang Chủ</a></li>
+                                            <li><Link to="/">Trang Chủ</Link></li>
                                             <li className="drop"><a href="/#" onClick={(e) => e.preventDefault()}>Sản Phẩm</a>
                                                 <ul className="dropdown">
-                                                    {/* todo:  */}
-                                                    <li><a href="/products">Product Grid</a></li>
-                                                    <li><a href="/products">Product Grid</a></li>
+                                                    {(this.props.listCatalog === undefined) ?
+                                                        <div></div>
+                                                        :
+                                                        this.props.listCatalog.map((item, index) => {
+                                                            const strSlug = to_slug(item.name);
+                                                            const path = `/danh-muc-${strSlug}.${item.id}`;
+                                                            return (
+                                                                <li key={index}><Link to={path}>{item.name}</Link></li>
+                                                            );
+                                                        })
+                                                    }
                                                 </ul>
                                             </li>
 
-                                            <li><a href="/blogs">Bài Viết</a></li>
+                                            <li><Link to="/blogs">Bài Viết</Link></li>
 
-                                            <li><a href="/contact">Liên Hệ</a></li>
+                                            <li><Link to="/contact">Liên Hệ</Link></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -141,7 +157,8 @@ class Header extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isAuthenticated: state.authReducer.isAuthenticated,
-        myCarts: state.appReducer.myCarts
+        myCarts: state.appReducer.myCarts,
+        listCatalog: state.catalogReducer.listCatalog
     }
 }
 
@@ -152,6 +169,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         openSearch: () => {
             dispatch(openSearch());
+        },
+        fetchListDataCatalog: () => {
+            dispatch(getListCatalog());
         }
     }
 }

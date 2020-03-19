@@ -19,4 +19,8 @@ public interface ProductService {
     Product deleteProduct(int productId);
 
     Product getDetail(int id);
+
+    Page<Product> getProductsByCatalog(Pageable pageable, int idCatalog);
+
+    Page<Product> searchProduct(Pageable pageable, String keyword);
 }

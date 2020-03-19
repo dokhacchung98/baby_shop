@@ -39,9 +39,9 @@ public class CartController {
                 Cart cart = new Cart();
                 cart.setProductId(cartDTO.getProductId());
                 cart.setColor(cartDTO.isColor());
-                cart.setColor(cartDTO.getColor());
+                cart.setColor(cartDTO.getColorValue());
+                cart.setSize(cartDTO.getSizeValue());
                 cart.setSize(cartDTO.isSize());
-                cart.setSize(cartDTO.getSize());
                 cart.setUserId(userDetails.getUser().getId());
                 Cart tmp = cartService.createCart(cart);
                 return new ResponeDataDTO.Builder<Cart>()
@@ -68,8 +68,6 @@ public class CartController {
                     .build();
         }
         return new ResponeDataDTO<>(Result.FORBIDDEN);
-//        CustomUserDetail userDetails =
-//                (CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @RequestMapping(value = "/user/remove-to-cart")

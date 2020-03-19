@@ -110,4 +110,26 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public Page<Product> getProductsByCatalog(Pageable pageable, int idCatalog) {
+        try {
+            Page<Product> tmp = productRepository.getProductByCatalog(pageable, idCatalog);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> searchProduct(Pageable pageable, String keyword) {
+        try {
+            Page<Product> tmp = productRepository.searchProduct(pageable, keyword);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

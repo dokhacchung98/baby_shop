@@ -43,6 +43,13 @@ class Contact extends Component {
         return true;
     }
 
+    changeNameAndMail = (name, email) => {
+        this.setState({
+            vName: name,
+            vEmail: email,
+        })
+    }
+
     sendRequest = () => {
         if (!this.props.isSendding && this.validateContent()) {
             this.props.sendContact({
@@ -53,6 +60,14 @@ class Contact extends Component {
             });
         }
     }
+
+    componentDidMount() {
+        this.setState({
+            vName: this.props.userLogin !== null ? this.props.userLogin.name : '',
+            vEmail: this.props.userLogin !== null ? this.props.userLogin.email : '',
+        });
+    }
+
 
     render() {
         return (
@@ -151,7 +166,10 @@ class Contact extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state.authReducer.userInfo);
+    // if(state.authReducer.userInfo !== null) {
+    //     Contact.changeNameAndMail(state.authReducer.userInfo.name, state.authReducer.userInfo.email);
+    // }
+    console.log(state);
     return {
         userLogin: state.authReducer.userInfo,
         isSendding: state.contactReducer.isLoading

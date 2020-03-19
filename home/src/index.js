@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import AlertInfo from './components/layouts/alert_info';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import Store from './state/store';
 
 ReactDOM.render(<Provider store={Store}>
-    {/* <AlertInfo /> */}
+    <AlertInfo />
     <App />
 </Provider>,
     document.getElementById('root'));

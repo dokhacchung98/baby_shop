@@ -2,10 +2,10 @@ package com.khacchung.babyshop.model.dto;
 
 public class CartDTO {
     private int id;
-    private boolean isSize;
-    private String size;
-    private boolean isColor;
-    private String color;
+    private boolean size;
+    private String sizeValue;
+    private boolean color;
+    private String colorValue;
     private int userId;
     private int productId;
     private int transactionId;
@@ -22,35 +22,35 @@ public class CartDTO {
     }
 
     public boolean isSize() {
-        return isSize;
-    }
-
-    public void setSize(boolean size) {
-        isSize = size;
-    }
-
-    public String getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(boolean size) {
         this.size = size;
     }
 
+    public String getSizeValue() {
+        return sizeValue;
+    }
+
+    public void setSizeValue(String sizeValue) {
+        this.sizeValue = sizeValue;
+    }
+
     public boolean isColor() {
-        return isColor;
-    }
-
-    public void setColor(boolean color) {
-        isColor = color;
-    }
-
-    public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(boolean color) {
         this.color = color;
+    }
+
+    public String getColorValue() {
+        return colorValue;
+    }
+
+    public void setColorValue(String colorValue) {
+        this.colorValue = colorValue;
     }
 
     public int getUserId() {
