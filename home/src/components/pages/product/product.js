@@ -101,31 +101,34 @@ class Product extends Component {
                             <div className="htc__product__container">
                                 <div className="row">
                                     <div className={this.state.typeGrid ? "single-grid-view tab-pane fade clearfix active in" : "single-grid-view tab-pane fade clearfix"} style={{ position: 'relative', height: '0px' }}>
-                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12">
-                                            <ItemView></ItemView>
-                                        </div>
-                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12">
-                                            <ItemView></ItemView>
-                                        </div>
-                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12">
-                                            <ItemView></ItemView>
-                                        </div>
-                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12">
-                                            <ItemView></ItemView>
-                                        </div>
-                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12">
-                                            <ItemView></ItemView>
-                                        </div>
-                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12">
-                                            <ItemView></ItemView>
-                                        </div>
+                                        {
+                                            (this.props.listProduct === undefined)
+                                                ?
+                                                <div> Không có dữ liệu </div>
+                                                :
+                                                this.props.listProduct.map((item, key) => {
+                                                    return (
+                                                        <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12" key={key}>
+                                                            <ItemView valueData={item}></ItemView>
+                                                        </div>
+                                                    );
+                                                })
+                                        }
                                     </div>
                                     <div role="tabpanel" id="list-view" className={this.state.typeGrid ? "single-grid-view tab-pane fade clearfix" : "single-grid-view tab-pane fade clearfix active in"}>
                                         <div className="col-xs-12">
                                             <div className="ht__list__wrap">
-                                                {/* Start List Product */}
-                                                <ItemViewList></ItemViewList>
-                                                {/* End List Product */}
+                                                {
+                                                    (this.props.listProduct === undefined)
+                                                        ?
+                                                        <div> Không có dữ liệu </div>
+                                                        :
+                                                        this.props.listProduct.map((item, key) => {
+                                                            return (
+                                                                < ItemViewList valueData={item} key={key}></ItemViewList>
+                                                            );
+                                                        })
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +153,7 @@ class Product extends Component {
 
                 <Group></Group>
                 <Footer></Footer>
-            </div>
+            </div >
         )
     }
 }
