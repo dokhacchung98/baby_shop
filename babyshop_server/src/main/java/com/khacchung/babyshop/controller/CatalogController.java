@@ -76,4 +76,16 @@ public class CatalogController {
             return new ResponeDataDTO<>(Result.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(value = "/get-catalog-by-id", method = RequestMethod.GET)
+    public ResponeDataDTO<Catalog> getCatalog(@Param("id") int id) {
+        try {
+            Catalog catalog = catalogService.findCatalog(id);
+            ResponeDataDTO<Catalog> tmp = new ResponeDataDTO<>(Result.SUCCESS);
+            tmp.setData(catalog);
+            return tmp;
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.NOT_FOUND);
+        }
+    }
 }

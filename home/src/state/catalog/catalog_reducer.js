@@ -3,7 +3,8 @@ import * as Type from './constant';
 const initialState = {
     listCatalog: [],
     isLoading: false,
-    err: null
+    err: null,
+    currentCatalog: null
 };
 
 const catalogReducer = (state = initialState, action) => {
@@ -14,6 +15,8 @@ const catalogReducer = (state = initialState, action) => {
             return { ...state, isLoading: false, listCatalog: action.data };
         case Type.LOAD_ER:
             return { ...state, isLoading: false, err: action.error };
+        case Type.LOAD_CURRENT_CATALOG:
+            return { ...state, isLoading: false, currentCatalog: action.currentCatalog };
         default: return state;
     }
 }

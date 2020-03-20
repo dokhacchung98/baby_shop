@@ -61,4 +61,15 @@ public class CatalogServiceImpl implements CatalogService {
         }
         return null;
     }
+
+    @Override
+    public Catalog findCatalog(int id) {
+        try {
+            Catalog tmp = catalogRepository.findById(id).get();
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

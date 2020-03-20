@@ -3561,5 +3561,8 @@ ul.htc__instagram__posts.owl-carousel li img {
     outline: none;
 }
 
-
-
+.disable-pagging {
+    color: #b3b3b3 !important;
+    background: #f6f6f6 none repeat scroll 0 0 !important;
+    cursor: auto;
+}

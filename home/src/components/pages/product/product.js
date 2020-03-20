@@ -9,6 +9,7 @@ import Banner from './../../layouts/banner';
 import Breadcrumb from './../../layouts/breadcrumb';
 import { setIdCatalog, getListProduct, setTypeSort } from './../../../state/product/product_action';
 import { connect } from 'react-redux';
+import { getCurentCatalog } from './../../../state/catalog/catalog_action';
 
 class Product extends Component {
     constructor(props) {
@@ -16,19 +17,19 @@ class Product extends Component {
         this.state = {
             typeGrid: true
         };
+        this.getDataProduct();
     }
 
-    componentDidMount() {
+    getDataProduct = () => {
         const idCatalog = this.props.match.params.id;
         this.props.setIdCatalog(idCatalog);
         this.props.fetchListProduct(0);
+        this.props.getCurrentCatalog(idCatalog);
     }
-
 
     dataLinkProduct = () => {
         return [
             { name: 'Trang Chủ', link: '/' },
-            { name: 'Sản Phẩm', link: '/products' }
         ];
     }
 
@@ -37,12 +38,12 @@ class Product extends Component {
             <div >
                 <Header></Header>
                 <Search></Search>
-                <Banner imgBg="images/bg/6.jpg" title="SẢN PHẨM"></Banner>
-                <Breadcrumb dataLink={this.dataLinkProduct()} myName="Sản Phẩm"></Breadcrumb>
+                <Banner imgBg="images/bg/6.jpg" title="DANH SÁCH SẢN PHẨM"></Banner>
+                <Breadcrumb dataLink={this.dataLinkProduct()} myName="Danh Sách Sản Phẩm"></Breadcrumb>
 
                 <section className="htc__category__area ptb--100">
                     <div className="section__title--2 text-center">
-                        <h2 className="title__line" style={{ marginBottom: '14px' }}>New Arrivals</h2>
+                        <h2 className="title__line" style={{ marginBottom: '14px' }}>{this.props.currentCatalog === null ? '' : this.props.currentCatalog.name}</h2>
                     </div>
 
                     <div className="container">
@@ -63,7 +64,7 @@ class Product extends Component {
                                         </select>
 
                                         <div className="ht__pro__qun col-md-4 col-lg-4 col-sm-4 col-xs-12" style={{ textAlign: 'center' }}>
-                                            <span>Showing 1-12 of 1033 products</span>
+                                            <span>Tổng số {this.props.listProduct.length} sản phẩm</span>
                                         </div>
                                         {/* Start List And Grid View */}
                                         <ul className="view__mode col-md-4 col-lg-4 col-sm-4 col-xs-12" role="tablist" style={{ padding: '0px', justifyContent: 'flex-end' }}>
@@ -139,11 +140,30 @@ class Product extends Component {
                         <div className="row">
                             <div className="col-xs-12">
                                 <ul className="htc__pagenation">
-                                    <li><a href="#"><i className="zmdi zmdi-chevron-left" /></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li className="active"><a href="#">3</a></li>
-                                    <li><a href="#">19</a></li>
-                                    <li><a href="#"><i className="zmdi zmdi-chevron-right" /></a></li>
+                                    <li><a href="/#" onClick={(e) => {
+                                        e.preventDefault();
+                                        this.props.fetchListProduct(this.props.pageNumber - 1);
+                                    }} className={this.props.isFirst ? "disable-pagging" : ""}><i className="zmdi zmdi-chevron-left" /></a></li>
+
+                                    {
+                                        Array.from(Array(this.props.totalPage).keys()).map((item, key) => {
+                                            return (<li className={
+                                                (this.props.pageNumber === item)
+                                                    ? "active"
+                                                    : ""
+                                            } key={key}>
+                                                <a href="/#" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    this.props.fetchListProduct(item);
+                                                }}>{item + 1}</a>
+                                            </li>)
+                                        })
+                                    }
+
+                                    <li><a href="/#" onClick={(e) => {
+                                        e.preventDefault();
+                                        this.props.fetchListProduct(this.props.pageNumber + 1);
+                                    }} className={this.props.isLast ? "disable-pagging" : ""}><i className="zmdi zmdi-chevron-right" /></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -162,7 +182,12 @@ const mapStateToProps = (state, ownProps) => {
     return {
         pageNumber: state.productReducer.pageNumber,
         listProduct: state.productReducer.listData,
-        typeSort: state.productReducer.typeSort
+        typeSort: state.productReducer.typeSort,
+        totalPage: state.productReducer.totalPage,
+        totalSize: state.productReducer.totalSize,
+        isFirst: state.productReducer.isFirst,
+        isLast: state.productReducer.isLast,
+        currentCatalog: state.catalogReducer.currentCatalog
     }
 }
 
@@ -176,6 +201,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         setTypeSort: (type) => {
             dispatch(setTypeSort(type));
+        },
+        getCurrentCatalog: (id) => {
+            dispatch(getCurentCatalog(id));
         }
     }
 }

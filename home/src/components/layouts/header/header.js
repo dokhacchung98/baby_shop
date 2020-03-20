@@ -70,9 +70,9 @@ class Header extends Component {
                                                         :
                                                         this.props.listCatalog.map((item, index) => {
                                                             const strSlug = to_slug(item.name);
-                                                            const path = `/danh-muc-${strSlug}.${item.id}`;
+                                                            const path = `/danh-muc-${strSlug}.${item.id}.`;
                                                             return (
-                                                                <li key={index}><Link to={path}>{item.name}</Link></li>
+                                                                <li key={index}><a href={path}>{item.name}</a></li>
                                                             );
                                                         })
                                                     }
@@ -124,14 +124,23 @@ class Header extends Component {
                                 </a>
                                 <nav className="mean-nav">
                                     <ul style={{ display: this.state.isOpenMenuMobile1 ? 'block' : 'none', transition: '0.3s' }}>
-                                        <li><a href="/">Trang Chủ</a></li>
+                                        <li><Link to="/">Trang Chủ</Link></li>
                                         <li><a href="/#" onClick={(e) => {
                                             e.preventDefault();
                                             this.toggleMenu2();
                                         }}>Sản Phẩm</a>
                                             <ul style={{ display: this.state.isOpenMenuMobile2 ? 'contents' : 'none' }}>
-                                                <li><a href="/products">Blog Details</a></li>
-                                                <li><a href="/products">Cart page</a></li>
+                                                {(this.props.listCatalog === undefined) ?
+                                                        <div></div>
+                                                        :
+                                                        this.props.listCatalog.map((item, index) => {
+                                                            const strSlug = to_slug(item.name);
+                                                            const path = `/danh-muc-${strSlug}.${item.id}`;
+                                                            return (
+                                                                <li key={index}><a href={path}>{item.name}</a></li>
+                                                            );
+                                                        })
+                                                    }
                                             </ul>
                                             <a className="mean-expand" href="/#" onClick={(e) => {
                                                 e.preventDefault();
@@ -139,9 +148,9 @@ class Header extends Component {
                                             }} style={{ fontSize: '18px' }}>+</a>
                                         </li>
 
-                                        <li><a href="/blogs">Bài Viết</a></li>
+                                        <li><Link to="/blogs">Bài Viết</Link></li>
 
-                                        <li><a href="/contact">Liên Hệ</a></li>
+                                        <li><Link to="/contact">Liên Hệ</Link></li>
                                     </ul>
                                 </nav>
                             </div>

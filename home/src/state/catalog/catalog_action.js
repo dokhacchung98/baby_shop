@@ -21,6 +21,30 @@ export function getListCatalog() {
     }
 }
 
+export function getCurentCatalog(id) {
+    return (dispatch) => {
+        return callApi(`get-catalog-by-id?id=${id}`, Method.GET, null, false)
+            .then(res => {
+                if (res.data !== undefined && res.data.code === 200) {
+                    dispatch(getSSCurentCatalog(res.data.data));
+                } else {
+                    dispatch(loadingError(''));
+                    dispatch(showAlertError(Value.AGAIN));
+                }
+            }).catch(() => {
+                dispatch(loadingError(''));
+                dispatch(showAlertError(Value.AGAIN));
+            });
+    }
+}
+
+export function getSSCurentCatalog(data) {
+    return {
+        type: Type.LOAD_CURRENT_CATALOG,
+        currentCatalog: data
+    }
+}
+
 export function loading() {
     return {
         type: Type.LOADDING_CATALOG

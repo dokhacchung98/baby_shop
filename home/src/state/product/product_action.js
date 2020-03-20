@@ -39,6 +39,33 @@ export function getListProduct(number){
     }
 }
 
+export function getDetailProduct(id) {
+    return (dispath) => {
+        const parameter = `get-detail-product?id=${id}`;
+        dispath(loadding());
+        return callApi(parameter, Method.GET,
+            null, false).then(res => {
+                if (res === undefined) {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+                if (res.data.code === 200) {
+                    dispath(getDetailProductSuccess(res.data.data));
+                } else {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+            }).catch(() => {
+                dispath(showAlertError(Type.MSG_ERR_GET));
+            });
+    }
+}
+
+export function getDetailProductSuccess(data) {
+    return {
+        type: Type.FETCH_PRODUCT_DETAIL,
+        currentProduct: data
+    }
+}
+
 export function setIdCatalog(id) {
     return {
         type: Type.UPDATE_ID_CATALOG,

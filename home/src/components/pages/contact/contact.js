@@ -169,7 +169,6 @@ const mapStateToProps = (state, ownProps) => {
     // if(state.authReducer.userInfo !== null) {
     //     Contact.changeNameAndMail(state.authReducer.userInfo.name, state.authReducer.userInfo.email);
     // }
-    console.log(state);
     return {
         userLogin: state.authReducer.userInfo,
         isSendding: state.contactReducer.isLoading

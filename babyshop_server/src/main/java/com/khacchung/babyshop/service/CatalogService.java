@@ -13,4 +13,6 @@ public interface CatalogService {
     Catalog deleteCatalog(int catalogId);
 
     Catalog updateCatalog(Catalog catalog);
+
+    Catalog findCatalog(int id);
 }

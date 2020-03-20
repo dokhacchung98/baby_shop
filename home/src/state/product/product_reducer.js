@@ -12,7 +12,8 @@ const initialState = {
     isLast: false,
     listData: [],
     idCatalog: 0,
-    typeSort: 0
+    typeSort: 0,
+    currentProduct: null,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -38,6 +39,8 @@ const productReducer = (state = initialState, action) => {
             return { ...state, idCatalog: action.idCatalog };
         case Type.UPDATE_ID_TYPE:
             return { ...state, typeSort: action.typeSort };
+        case Type.FETCH_PRODUCT_DETAIL:
+            return { ...state, currentProduct: action.currentProduct };
         default: return state;
     }
 }

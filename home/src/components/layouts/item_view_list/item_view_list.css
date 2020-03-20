@@ -1,0 +1,29 @@
+#list-view ul#nm li {
+    width: 50px;
+    height: 50px;
+    margin-right: 14px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #e8e8e8;
+    color: #000;
+    transition: 0.3s;
+}
+
+#list-view ul#nm li:hover {
+    background-color: #c43b68 ;
+    transition: 0.3s;
+}
+
+#list-view ul#nm li:hover a {
+    color: #fff;
+    transition: 0.3s;
+}
+
+.ht__list__product:hover img {
+    transform: scale(1.08);
+    -webkit-transform: scale(1.08);
+    -moz-transform: scale(1.08);
+    transition: all 0.9s ease 0s;
+    -webkit-transition: all 0.9s ease 0s;
+    -moz-transition: all 0.9s ease 0s;
+}
