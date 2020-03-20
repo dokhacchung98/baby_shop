@@ -63,7 +63,7 @@ class CreateBlog extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Thêm Mới Bài Viết</h5>
@@ -74,6 +74,25 @@ class CreateBlog extends Component {
                     <div className="modal-body">
                         {/* Modal Body */}
                         <form className="mb-30">
+                        <div className="row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="img">Hình Ảnh</label>
+                                    <br />
+                                    <small style={{ color: '#ff0000' }}>{this.state.errImage}</small>
+                                    <input type="file" id="img" name="img" accept="image/*" onChange={(e) => {
+                                        this.setState({
+                                            imagePath: e.target.files[0],
+                                            imgSrc: URL.createObjectURL(e.target.files[0])
+                                        });
+                                    }} />
+                                </div>
+
+                                <div className="col-md-6 row">
+                                    <img src={this.state.imgSrc} alt={`Baz taking a ${this.state.imgSrc}`} className="mx-auto margin utility img-thumbnail" style={{ width: '150px', height: '150px' }} />
+                                </div>
+                            </div>
+
+
                             <div className="form-group">
                                 <label htmlFor="fNameCreate">Tiêu Đề</label>
                                 <br />

@@ -11,6 +11,9 @@ import { getCurentCatalog } from './../../../state/catalog/catalog_action';
 import ReactImageZoom from 'react-image-zoom';
 import { convertMoneyDisplay } from './../../../utilities/convert_money';
 import renderComponent from './../../layouts/render_component';
+import './product_detail.css';
+import { to_slug } from './../../../utilities/slug';
+
 class ProductDetail extends Component {
     constructor(props) {
         super(props);
@@ -167,7 +170,25 @@ class ProductDetail extends Component {
                                     {/* End Single Content */}
                                     {/* Start Single Content */}
                                     <div role="tabpanel" id="shipping" className="pro__single__content tab-pane fade">
+                                        <div className="ty-control-group" id="askcc">
+                                            <ul className="ty-tags-list clearfix" style={{display: 'grid'}}>
 
+                                                {this.props.currentProduct === null ? '' :
+                                                    this.props.currentProduct.catalogs.map((item, key) => {
+                                                        const tmp = to_slug(item.name);
+                                                        const path = `/danh-muc-${tmp}.${item.id}.`;
+                                                        return (
+                                                            <li className="ty-tags-list__item" key={key}>
+                                                                <a className="ty-tags-list__a" href={path}>
+                                                                    {item.name}
+                                                                </a>
+                                                            </li>
+                                                        )
+                                                    })
+                                                }
+
+                                            </ul>
+                                        </div>
                                     </div>
                                     {/* End Single Content */}
                                 </div>
