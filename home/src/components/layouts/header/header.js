@@ -62,7 +62,7 @@ class Header extends Component {
                                 <div className="col-md-7 col-lg-8 col-sm-5 col-xs-3">
                                     <nav className="main__menu__nav hidden-xs hidden-sm">
                                         <ul className="main__menu" style={{ justifyContent: 'space-evenly' }}>
-                                            <li><Link to="/">Trang Chủ</Link></li>
+                                            <li><a href="/">Trang Chủ</a></li>
                                             <li className="drop"><a href="/#" onClick={(e) => e.preventDefault()}>Sản Phẩm</a>
                                                 <ul className="dropdown">
                                                     {(this.props.listCatalog === undefined) ?
@@ -79,9 +79,9 @@ class Header extends Component {
                                                 </ul>
                                             </li>
 
-                                            <li><Link to="/blogs">Bài Viết</Link></li>
+                                            <li><a href="/blogs">Bài Viết</a></li>
 
-                                            <li><Link to="/contact">Liên Hệ</Link></li>
+                                            <li><a href="/contact">Liên Hệ</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -124,7 +124,7 @@ class Header extends Component {
                                 </a>
                                 <nav className="mean-nav">
                                     <ul style={{ display: this.state.isOpenMenuMobile1 ? 'block' : 'none', transition: '0.3s' }}>
-                                        <li><Link to="/">Trang Chủ</Link></li>
+                                        <li><a href="/">Trang Chủ</a></li>
                                         <li><a href="/#" onClick={(e) => {
                                             e.preventDefault();
                                             this.toggleMenu2();
@@ -148,9 +148,9 @@ class Header extends Component {
                                             }} style={{ fontSize: '18px' }}>+</a>
                                         </li>
 
-                                        <li><Link to="/blogs">Bài Viết</Link></li>
+                                        <li><a href="/blogs">Bài Viết</a></li>
 
-                                        <li><Link to="/contact">Liên Hệ</Link></li>
+                                        <li><a href="/contact">Liên Hệ</a></li>
                                     </ul>
                                 </nav>
                             </div>

@@ -20,3 +20,6 @@
 [http-nio-8080-exec-4] ERROR com.khacchung.babyshop.common.jwt.JwtTokenProvider  - Invalid JWT token
 [http-nio-8080-exec-4] ERROR com.khacchung.babyshop.service.impl.ProductServiceImpl  - Parameter value [79] did not match expected type [com.khacchung.babyshop.model.dao.Catalog (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [79] did not match expected type [com.khacchung.babyshop.model.dao.Catalog (n/a)]
 [http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.CatalogServiceImpl  - No value present
+[http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.BlogServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-2] ERROR com.khacchung.babyshop.service.impl.BlogServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+[http-nio-8080-exec-4] ERROR com.khacchung.babyshop.service.impl.CatalogServiceImpl  - No value present

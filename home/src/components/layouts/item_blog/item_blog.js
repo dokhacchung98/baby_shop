@@ -1,22 +1,30 @@
 import React, { Component } from 'react'
+import { to_slug } from './../../../utilities/slug';
+import './item_blog.css';
 
 export default class ItemBlog extends Component {
+    getLinkBlog = (name, id) => {
+        const strSlug = to_slug(name);
+        const path = `/bai-viet-${strSlug}.${id}.`;
+        return path;
+    }
+
     render() {
         return (
             <div className="blog">
                 <div className="blog__thumb">
-                    <a href="blog-details.html">
-                        <img src="images/blog/blog-img/1.jpg" alt="blog images" />
+                    <a href={this.getLinkBlog(this.props.dataValue.title, this.props.dataValue.id)}>
+                        <img src={this.props.dataValue.imagePath} alt={this.props.dataValue.title} style={{ width: '400px', height: '287px', objectFit: 'cover' }} />
                     </a>
                 </div>
                 <div className="blog__details">
                     <div className="bl__date">
-                        <span>March 22, 2016</span>
+                        <span>{new Date(this.props.dataValue.createdDate).toLocaleString().replace("00:00:00, ", "")}</span>
                     </div>
-                    <h2><a href="blog-details.html">Lorem ipsum dolor sit amet, consec tetur adipisicing elit</a></h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <h2><a href={this.getLinkBlog(this.props.dataValue.title, this.props.dataValue.id)}>{this.props.dataValue.title}</a></h2>
+                    <p>{this.props.dataValue.shortDescription.substring(0, 120) + "..."}</p>
                     <div className="blog__btn">
-                        <a href="blog-details.html">Read More</a>
+                        <a href={this.getLinkBlog(this.props.dataValue.title, this.props.dataValue.id)}>Đọc Thêm</a>
                     </div>
                 </div>
             </div>

@@ -18,6 +18,8 @@ public class Blog {
     private String description;
     @Column(name = "created_date")
     private Date createdDate;
+    @Column(name = "image_path")
+    private String imagePath;
 
     public Blog() {
     }
@@ -60,5 +62,13 @@ public class Blog {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

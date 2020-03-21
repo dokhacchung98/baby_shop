@@ -63,7 +63,7 @@ class Product extends Component {
                                             <option value="4">Sắp xếp theo Giá Giảm Dần</option>
                                         </select>
 
-                                        <div className="ht__pro__qun col-md-4 col-lg-4 col-sm-4 col-xs-12" style={{ textAlign: 'center' }}>
+                                        <div className="ht__pro__qun col-md-4 col-lg-4 col-sm-4 col-xs-12" style={{ textAlign: 'end' }}>
                                             <span>Tổng số {this.props.listProduct.length} sản phẩm</span>
                                         </div>
                                         {/* Start List And Grid View */}

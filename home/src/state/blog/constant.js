@@ -1,0 +1,7 @@
+export const FETCH_BLOG_SS ="FETCH_BLOG_SS";
+export const FETCH_BLOG_ER ="FETCH_BLOG_ER";
+export const LOADDING_BLOG ="LOADDING_BLOG";
+export const FETCH_LIST = "FETCH_LIST_BLOG";
+export const MSG_ERR_GET = "MSG_ERR_GET_BLOG";
+export const UPDATE_ID_TYPE = "UPDATE_ID_TYPE";
+export const FETCH_BLOG_DETAIL = "FETCH_BLOG_DETAIL";

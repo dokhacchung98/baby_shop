@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { closeModal, editBlog } from './../../../../state/blog/BlogAction';
+import { closeModal, editBlog, uploadImageAndUpdate } from './../../../../state/blog/BlogAction';
 import CKEditor from "react-ckeditor-component";
 
 class EditBlog extends Component {
@@ -11,7 +11,10 @@ class EditBlog extends Component {
             shortDes: this.props.dataBlog.shortDescription,
             description: this.props.dataBlog.description,
             errTitle: '',
-            errDes: ''
+            errDes: '',
+            isChangeImage: false,
+            imagePath: this.props.dataBlog.imagePath,
+            imgSrc: this.props.dataBlog.imagePath,
         }
     }
 
@@ -48,7 +51,11 @@ class EditBlog extends Component {
     sendRequest = (e) => {
         if (this.validateForm()) {
             const data = this.parseToJson();
-            this.props.sendDataEdit(data);
+            if (this.state.isChangeImage) {
+                this.props.sendDataUploadAndEdit(this.state.imagePath, data);
+            } else {
+                this.props.sendDataEdit(data);
+            }
         }
     }
 
@@ -57,14 +64,15 @@ class EditBlog extends Component {
             id: this.props.dataBlog.id,
             title: this.state.titleBlog.trim(),
             shortDescription: this.state.shortDes.trim(),
-            description: this.state.description
+            description: this.state.description,
+            imagePath: this.state.imgSrc,
         };
         return data;
     }
 
     render() {
         return (
-            <div>
+            <div style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Sửa Bài Viết</h5>
@@ -74,6 +82,24 @@ class EditBlog extends Component {
                     </div>
                     <div className="modal-body">
                         {/* Modal Body */}
+                        <div className="row">
+                            <div className="form-group col-md-6">
+                                <label htmlFor="img">Hình Ảnh</label>
+                                <br />
+                                <input type="file" id="img" name="img" accept="image/*" onChange={(e) => {
+                                    this.setState({
+                                        imagePath: e.target.files[0],
+                                        imgSrc: URL.createObjectURL(e.target.files[0]),
+                                        isChangeImage: true
+                                    });
+                                }} />
+                            </div>
+
+                            <div className="col-md-6 row">
+                                <img src={this.state.imgSrc} alt={`Baz taking a ${this.state.imgSrc}`} className="mx-auto margin utility img-thumbnail" style={{ width: '150px', height: '150px' }} />
+                            </div>
+                        </div>
+
                         <form className="mb-30">
                             <div className="form-group">
                                 <label htmlFor="fNameCreate">Tiêu Đề</label>
@@ -130,6 +156,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         closeModel: () => {
             dispatch(closeModal());
+        },
+        sendDataUploadAndEdit: (image, data) => {
+            dispatch(uploadImageAndUpdate(image, data));
         }
     }
 }

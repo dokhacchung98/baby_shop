@@ -8,6 +8,7 @@ public class BlogDTO {
     private String shortDescription;
     private String description;
     private Date createdDate;
+    private String imagePath;
 
     public BlogDTO() {
     }
@@ -50,5 +51,13 @@ public class BlogDTO {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

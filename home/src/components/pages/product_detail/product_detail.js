@@ -7,7 +7,6 @@ import Banner from './../../layouts/banner';
 import Breadcrumb from './../../layouts/breadcrumb';
 import { getDetailProduct } from './../../../state/product/product_action';
 import { connect } from 'react-redux';
-import { getCurentCatalog } from './../../../state/catalog/catalog_action';
 import ReactImageZoom from 'react-image-zoom';
 import { convertMoneyDisplay } from './../../../utilities/convert_money';
 import renderComponent from './../../layouts/render_component';

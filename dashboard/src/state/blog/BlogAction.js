@@ -3,6 +3,7 @@ import callApi from './../../service';
 import * as Method from './../../utilities';
 import Store from './../Store';
 import { showAlertError, showAlertSuccess } from './../alert/ActionAlert';
+import { uploadImage } from '../../service/CallApi';
 
 export function createBlog(data) {
     const page = Store.getState().BlogReducer.totalPage;
@@ -29,13 +30,35 @@ export function createBlog(data) {
     }
 }
 
+export function uploadImageAndCreate(image, data) {
+    return (dispath) => {
+        return uploadImage(image).then(res => {
+            dispath(createBlog({ ...data, imagePath: res.data.data }));
+        }).catch(() => {
+            dispath(createError());
+            dispath(showAlertError(Type.MSG_ERR_CREATE));
+        });
+    }
+}
+
+export function uploadImageAndUpdate(image, data) {
+    return (dispath) => {
+        return uploadImage(image).then(res => {
+            dispath(editBlog({ ...data, imagePath: res.data.data }));
+        }).catch(() => {
+            dispath(createError());
+            dispath(showAlertError(Type.MSG_ERR_CREATE));
+        });
+    }
+}
+
 export function getListBlog(number) {
     const pageSize = Store.getState().BlogReducer.pageSize;
     if (number < 0) {
         number = 0;
     }
     return (dispath) => {
-        const parameter = `get-blogs?page=${number}&size=${pageSize}`;
+        const parameter = `get-blogs?page=${number}&size=${pageSize}&type=0`;
         dispath(loadding());
         return callApi(parameter, Method.GET,
             null, false).then(res => {

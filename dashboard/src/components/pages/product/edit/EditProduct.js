@@ -4,22 +4,6 @@ import { closeModal, uploadImageAndUpdate, editProduct } from '../../../../state
 import { Multiselect } from 'multiselect-react-dropdown';
 import CKEditor from "react-ckeditor-component";
 
-
-// avatar: state.ProductReducer.dataProduct.imagePath,
-//         nameProduct: state.ProductReducer.dataProduct.name,
-//         priceProduct: state.ProductReducer.dataProduct.price,
-//         discountProduct: state.ProductReducer.dataProduct.discount,
-//         descriptionProduct: state.ProductReducer.dataProduct.description,
-//         isColorProduct: state.ProductReducer.dataProduct.color,
-//         isSizeProduct: state.ProductReducer.dataProduct.size,
-//         listColor: state.ProductReducer.dataProduct.colorValue.split(" ").filter(t => t === ''),
-//         listSize: state.ProductReducer.dataProduct.sizeValue.split(" ").map(
-//             t => ({ name: t })).filter(t => t === ''),
-//         listCatalogSelected: state.ProductReducer.dataProduct.catalogs,
-//         idProduct: state.ProductReducer.dataProduct.id,
-
-
-
 class EditProduct extends Component {
     constructor(props) {
         super(props)

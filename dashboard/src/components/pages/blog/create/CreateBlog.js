@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { closeModal, createBlog } from './../../../../state/blog/BlogAction';
+import { closeModal, uploadImageAndCreate } from './../../../../state/blog/BlogAction';
 import CKEditor from "react-ckeditor-component";
 
 class CreateBlog extends Component {
@@ -11,7 +11,9 @@ class CreateBlog extends Component {
             shortDes: '',
             description: '',
             errTitle: '',
-            errDes: ''
+            errDes: '',
+            imgSrc: 'dist/img/avatar1.jpg',
+            errImage: ''
         }
     }
 
@@ -22,6 +24,10 @@ class CreateBlog extends Component {
     }
 
     validateForm = () => {
+        if (!this.state.imagePath) {
+            this.setState({ errImage: 'Bạn chưa chọn hình ảnh' })
+            return false;
+        }
         if (!this.state.titleBlog.trim()) {
             this.setState({
                 errTitle: 'Vui lòng nhập tiêu đề'
@@ -48,7 +54,7 @@ class CreateBlog extends Component {
     sendRequest = (e) => {
         if (this.validateForm()) {
             const data = this.parseToJson();
-            this.props.sendDataCreate(data);
+            this.props.sendDataCreate(this.state.imagePath, data);
         }
     }
 
@@ -142,8 +148,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        sendDataCreate: (data) => {
-            dispatch(createBlog(data));
+        sendDataCreate: (img, data) => {
+            dispatch(uploadImageAndCreate(img, data));
         },
         closeModel: () => {
             dispatch(closeModal());

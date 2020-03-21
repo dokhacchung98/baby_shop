@@ -36,6 +36,7 @@ public class BlogController {
         blog.setShortDescription(requestDTO.getShortDescription());
         blog.setDescription(requestDTO.getDescription());
         blog.setCreatedDate(new Date());
+        blog.setImagePath(requestDTO.getImagePath());
         try {
             Blog tmp = blogService.createBlog(blog);
             return new ResponeDataDTO<>(Constants.SUCCESS_MSG, Constants.SUCCESS_CODE, tmp);
@@ -87,6 +88,7 @@ public class BlogController {
             blog.setTitle(requestDTO.getTitle());
             blog.setShortDescription(requestDTO.getShortDescription());
             blog.setDescription(requestDTO.getDescription());
+            blog.setImagePath((requestDTO.getImagePath()));
             Blog tmp = blogService.updateBlog(blog);
             return new ResponeDataDTO<>(Constants.SUCCESS_MSG, Constants.SUCCESS_CODE, tmp);
         } catch (Exception e) {
