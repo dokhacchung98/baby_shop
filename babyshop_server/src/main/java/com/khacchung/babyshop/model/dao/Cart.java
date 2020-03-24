@@ -126,7 +126,7 @@ public class Cart {
 
     public long getPriceAfterSale() {
         if (this.product != null)
-            return ((int) (this.product.getPrice() * (1 - this.product.getDiscount() / 100000)) / 1000) * this.number;
+            return ((long) (this.product.getPrice() * (100 - this.product.getDiscount()) / 100000)) * number * 1000;
         return 0;
     }
 }

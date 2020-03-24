@@ -28,7 +28,6 @@ class ItemView extends Component {
             colorValue: this.props.valueData.colorValue === undefined ? '' : this.props.valueData.colorValue.charAt(0),
             number: 1
         }
-        console.log(json);
         return json;
     }
 

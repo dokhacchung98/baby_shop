@@ -41,15 +41,15 @@ public class CartController {
                 CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
                 Cart cart = new Cart();
                 cart.setProductId(cartDTO.getProductId());
-                cart.setColorValue(cartDTO.isColor());
-                cart.setColor(cartDTO.getColorValue());
-                cart.setSize(cartDTO.getSizeValue());
-                cart.setSizeValue(cartDTO.isSize());
+                cart.setColorValue(cartDTO.getColorValue());
+                cart.setColor(cartDTO.isColor());
+                cart.setSize(cartDTO.isSize());
+                cart.setSizeValue(cartDTO.getSizeValue());
                 cart.setUserId(userDetails.getUser().getId());
 
                 Cart existCart = cartService.findExistCart(cart);
                 if (existCart != null) {
-                    return updateNumberCart(cart.getId(), cart.getNumber() + existCart.getNumber());
+                    return updateNumberCart(existCart.getId(), cart.getNumber() + existCart.getNumber());
                 }
 
                 Cart tmp = cartService.createCart(cart);

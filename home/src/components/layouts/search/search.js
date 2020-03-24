@@ -2,8 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { closeMenu, openMenu, openSearch, closeSearch } from './../../../state/app/app_action';
 import FormLogin from '../form_login/form_login';
+import { getListCart } from './../../../state/cart/cart_action';
 
 class Search extends Component {
+    constructor(props) {
+        super(props);
+        if (this.props.isAuthenticated) {
+            this.props.getListCart();
+        }
+    }
+
     render() {
         return (
             <div className={this.props.isOpenSearch ? "search__box__show__hide" : ""}>
@@ -120,6 +128,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         closeSearch: () => {
             dispatch(closeSearch());
         },
+        getListCart: () => {
+            dispatch(getListCart());
+        }
     }
 }
 

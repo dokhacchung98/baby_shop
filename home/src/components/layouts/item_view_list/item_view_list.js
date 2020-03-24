@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './item_view_list.css';
 import { convertMoneyDisplay } from './../../../utilities/convert_money'
 import { to_slug } from './../../../utilities/slug';
+import { addToCart, removeCart } from './../../../state/cart/cart_action';
+import { connect } from 'react-redux';
 
-export default class ItemViewList extends Component {
+class ItemViewList extends Component {
     convertMoney = (price, discount) => {
         const t = convertMoneyDisplay(price, discount);
         return t;
@@ -13,6 +15,24 @@ export default class ItemViewList extends Component {
         const strSlug = to_slug(name);
         const path = `/san-pham-${strSlug}.${id}.`;
         return path;
+    }
+    
+    parseToJson = () => {
+        const json = {
+            transactionId: 0,
+            productId: this.props.valueData.id,
+            size: this.props.valueData.size,
+            color: this.props.color === undefined ? false : this.props.color,
+            sizeValue: this.props.valueData.sizeValue === undefined ? '' : this.props.valueData.sizeValue.charAt(0),
+            colorValue: this.props.valueData.colorValue === undefined ? '' : this.props.valueData.colorValue.charAt(0),
+            number: 1
+        }
+        return json;
+    }
+
+    addToCart = () => {
+        const data = this.parseToJson();
+        this.props.addToCart(data);
     }
 
     render() {
@@ -52,10 +72,23 @@ export default class ItemViewList extends Component {
                         <li><a href="#"><i className="icon-shuffle icons" /></a></li>
                     </ul>
                     <div className="fr__list__btn">
-                        <a className="fr__btn" href="cart.html">Thêm Vào Giỏ Hàng</a>
+                        <a className="fr__btn" href="/#" onClick={(e) => {
+                            e.preventDefault();
+                            this.addToCart();
+                        }}>Thêm Vào Giỏ Hàng</a>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        addToCart: (json) => {
+            dispatch(addToCart(json))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ItemViewList);

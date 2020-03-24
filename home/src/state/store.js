@@ -8,6 +8,7 @@ import alertReducer from './alert';
 import productReducer from './product';
 import catalogReducer from './catalog';
 import blogReducer from './blog';
+import cartReducer from './cart';
 
 const mReducer = combineReducers({
     appReducer,
@@ -16,7 +17,8 @@ const mReducer = combineReducers({
     alertReducer,
     productReducer,
     catalogReducer,
-    blogReducer
+    blogReducer,
+    cartReducer
 });
 
 const Store = createStore(mReducer,

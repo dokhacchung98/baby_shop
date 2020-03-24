@@ -17,7 +17,7 @@ public interface CartRepository extends CrudRepository<Cart, Integer> {
     @Query(value = "SELECT e FROM Cart e WHERE e.userId = :idUser")
     Page<Cart> findCart(Pageable pageable, @Param("idUser") int idUser);
 
-    @Query(value = "SELECT e FROM Cart e WHERE e.userId = ?1 AND e.productId = ?2 AND e.size = ?3 AND e.color = ?4")
+    @Query(value = "SELECT e FROM Cart e WHERE e.userId = ?1 AND e.productId = ?2 AND e.sizeValue = ?3 AND e.colorValue = ?4")
     Cart findCartExist(int idUser, int productId, String size, String color);
 
     @Query(value = "SELECT e FROM Cart e WHERE e.userId = :id")

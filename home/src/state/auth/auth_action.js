@@ -26,7 +26,7 @@ export function sendRegister(data) {
         dispath(loading());
         return callApi('register', Method.POST, data, false)
             .then(res => {
-                if (res.data !== undefined && res.data.code === 200) {
+                if (res !== undefined && res.data.code === 200) {
                     dispath(loginSS(res.data.data));
                 } else {
                     dispath(registerErr(res.data.data));
@@ -42,7 +42,7 @@ export function getDetailUser() {
         if (Store.getState().authReducer.isAuthenticated)
             return callApi('user/get-information', Method.GET, null, true)
                 .then(res => {
-                    if (res.data !== null && res.data.code === 200) {
+                    if (res !== undefined && res.data.code === 200) {
                         dispath(getInformationSS(res.data.data));
                     }
                 });

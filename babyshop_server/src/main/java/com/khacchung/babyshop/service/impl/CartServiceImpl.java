@@ -79,7 +79,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart findExistCart(Cart cart) {
         try {
-            Cart tmp = cartRepository.findCartExist(cart.getUserId(), cart.getProductId(), cart.getSize(), cart.getColor());
+            Cart tmp = cartRepository.findCartExist(cart.getUserId(), cart.getProductId(), cart.getSizeValue(), cart.getColorValue());
             return tmp;
         } catch (Exception e) {
             logger.error(e.getMessage());
