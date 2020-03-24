@@ -75,4 +75,15 @@ public class CartServiceImpl implements CartService {
         }
         return null;
     }
+
+    @Override
+    public Cart findExistCart(Cart cart) {
+        try {
+            Cart tmp = cartRepository.findCartExist(cart.getUserId(), cart.getProductId(), cart.getSize(), cart.getColor());
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

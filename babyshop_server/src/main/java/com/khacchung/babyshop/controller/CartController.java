@@ -15,9 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -29,7 +32,7 @@ public class CartController {
     @RequestMapping(value = "/user/add-to-cart", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
             produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponeDataDTO<Cart> createCart(CartDTO cartDTO) {
+    public ResponeDataDTO<Cart> createCart(@Valid @RequestBody CartDTO cartDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if ((auth instanceof AnonymousAuthenticationToken)) {
             return new ResponeDataDTO<>(Result.FORBIDDEN);
@@ -38,11 +41,17 @@ public class CartController {
                 CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
                 Cart cart = new Cart();
                 cart.setProductId(cartDTO.getProductId());
-                cart.setColor(cartDTO.isColor());
+                cart.setColorValue(cartDTO.isColor());
                 cart.setColor(cartDTO.getColorValue());
                 cart.setSize(cartDTO.getSizeValue());
-                cart.setSize(cartDTO.isSize());
+                cart.setSizeValue(cartDTO.isSize());
                 cart.setUserId(userDetails.getUser().getId());
+
+                Cart existCart = cartService.findExistCart(cart);
+                if (existCart != null) {
+                    return updateNumberCart(cart.getId(), cart.getNumber() + existCart.getNumber());
+                }
+
                 Cart tmp = cartService.createCart(cart);
                 return new ResponeDataDTO.Builder<Cart>()
                         .withMessage(Constants.SUCCESS_MSG)

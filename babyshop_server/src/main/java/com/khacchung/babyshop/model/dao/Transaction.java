@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "`transaction`")
-@JsonIgnoreProperties(value = {"carts"})
+@JsonIgnoreProperties(value = {"orders"})
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,11 @@ public class Transaction {
     private int status;
     @Column(name = "user_id")
     private int userId;
-
-    @OneToMany(mappedBy = "transaction")
-    private Collection<Cart> carts;
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
+    private Collection<Order> orders;
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
     public Transaction() {
     }
@@ -59,11 +61,19 @@ public class Transaction {
         return status;
     }
 
-    public Collection<Cart> getCarts() {
-        return carts;
+    public Collection<Order> getOrders() {
+        return orders;
     }
 
-    public void setCarts(Collection<Cart> carts) {
-        this.carts = carts;
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

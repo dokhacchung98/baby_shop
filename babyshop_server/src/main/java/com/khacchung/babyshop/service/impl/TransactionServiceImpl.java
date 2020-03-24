@@ -1,9 +1,11 @@
 package com.khacchung.babyshop.service.impl;
 
 import com.khacchung.babyshop.model.dao.Cart;
+import com.khacchung.babyshop.model.dao.Order;
 import com.khacchung.babyshop.model.dao.Transaction;
 import com.khacchung.babyshop.model.dto.TransactionUpdateStatusDTO;
 import com.khacchung.babyshop.repository.CartRepository;
+import com.khacchung.babyshop.repository.OrderRepository;
 import com.khacchung.babyshop.repository.TransactionRepository;
 import com.khacchung.babyshop.service.TransactionService;
 import org.apache.log4j.Logger;
@@ -25,23 +27,32 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     @Override
-    public Transaction createTransaction(Transaction transaction, List<Integer> idCarts) {
+    public Transaction createTransaction(Transaction transaction, int userId) {
         try {
-            List<Cart> cartList = new ArrayList<>();
-            for (int id : idCarts) {
-                Cart c = cartRepository.findById(id).get();
-                if (c != null) {
-                    cartList.add(c);
+            List<Order> orderList = new ArrayList<>();
+            List<Cart> cartList = cartRepository.findAllCartByUserId(userId);
+            if (cartList != null && cartList.size() > 0) {
+                for (Cart t : cartList) {
+                    Order order = new Order();
+                    order.setColor(t.isColor());
+                    order.setColorValue(t.getColorValue());
+                    order.setSize(t.isSize());
+                    order.setSizeValue(t.getSizeValue());
+                    order.setPrice(t.getProduct().getPrice());
+                    order.setDiscount(t.getProduct().getDiscount());
+                    order.setNumber(t.getNumber());
+                    orderList.add(order);
                 }
             }
-            transaction.setCarts(cartList);
+
+            transaction.setOrders(orderList);
             Transaction tmp = transactionRepository.save(transaction);
-            for (Cart t : cartList) {
-                t.setTransactionId(tmp.getId());
-                t.setUserId(0);
-                cartRepository.save(t);
-            }
+            cartRepository.deleteAll(cartList);
+
             return tmp;
         } catch (Exception e) {
             logger.error(e.getMessage());

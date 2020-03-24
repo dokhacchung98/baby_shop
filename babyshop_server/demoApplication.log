@@ -23,3 +23,11 @@
 [http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.BlogServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
 [http-nio-8080-exec-2] ERROR com.khacchung.babyshop.service.impl.BlogServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
 [http-nio-8080-exec-4] ERROR com.khacchung.babyshop.service.impl.CatalogServiceImpl  - No value present
+[http-nio-8080-exec-4] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-8] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - Session/EntityManager is closed; nested exception is java.lang.IllegalStateException: Session/EntityManager is closed
+[http-nio-8080-exec-2] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - Session/EntityManager is closed; nested exception is java.lang.IllegalStateException: Session/EntityManager is closed
+[http-nio-8080-exec-7] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.CartServiceImpl  - Session/EntityManager is closed; nested exception is java.lang.IllegalStateException: Session/EntityManager is closed

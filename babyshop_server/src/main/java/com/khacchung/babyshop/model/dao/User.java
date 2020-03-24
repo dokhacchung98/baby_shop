@@ -35,6 +35,8 @@ public class User {
     private Role role;
     @OneToMany(mappedBy = "user")
     private Collection<Cart> carts;
+    @OneToMany(mappedBy = "user")
+    private Collection<Transaction> transactions;
 
     public User() {
     }
@@ -123,5 +125,21 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public Collection<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Collection<Cart> carts) {
+        this.carts = carts;
+    }
+
+    public Collection<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Collection<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

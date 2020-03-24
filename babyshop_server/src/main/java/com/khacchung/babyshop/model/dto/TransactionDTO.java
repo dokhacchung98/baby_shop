@@ -9,8 +9,6 @@ public class TransactionDTO {
     private int status;
     private int userId;
 
-    private List<Integer> listCartId;
-
     public TransactionDTO() {
     }
 
@@ -44,13 +42,5 @@ public class TransactionDTO {
 
     public int getStatus() {
         return status;
-    }
-
-    public List<Integer> getListCartId() {
-        return listCartId;
-    }
-
-    public void setListCartId(List<Integer> listCartId) {
-        this.listCartId = listCartId;
     }
 }

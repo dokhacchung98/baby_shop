@@ -14,4 +14,6 @@ public interface CartService {
     Cart deleteCart(int cartId);
 
     Cart updateNumber(int idCart, int number);
+
+    Cart findExistCart(Cart cart);
 }

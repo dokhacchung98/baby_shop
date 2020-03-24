@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "`product`")
-@JsonIgnoreProperties(value = {"carts"})
+@JsonIgnoreProperties(value = {"carts", "orders"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +34,10 @@ public class Product {
     @Column(name = "size")
     private String sizeValue;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Cart> carts;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Collection<Order> orders;
 
     @ManyToMany(targetEntity = Catalog.class, cascade = {CascadeType.ALL})
     @JoinTable(name = "product_catalog",
@@ -148,5 +150,13 @@ public class Product {
 
     public void setCatalogs(Collection<Catalog> catalogs) {
         this.catalogs = catalogs;
+    }
+
+    public Collection<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
     }
 }

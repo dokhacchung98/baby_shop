@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface TransactionService {
-    Transaction createTransaction(Transaction transaction, List<Integer> idCarts);
+    Transaction createTransaction(Transaction transaction, int userId);
 
     Page<Transaction> getTransactions(Pageable pageable, int userId);
 

@@ -9,6 +9,7 @@ public class CartDTO {
     private int userId;
     private int productId;
     private int transactionId;
+    private int number;
 
     public CartDTO() {
     }
@@ -75,5 +76,13 @@ public class CartDTO {
 
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

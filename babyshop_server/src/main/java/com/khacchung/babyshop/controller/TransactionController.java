@@ -36,7 +36,8 @@ public class TransactionController {
                 transaction.setCreatedDate(new Date());
                 transaction.setUserId(userDetails.getUser().getId());
                 transaction.setStatus(0);
-                Transaction tmp = transactionService.createTransaction(transaction, transactionDTO.getListCartId());
+                Transaction tmp = transactionService.createTransaction(transaction,
+                        ((CustomUserDetail) auth.getPrincipal()).getUser().getId());
                 return new ResponeDataDTO.Builder<Transaction>()
                         .withData(tmp)
                         .withCode(Constants.SUCCESS_CODE)

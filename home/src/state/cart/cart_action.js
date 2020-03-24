@@ -13,9 +13,20 @@ export function getListCart() {
     }
 }
 
-export function addToCart() {
+export function addToCart(data) {
     return (dispatch) => {
-        return callApi("user/get-carts?page=0&size=100", Method.GET, null, true)
+        return callApi("user/add-to-cart", Method.POST, data, true)
+            .then(res => {
+                console.log(res);
+            }).catch(err => {
+                dispatch(getListCartErr(err))
+            });
+    }
+}
+
+export function removeCart(id) {
+    return (dispatch) => {
+        return callApi(`user/remove-to-cart?id=${id}`, Method.GET, null, true)
             .then(res => {
                 console.log(res);
             }).catch(err => {

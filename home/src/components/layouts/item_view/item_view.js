@@ -3,8 +3,10 @@ import './item_view.css';
 import Marquee from 'react-text-marquee';
 import { convertMoneyDisplay } from './../../../utilities/convert_money'
 import { to_slug } from './../../../utilities/slug';
+import { addToCart, removeCart } from './../../../state/cart/cart_action';
+import { connect } from 'react-redux';
 
-export default class ItemView extends Component {
+class ItemView extends Component {
     convertMoney = (price, discount) => {
         const t = convertMoneyDisplay(price, discount);
         return t;
@@ -14,6 +16,25 @@ export default class ItemView extends Component {
         const strSlug = to_slug(name);
         const path = `/san-pham-${strSlug}.${id}.`;
         return path;
+    }
+
+    parseToJson = () => {
+        const json = {
+            transactionId: 0,
+            productId: this.props.valueData.id,
+            size: this.props.valueData.size,
+            color: this.props.color === undefined ? false : this.props.color,
+            sizeValue: this.props.valueData.sizeValue === undefined ? '' : this.props.valueData.sizeValue.charAt(0),
+            colorValue: this.props.valueData.colorValue === undefined ? '' : this.props.valueData.colorValue.charAt(0),
+            number: 1
+        }
+        console.log(json);
+        return json;
+    }
+
+    addToCart = () => {
+        const data = this.parseToJson();
+        this.props.addToCart(data);
     }
 
     render() {
@@ -27,8 +48,11 @@ export default class ItemView extends Component {
                 <div className="fr__hover__info">
                     <ul className="product__action">
                         <li><a href="wishlist.html"><i className="icon-heart icons" /></a></li>
-                        <li><a href="cart.html"><i className="icon-handbag icons" /></a></li>
-                        <li><a href="#"><i className="icon-shuffle icons" /></a></li>
+                        <li><a href="/#" onClick={(e) => {
+                            e.preventDefault();
+                            this.addToCart();
+                        }}><i className="icon-handbag icons" /></a></li>
+                        <li><a href="/#"><i className="icon-shuffle icons" /></a></li>
                     </ul>
                 </div>
                 {
@@ -70,3 +94,13 @@ export default class ItemView extends Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        addToCart: (json) => {
+            dispatch(addToCart(json))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ItemView);
