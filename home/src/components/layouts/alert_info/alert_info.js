@@ -6,7 +6,7 @@ import { closeAlert } from './../../../state/alert/alert_action';
 class AlertInfo extends Component {
     render() {
         if (this.props.isShow) return (
-            <AlertContainer>
+            <AlertContainer style={{zIndex: '100000'}}>
                 <Alert type={this.props.typeAlert} timeout={3000} onDismiss={() => this.props.closeAlert()}>{this.props.contentAlert}</Alert>
             </AlertContainer>
         );

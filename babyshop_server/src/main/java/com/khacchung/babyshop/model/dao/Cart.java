@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "`cart`")
-@JsonIgnoreProperties(value = {"product", "user"})
+@JsonIgnoreProperties(value = {"user"})
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

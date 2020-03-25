@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { closeMenu, openMenu, openSearch, closeSearch } from './../../../state/app/app_action';
 import FormLogin from '../form_login/form_login';
 import { getListCart } from './../../../state/cart/cart_action';
+import ItemCartSearch from './item_cart';
 
 class Search extends Component {
     constructor(props) {
@@ -51,40 +52,26 @@ class Search extends Component {
                             <div className="shp__cart__wrap">
                                 {this.props.isAuthenticated ?
                                     <div>
-                                        <div className="shp__single__product">
-                                            <div className="shp__pro__thumb">
-                                                <a href="/#">
-                                                    <img src="images/product-2/sm-smg/1.jpg" alt="product images" />
-                                                </a>
-                                            </div>
-                                            <div className="shp__pro__details">
-                                                <h2><a href="product-details.html">BO&amp;Play Wireless Speaker</a></h2>
-                                                <span className="quantity">QTY: 1</span>
-                                                <span className="shp__price">$105.00</span>
-                                            </div>
-                                            <div className="remove__btn">
-                                                <a href="/#" title="Remove this item"><i className="zmdi zmdi-close" /></a>
-                                            </div>
-                                        </div>
-                                        <div className="shp__single__product">
-                                            <div className="shp__pro__thumb">
-                                                <a href="/#">
-                                                    <img src="images/product-2/sm-smg/2.jpg" alt="product images" />
-                                                </a>
-                                            </div>
-                                            <div className="shp__pro__details">
-                                                <h2><a href="product-details.html">Brone Candle</a></h2>
-                                                <span className="quantity">QTY: 1</span>
-                                                <span className="shp__price">$25.00</span>
-                                            </div>
-                                            <div className="remove__btn">
-                                                <a href="/#" title="Remove this item"><i className="zmdi zmdi-close" /></a>
-                                            </div>
-                                        </div>
-
+                                        {/* Start Item */}
+                                        {
+                                            this.props.listCart.length === 0
+                                                ?
+                                                <div>Giỏ Hàng Trống</div>
+                                                :
+                                                this.props.listCart.map((item, key) => {
+                                                    return (
+                                                        <ItemCartSearch key={key} dataValue={item}></ItemCartSearch>
+                                                    )
+                                                })
+                                        }
+                                        {/* End Item */}
                                         <ul className="shoping__total">
-                                            <li className="subtotal">Subtotal:</li>
-                                            <li className="total__price">$130.00</li>
+                                            <li className="subtotal">Tổng:</li>
+                                    <li className="total__price">{this.props.listCart === undefined ? '0' :
+                                        this.props.listCart.reduce((total, currentValue)=>{
+                                            return total + currentValue.priceAfterSale
+                                        }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+                                    } VND</li>
                                         </ul>
                                         <ul className="shopping__btn" >
                                             <li><a href="cart.html">View Cart</a></li>
@@ -110,7 +97,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         isOpenMenu: state.appReducer.isOpenMenu,
         isOpenSearch: state.appReducer.isOpenSearch,
-        isAuthenticated: state.authReducer.isAuthenticated
+        isAuthenticated: state.authReducer.isAuthenticated,
+        listCart: state.cartReducer.listCart
     }
 }
 
