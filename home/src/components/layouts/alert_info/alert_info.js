@@ -7,7 +7,7 @@ class AlertInfo extends Component {
     render() {
         if (this.props.isShow) return (
             <AlertContainer style={{zIndex: '100000'}}>
-                <Alert type={this.props.typeAlert} timeout={3000} onDismiss={() => this.props.closeAlert()}>{this.props.contentAlert}</Alert>
+                <Alert style={{zIndex: '100000'}} type={this.props.typeAlert} timeout={1000} onDismiss={() => this.props.closeAlert()}>{this.props.contentAlert}</Alert>
             </AlertContainer>
         );
         return null;

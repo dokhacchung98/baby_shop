@@ -3,7 +3,7 @@ import './item_view.css';
 import Marquee from 'react-text-marquee';
 import { convertMoneyDisplay } from './../../../utilities/convert_money'
 import { to_slug } from './../../../utilities/slug';
-import { addToCart, removeCart } from './../../../state/cart/cart_action';
+import { addToCart } from './../../../state/cart/cart_action';
 import { connect } from 'react-redux';
 
 class ItemView extends Component {

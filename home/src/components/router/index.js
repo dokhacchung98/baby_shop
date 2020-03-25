@@ -10,6 +10,8 @@ import ProductDetail from './../pages/product_detail';
 import BlogDetail from './../pages/blog_detail';
 import Blogs from './../pages/blogs';
 import { getDetailUser } from './../../state/auth/auth_action';
+import Cart from '../pages/cart';
+import CheckOut from '../pages/checkout';
 
 class MyRouter extends Component {
     componentWillMount() {
@@ -28,7 +30,8 @@ class MyRouter extends Component {
                 <Route exact path="/contact" component={Contact}></Route>
                 <Route exact path="/search" component={Home}></Route>
                 <Route exact path="/user" component={Home}></Route>
-                <Route exact path="/cart" component={Home}></Route>
+                <Route exact path="/cart" component={Cart}></Route>
+                <Route exact path="/checkout" component={CheckOut}></Route>
 
                 <Route path="*">
                     <NotFound />

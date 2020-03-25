@@ -74,9 +74,9 @@ class Search extends Component {
                                     } VND</li>
                                         </ul>
                                         <ul className="shopping__btn" >
-                                            <li><a href="cart.html">View Cart</a></li>
+                                            <li><a href="/cart">Xem Giỏ Hàng</a></li>
                                             <li className="shp__checkout">
-                                                <a href="checkout.html">Checkout</a>
+                                                <a href="/checkout">Thanh Toán</a>
                                             </li>
                                         </ul>
                                     </div>
