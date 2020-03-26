@@ -54,7 +54,7 @@ export function searchBlogs(keyword, number) {
                 }
                 if (res.data.code === 200) {
                     if ((res.data.data.totalPages - 1) < number && res.data.data.totalElements > 0) {
-                        return dispath(getListBlog(number - 1));
+                        return dispath(searchBlogs(number - 1));
                     }
                     dispath(fetchList(res.data.data.content,
                         res.data.data.totalElements,

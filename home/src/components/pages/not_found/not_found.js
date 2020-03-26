@@ -6,10 +6,29 @@ import Footer from './../../layouts/footer';
 import './not_found.css';
 
 export default class NotFound extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fKey: ''
+        }
+    }
+    getLinkSearch = (name) => {
+        const path = `/tim-kiem-${name.trim()}`;
+        return path;
+    }
+
+    searchKeyword = () => {
+        const keyword = this.state.fKey;
+        if (keyword.trim() === '') {
+            return;
+        }
+        window.location.replace(this.getLinkSearch(keyword));
+    }
+
     render() {
         return (
             <div>
-               <Header></Header>
+                <Header></Header>
                 <Search></Search>
 
                 <div id="notfound">
@@ -19,15 +38,22 @@ export default class NotFound extends Component {
                         </div>
                         <h2>Ồ, Trang mà bạn yêu cầu không tồn tại!</h2>
                         <form className="notfound-search">
-                            <input type="text" placeholder="Tìm kiếm..." />
-                            <button type="button">Tìm Kiếm</button>
+                            <input type="text" placeholder="Tìm kiếm..." onChange={(e) => {
+                                this.setState({
+                                    fKey: e.target.value
+                                })
+                            }} />
+                            <button type="button" onClick={(e) => {
+                                e.preventDefault();
+                                this.searchKeyword()
+                            }}>Tìm Kiếm</button>
                         </form>
                         <a href="/"><span className="arrow" />Về Trang Chủ</a>
                     </div>
                 </div>
-                
+
                 <Group></Group>
-                <Footer></Footer> 
+                <Footer></Footer>
             </div>
         )
     }
