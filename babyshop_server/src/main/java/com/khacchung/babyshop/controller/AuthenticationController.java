@@ -118,11 +118,11 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/user/update-information", method = RequestMethod.POST)
-    public ResponeDataDTO<User> updateInformationUser(UserInformationDTO userInformationDTO) {
+    public ResponeDataDTO<User> updateInformationUser(@RequestBody UserInformationDTO userInformationDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
-            if (userDetails.getUser().getId() == userInformationDTO.getId()) {
+                userInformationDTO.setId(userDetails.getUser().getId());
                 try {
                     User user = userService.updateInformation(userInformationDTO);
                     return new ResponeDataDTO.Builder<User>()
@@ -133,7 +133,6 @@ public class AuthenticationController {
                 } catch (Exception e) {
                     return new ResponeDataDTO<>(Result.BAD_REQUEST);
                 }
-            }
         }
         return new ResponeDataDTO<>(Result.BAD_REQUEST);
     }

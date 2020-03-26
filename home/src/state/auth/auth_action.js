@@ -1,7 +1,8 @@
 import * as Type from './constant';
 import callApi from './../../service/call_api';
 import * as Method from './../../utilities';
-import Store from './../store'
+import Store from './../store';
+import { showAlertError, showAlertSuccess } from './../alert/alert_action';
 
 export function sendLogin(data) {
     return (dispath) => {
@@ -46,6 +47,22 @@ export function getDetailUser() {
                         dispath(getInformationSS(res.data.data));
                     }
                 });
+    }
+}
+
+export function updateDetailUser(data) {
+    return (dispatch) => {
+        return callApi('user/update-information', Method.POST, data, true)
+            .then(res => {
+                if (res != undefined && res.data.code === 200) {
+                    dispatch(showAlertSuccess(Type.ALERT_UPDATE_SS));
+                    dispatch(getInformationSS(res.data.data));
+                } else {
+                    dispatch(showAlertError(Type.ALERT_UPDATE_ER));
+                }
+            }).catch(e => {
+                dispatch(showAlertError(Type.ALERT_UPDATE_ER));
+            });
     }
 }
 

@@ -11,6 +11,22 @@ class Search extends Component {
         if (this.props.isAuthenticated) {
             this.props.getListCart();
         }
+        this.state = {
+            fKey: ''
+        }
+    }
+
+    getLinkSearch = (name) => {
+        const path = `/tim-kiem-${name.trim()}`;
+        return path;
+    }
+
+    searchKeyword = () => {
+        const keyword = this.state.fKey;
+        if (keyword.trim() === '') {
+            return;
+        }
+        window.location.replace(this.getLinkSearch(keyword));
     }
 
     render() {
@@ -28,8 +44,15 @@ class Search extends Component {
                                 <div className="col-md-12">
                                     <div className="search__inner">
                                         <form action="#" method="get">
-                                            <input placeholder="Search here... " type="text" />
-                                            <button type="submit" />
+                                            <input placeholder="Tìm kiếm... " type="text" onChange={(e) => {
+                                                this.setState({
+                                                    fKey: e.target.value
+                                                })
+                                            }} />
+                                            <button onClick={(e) => {
+                                                e.preventDefault();
+                                                this.searchKeyword();
+                                            }} />
                                         </form>
                                         <div className="search__close__btn" onClick={() => this.props.closeSearch()}>
                                             <span className="search__close__btn_icon"><i className="zmdi zmdi-close" /></span>
@@ -67,11 +90,11 @@ class Search extends Component {
                                         {/* End Item */}
                                         <ul className="shoping__total">
                                             <li className="subtotal">Tổng:</li>
-                                    <li className="total__price">{this.props.listCart === undefined ? '0' :
-                                        this.props.listCart.reduce((total, currentValue)=>{
-                                            return total + currentValue.priceAfterSale
-                                        }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
-                                    } VND</li>
+                                            <li className="total__price">{this.props.listCart === undefined ? '0' :
+                                                this.props.listCart.reduce((total, currentValue) => {
+                                                    return total + currentValue.priceAfterSale
+                                                }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+                                            } VND</li>
                                         </ul>
                                         <ul className="shopping__btn" >
                                             <li><a href="/cart">Xem Giỏ Hàng</a></li>

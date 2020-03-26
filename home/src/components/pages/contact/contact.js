@@ -68,6 +68,14 @@ class Contact extends Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userLogin != undefined) {
+            this.setState({
+                vName: nextProps.userLogin.name == null ? '' : nextProps.userLogin.name,
+                vEmail: nextProps.userLogin.email == null ? '' : nextProps.userLogin.email
+            })
+        }
+    }
 
     render() {
         return (
@@ -166,9 +174,6 @@ class Contact extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    // if(state.authReducer.userInfo !== null) {
-    //     Contact.changeNameAndMail(state.authReducer.userInfo.name, state.authReducer.userInfo.email);
-    // }
     return {
         userLogin: state.authReducer.userInfo,
         isSendding: state.contactReducer.isLoading

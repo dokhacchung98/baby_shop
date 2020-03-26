@@ -6,6 +6,7 @@ import Footer from './../../layouts/footer';
 import Banner from './../../layouts/banner';
 import Breadcrumb from './../../layouts/breadcrumb';
 import { getDetailProduct } from './../../../state/product/product_action';
+import { addToCart } from './../../../state/cart/cart_action';
 import { connect } from 'react-redux';
 import ReactImageZoom from 'react-image-zoom';
 import { convertMoneyDisplay } from './../../../utilities/convert_money';
@@ -17,7 +18,11 @@ class ProductDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            typeGrid: true
+            typeGrid: true,
+            fColor: '',
+            fSize: '',
+            iColor: false,
+            iSize: false,
         };
         this.getDataProduct();
     }
@@ -36,6 +41,34 @@ class ProductDetail extends Component {
     convertMoney = (price, discount) => {
         const t = convertMoneyDisplay(price, discount);
         return t;
+    }
+
+    addToCart = () => {
+        const data = this.parseToJson();
+        this.props.addToCart(data);
+    }
+
+    parseToJson = () => {
+        const json = {
+            productId: this.props.currentProduct.id,
+            size: this.state.iSize,
+            color: this.state.iColor,
+            sizeValue: this.state.fSize,
+            colorValue: this.state.fColor,
+            number: 1
+        }
+        return json;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentProduct != undefined) {
+            this.setState({
+                fColor: nextProps.currentProduct.colorValue.split(" ")[0],
+                fSize: nextProps.currentProduct.sizeValue.charAt(0),
+                iColor: nextProps.currentProduct.color,
+                iSize: nextProps.currentProduct.size,
+            })
+        }
     }
 
     render() {
@@ -87,29 +120,57 @@ class ProductDetail extends Component {
                                         }
 
                                         <div className="ht__pro__desc">
-                                            <div className="sin__desc align--left">
-                                                <p><span>color:</span></p>
-                                                <ul className="pro__color">
-                                                    <li className="red"><a href="#">red</a></li>
-                                                    <li className="green"><a href="#">green</a></li>
-                                                    <li className="balck"><a href="#">balck</a></li>
-                                                </ul>
-                                                <div className="pro__more__btn">
-                                                    <a href="#">more</a>
-                                                </div>
-                                            </div>
+                                            {
+                                                this.props.currentProduct == null
+                                                    ? <div></div>
+                                                    :
+                                                    this.props.currentProduct.color == true
+                                                        ?
+                                                        <div className="sin__desc align--left">
+                                                            <p><span style={{ marginRight: '24px' }}>Màu Sắc:</span></p>
 
-                                            <div className="sin__desc align--left">
-                                                <p><span>size</span></p>
-                                                <select className="select__size">
-                                                    <option>s</option>
-                                                    <option>l</option>
-                                                    <option>xs</option>
-                                                    <option>xl</option>
-                                                    <option>m</option>
-                                                    <option>s</option>
-                                                </select>
-                                            </div>
+                                                            {this.props.currentProduct.colorValue.split(" ").map((item, key) => {
+                                                                return (
+                                                                    <div className="single-input" style={{ display: 'flex', marginRight: '8px' }} key={key}>
+                                                                        <input type="radio" id="checkout-method-1" value={item} name="fColor" defaultChecked={key === 0}
+                                                                            onChange={(e) => {
+                                                                                this.setState({
+                                                                                    fColor: item
+                                                                                })
+                                                                            }} />
+                                                                        <div style={{ backgroundColor: `#${item}`, width: '24px', height: '24px', marginLeft: '4px' }}></div>
+                                                                    </div>
+                                                                )
+                                                            })}
+
+                                                        </div>
+                                                        :
+                                                        <div></div>
+                                            }
+
+                                            {
+                                                this.props.currentProduct == null
+                                                    ? <div></div>
+                                                    :
+                                                    this.props.currentProduct.size == true
+                                                        ?
+                                                        <div className="sin__desc align--left">
+                                                            <p><span>Kích Thước</span></p>
+                                                            <select className="select__size" onChange={(e) => {
+                                                                this.setState({
+                                                                    fSize: e.target.value
+                                                                })
+                                                            }}>
+                                                                {this.props.currentProduct.sizeValue.split(" ").map((item, key) => {
+                                                                    return (
+                                                                        <option key={key} value={item}>{item}</option>
+                                                                    )
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                        :
+                                                        <div></div>
+                                            }
 
                                             <div className="sin__desc product__share__link">
                                                 <p><span>Chia Sẻ Sản Phẩm:</span></p>
@@ -122,6 +183,12 @@ class ProductDetail extends Component {
                                                     <li><a href="#" target="_blank"><i className="icon-social-pinterest icons" /></a></li>
                                                 </ul>
                                             </div>
+
+                                            <div className="contact-btn"><button onClick={(e) => {
+                                                e.preventDefault();
+                                                this.addToCart();
+                                            }} className="fv-btn">Thêm Vào Giỏ Hàng</button></div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +237,7 @@ class ProductDetail extends Component {
                                     {/* Start Single Content */}
                                     <div role="tabpanel" id="shipping" className="pro__single__content tab-pane fade">
                                         <div className="ty-control-group" id="askcc">
-                                            <ul className="ty-tags-list clearfix" style={{display: 'grid'}}>
+                                            <ul className="ty-tags-list clearfix" style={{ display: 'grid' }}>
 
                                                 {this.props.currentProduct === null ? '' :
                                                     this.props.currentProduct.catalogs.map((item, key) => {
@@ -213,6 +280,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         getDetailProduct: (id) => {
             dispatch(getDetailProduct(id))
+        },
+        addToCart: (data) => {
+            dispatch(addToCart(data))
         }
     }
 }

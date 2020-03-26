@@ -5,6 +5,7 @@ import { showAlertError, showAlertSuccess } from './../alert/alert_action';
 
 export function getListCart() {
     return (dispatch) => {
+        dispatch(loadding());
         return callApi(`user/get-carts?page=0&size=${100}`, Method.GET, null, true)
             .then(res => {
                 if (res !== undefined && res.data.code === 200) {
@@ -20,6 +21,7 @@ export function getListCart() {
 
 export function addToCart(data) {
     return (dispatch) => {
+        dispatch(loadding());
         return callApi("user/add-to-cart", Method.POST, data, true)
             .then(res => {
                 if (res !== undefined && res.data.code === 200) {
@@ -37,6 +39,7 @@ export function addToCart(data) {
 
 export function removeCart(id) {
     return (dispatch) => {
+        dispatch(loadding());
         return callApi(`user/remove-to-cart?id=${id}`, Method.GET, null, true)
             .then(res => {
                 if (res !== undefined && res.data.code === 200) {
@@ -49,6 +52,43 @@ export function removeCart(id) {
                 dispatch(getListCartErr(err));
                 dispatch(showAlertError(Type.ALERT_ER_REMOVE));
             });
+    }
+}
+
+export function updateCart(id, number) {
+    return (dispatch) => {
+        dispatch(loadding());
+        return callApi(`user/update-cart?idCart=${id}&number=${number}`, Method.GET, null, true)
+            .then(res => {
+                if (res !== undefined && res.data.code === 200) {
+                    dispatch(showAlertSuccess(Type.ALERT_UPDATE_SS));
+                    dispatch(updateSS(res.data.data));
+                } else {
+                    dispatch(showAlertError(Type.ALERT_UPDATE_ER));
+                }
+            }).catch(err => {
+                dispatch(updateER());
+                dispatch(showAlertError(Type.ALERT_UPDATE_ER));
+            });
+    }
+}
+
+export function loadding() {
+    return {
+        type: Type.LOADDING_CART
+    }
+}
+
+export function updateSS(data) {
+    return {
+        type: Type.UPDATE_CART_SS,
+        data: data
+    }
+}
+
+export function updateER() {
+    return {
+        type: Type.UPDATE_CART_ER,
     }
 }
 

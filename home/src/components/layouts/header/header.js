@@ -98,6 +98,8 @@ class Header extends Component {
                                                 if (!this.props.isAuthenticated) {
                                                     e.preventDefault();
                                                     this.props.openMenu();
+                                                } else {
+                                                    window.location.replace("/user");
                                                 }
                                             }}><i className="icon-user icons" /></a>
                                         </div>
@@ -105,7 +107,7 @@ class Header extends Component {
                                             this.props.openMenu();
                                         }}>
                                             <a className="cart__menu" href="/#" onClick={(e) => e.preventDefault()}><i className="icon-handbag icons" /></a>
-                                            <a onClick={(e) => e.preventDefault()} href="/#"><span className="htc__qua">{this.props.myCarts.length}</span></a>
+                                            <a onClick={(e) => e.preventDefault()} href="/#"><span className="htc__qua">{this.props.listCart === null ? 0 : this.props.listCart.length}</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -131,16 +133,16 @@ class Header extends Component {
                                         }}>Sản Phẩm</a>
                                             <ul style={{ display: this.state.isOpenMenuMobile2 ? 'contents' : 'none' }}>
                                                 {(this.props.listCatalog === undefined) ?
-                                                        <div></div>
-                                                        :
-                                                        this.props.listCatalog.map((item, index) => {
-                                                            const strSlug = to_slug(item.name);
-                                                            const path = `/danh-muc-${strSlug}.${item.id}`;
-                                                            return (
-                                                                <li key={index}><a href={path}>{item.name}</a></li>
-                                                            );
-                                                        })
-                                                    }
+                                                    <div></div>
+                                                    :
+                                                    this.props.listCatalog.map((item, index) => {
+                                                        const strSlug = to_slug(item.name);
+                                                        const path = `/danh-muc-${strSlug}.${item.id}`;
+                                                        return (
+                                                            <li key={index}><a href={path}>{item.name}</a></li>
+                                                        );
+                                                    })
+                                                }
                                             </ul>
                                             <a className="mean-expand" href="/#" onClick={(e) => {
                                                 e.preventDefault();
@@ -166,8 +168,8 @@ class Header extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isAuthenticated: state.authReducer.isAuthenticated,
-        myCarts: state.appReducer.myCarts,
-        listCatalog: state.catalogReducer.listCatalog
+        listCatalog: state.catalogReducer.listCatalog,
+        listCart: state.cartReducer.listCart
     }
 }
 

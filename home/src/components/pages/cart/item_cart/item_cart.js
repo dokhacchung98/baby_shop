@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { to_slug } from './../../../../utilities/slug';
 import { connect } from 'react-redux';
-import { removeCart } from './../../../../state/cart/cart_action';
+import { removeCart, updateCart } from './../../../../state/cart/cart_action';
 import { convertMoneyDisplay } from './../../../../utilities/convert_money';
 
 class ItemCart extends Component {
@@ -18,6 +18,12 @@ class ItemCart extends Component {
         const strSlug = to_slug(this.props.dataValue.product.name);
         const path = `/san-pham-${strSlug}.${this.props.dataValue.product.id}.`;
         return path;
+    }
+
+    updateCart = (number) => {
+        if (number !== this.props.dataValue.number && number > 0) {
+            this.props.updateCart(this.props.dataValue.id, number);
+        }
     }
 
     render() {
@@ -45,19 +51,21 @@ class ItemCart extends Component {
                     <ul className="pro__prize">
                         {this.props.dataValue.size
                             ?
-                            < li className="old__prize" style={{ textDecoration: 'line-through' }}>Size: {this.props.dataValue.sizeValue}</li>
+                            < li style={{ marginRight: '16px' }}>Size: {this.props.dataValue.sizeValue}</li>
                             : <li></li>
                         }
                         {this.props.dataValue.color
                             ?
-                            < li>Color: <div style={{ width: '50px', height: '50px', backgroundColor: `#${this.props.dataValue.colorValue}` }}></div></li>
+                            < li style={{display: 'flex'}}>Color: <div style={{ width: '24px', height: '24px', backgroundColor: `#${this.props.dataValue.colorValue}`, marginLeft: '8px' }}></div></li>
                             : <li></li>
                         }
                     </ul>
                 </td>
 
                 <td className="product-price"><span className="amount">{this.props.dataValue.product.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")} VND</span></td>
-                <td className="product-quantity"><input type="number" defaultValue={this.props.dataValue.number} /></td>
+                <td className="product-quantity"><input type="number" defaultValue={this.props.dataValue.number} onChange={(e) => {
+                    this.updateCart(e.target.value);
+                }} /></td>
                 <td className="product-subtotal">{this.props.dataValue.priceAfterSale.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")} VND</td>
                 <td className="product-remove"><a href="/#" onClick={(e) => {
                     e.preventDefault();
@@ -73,6 +81,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         removeItem: (id) => {
             dispatch(removeCart(id))
+        },
+        updateCart: (id, number) => {
+            dispatch(updateCart(id, number))
         }
     }
 }

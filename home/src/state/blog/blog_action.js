@@ -38,6 +38,40 @@ export function getListBlog(number) {
     }
 }
 
+export function searchBlogs(keyword, number) {
+    const pageSize = Store.getState().blogReducer.pageSize;
+    if (number < 0) {
+        number = 0;
+    }
+    const typeSort = Store.getState().blogReducer.typeSort;
+    return (dispath) => {
+        const parameter = `search-blog?page=${number}&size=${pageSize}&keyword=${keyword}`;
+        dispath(loadding());
+        return callApi(parameter, Method.GET,
+            null, false).then(res => {
+                if (res === undefined) {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+                if (res.data.code === 200) {
+                    if ((res.data.data.totalPages - 1) < number && res.data.data.totalElements > 0) {
+                        return dispath(getListBlog(number - 1));
+                    }
+                    dispath(fetchList(res.data.data.content,
+                        res.data.data.totalElements,
+                        res.data.data.totalPages,
+                        res.data.data.first,
+                        res.data.data.last,
+                        res.data.data.number
+                    ));
+                } else {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+            }).catch(() => {
+                dispath(showAlertError(Type.MSG_ERR_GET));
+            });
+    }
+}
+
 export function getDetailBlog(id) {
     return (dispath) => {
         const parameter = `get-blog-by-id?id=${id}`;

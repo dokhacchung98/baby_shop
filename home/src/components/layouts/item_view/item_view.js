@@ -20,7 +20,6 @@ class ItemView extends Component {
 
     parseToJson = () => {
         const json = {
-            transactionId: 0,
             productId: this.props.valueData.id,
             size: this.props.valueData.size,
             color: this.props.color === undefined ? false : this.props.color,
