@@ -51,3 +51,11 @@
 [http-nio-8080-exec-8] ERROR com.khacchung.babyshop.common.jwt.JwtTokenProvider  - Invalid JWT token
 [http-nio-8080-exec-4] ERROR com.khacchung.babyshop.common.jwt.JwtTokenProvider  - Invalid JWT token
 [http-nio-8080-exec-3] ERROR com.khacchung.babyshop.common.jwt.JwtTokenProvider  - Invalid JWT token
+[http-nio-8080-exec-8] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not execute statement
+[http-nio-8080-exec-1] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not execute statement
+[http-nio-8080-exec-10] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-10] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-10] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-10] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-10] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+[http-nio-8080-exec-10] ERROR com.khacchung.babyshop.service.impl.TransactionServiceImpl  - could not execute statement; SQL [n/a]; constraint [null]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement

@@ -73,6 +73,38 @@ export function updateCart(id, number) {
     }
 }
 
+export function checkout() {
+    return (dispatch) => {
+        dispatch(loadding())
+        return callApi('user/add-transaction', Method.POST, null, true)
+            .then(res => {
+                if (res != undefined && res.data.code === 200) {
+                    dispatch(checkoutSS(res.data.data));
+                    dispatch(showAlertSuccess(Type.ALERT_CHECKOUT_SS));
+                } else {
+                    dispatch(checkoutER());
+                    dispatch(showAlertError(Type.ALERT_CHECKOUT_ER));
+                }
+            }).catch(err => {
+                dispatch(checkoutER());
+                dispatch(showAlertError(Type.ALERT_CHECKOUT_ER));
+            })
+    }
+}
+
+export function checkoutSS(data) {
+    return {
+        type: Type.CHECKOUT_SS,
+        data: data
+    }
+}
+
+export function checkoutER() {
+    return {
+        type: Type.CHECKOUT_ER
+    }
+}
+
 export function loadding() {
     return {
         type: Type.LOADDING_CART

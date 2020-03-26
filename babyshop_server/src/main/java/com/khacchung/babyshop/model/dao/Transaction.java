@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "`transaction`")
-@JsonIgnoreProperties(value = {"orders"})
+@JsonIgnoreProperties(value = {"user"})
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -28,6 +28,10 @@ const cartReducer = (state = initialState, action) => {
             return { ...state, isLoading: false };
         case Type.DELETE_CART_ER:
             return { ...state, isLoading: false, error: action.error };
+        case Type.CHECKOUT_ER:
+            return { ...state, isLoading: false }
+        case Type.CHECKOUT_SS:
+            return { ...state, isLoading: false, listCart: [] };
         default: return state;
     }
 }

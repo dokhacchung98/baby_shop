@@ -6,10 +6,22 @@ import Footer from './../../layouts/footer';
 import Banner from '../../layouts/banner';
 import Breadcrumb from '../../layouts/breadcrumb/breadcrumb';
 import { connect } from 'react-redux';
-import { removeCart } from './../../../state/cart/cart_action';
+import { removeCart, checkout } from './../../../state/cart/cart_action';
 import { to_slug } from './../../../utilities/slug';
+import { getDetailUser } from './../../../state/auth/auth_action';
 
 class CheckOut extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fName: '',
+            fEmail: '',
+            fPhone: '',
+            fAddress: ''
+        };
+        this.props.getDetailUser();
+    }
+
     dataLinkCheckOut = () => {
         return [
             { name: 'Trang Chủ', link: '/' },
@@ -27,7 +39,28 @@ class CheckOut extends Component {
     }
 
     checkoutCart = () => {
+        if (this.props.listCart.length > 0)
+            this.props.checkoutMyCart();
+    }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userDetail != undefined) {
+
+            this.setState({
+                fName: nextProps.userDetail.name == null ? '' : nextProps.userDetail.name,
+                fEmail: nextProps.userDetail.email == null ? '' : nextProps.userDetail.email,
+                fPhone: nextProps.userDetail.phone == null ? '' : nextProps.userDetail.phone,
+                fAddress: nextProps.userDetail.address == null ? '' : nextProps.userDetail.address
+            })
+        }
+    }
+
+    onChangeData = (e) => {
+        const n = e.target.name;
+        const v = e.target.value;
+        this.setState({
+            [n]: v
+        });
     }
 
     render() {
@@ -55,27 +88,27 @@ class CheckOut extends Component {
                                                             <div className="col-md-12">
                                                                 <div className="single-input">
                                                                     <label> Họ và Tên</label>
-                                                                    <input type="text" name="fName" placeholder="Tên người nhận..." />
+                                                                    <input type="text" name="fName" placeholder="Tên người nhận..." value={this.state.fName} onChange={(e) => { this.onChangeData(e) }} />
                                                                 </div>
                                                             </div>
 
                                                             <div className="col-md-6">
                                                                 <div className="single-input">
                                                                     <label> Số Điện Thoại</label>
-                                                                    <input type="text" name="fPhone" placeholder="0123..." />
+                                                                    <input type="text" name="fPhone" placeholder="0123..." value={this.state.fPhone} onChange={(e) => { this.onChangeData(e) }} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <div className="single-input">
                                                                     <label> Email</label>
-                                                                    <input type="email" name="fMail" placeholder="abc@ef..." />
+                                                                    <input type="email" name="fEmail" placeholder="abc@ef..." value={this.state.fEmail} onChange={(e) => { this.onChangeData(e) }} />
                                                                 </div>
                                                             </div>
 
                                                             <div className="col-md-12">
                                                                 <div className="single-input">
                                                                     <label> Địa Chỉ</label>
-                                                                    <input type="text" name="fAddress" placeholder="Đường, phố,..." />
+                                                                    <input type="text" name="fAddress" placeholder="Đường, phố,..." value={this.state.fAddress} onChange={(e) => { this.onChangeData(e) }} />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -183,7 +216,8 @@ class CheckOut extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        listCart: state.cartReducer.listCart
+        listCart: state.cartReducer.listCart,
+        userDetail: state.authReducer.userInfo
     }
 }
 
@@ -191,6 +225,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         removeCart: (id) => {
             dispatch(removeCart(id))
+        },
+        checkoutMyCart: () => {
+            dispatch(checkout())
+        },
+        getDetailUser: () => {
+            dispatch(getDetailUser());
         }
     }
 }

@@ -35,7 +35,9 @@ public class TransactionServiceImpl implements TransactionService {
         try {
             List<Order> orderList = new ArrayList<>();
             List<Cart> cartList = cartRepository.findAllCartByUserId(userId);
+            Transaction tmp = new Transaction();
             if (cartList != null && cartList.size() > 0) {
+                tmp = transactionRepository.save(transaction);
                 for (Cart t : cartList) {
                     Order order = new Order();
                     order.setColor(t.isColor());
@@ -45,12 +47,14 @@ public class TransactionServiceImpl implements TransactionService {
                     order.setPrice(t.getProduct().getPrice());
                     order.setDiscount(t.getProduct().getDiscount());
                     order.setNumber(t.getNumber());
+                    order.setTransaction(tmp);
+                    order.setTransactionId(tmp.getId());
+                    order.setProductId(t.getProductId());
+                    order = orderRepository.save(order);
                     orderList.add(order);
                 }
             }
-
-            transaction.setOrders(orderList);
-            Transaction tmp = transactionRepository.save(transaction);
+            tmp.setOrders(orderList);
             cartRepository.deleteAll(cartList);
 
             return tmp;
@@ -87,6 +91,17 @@ public class TransactionServiceImpl implements TransactionService {
         try {
             Transaction tmp = transactionRepository.findById(transactionId).get();
             transactionRepository.delete(tmp);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Transaction getDetail(int transactionId) {
+        try {
+            Transaction tmp = transactionRepository.findById(transactionId).get();
             return tmp;
         } catch (Exception e) {
             logger.error(e.getMessage());

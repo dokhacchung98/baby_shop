@@ -9,6 +9,9 @@ import com.khacchung.babyshop.model.dto.TransactionDTO;
 import com.khacchung.babyshop.model.dto.TransactionUpdateStatusDTO;
 import com.khacchung.babyshop.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +30,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @RequestMapping(value = "/user/add-transaction", method = RequestMethod.POST)
-    public ResponeDataDTO<Transaction> createTransaction(@RequestBody TransactionDTO transactionDTO) {
+    public ResponeDataDTO<Transaction> createTransaction() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             try {
@@ -55,6 +58,35 @@ public class TransactionController {
     public ResponeDataDTO<Transaction> updateStatus(@RequestBody TransactionUpdateStatusDTO updateStatusDTO) {
         try {
             Transaction tmp = transactionService.updateStatus(updateStatusDTO);
+            return new ResponeDataDTO.Builder<Transaction>()
+                    .withData(tmp)
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/user/get-transactions", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Transaction>> getTransaction(@Param("page") int page, @Param("size") int size) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
+            Page<Transaction> tmp = transactionService.getTransactions(PageRequest.of(page, size), userDetails.getUser().getId());
+            return new ResponeDataDTO.Builder<Page<Transaction>>()
+                    .withData(tmp)
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .build();
+        }
+        return new ResponeDataDTO<>(Result.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/user/get-detail-transaction", method = RequestMethod.GET)
+    public ResponeDataDTO<Transaction> getDetailTransacation(@Param("id") int id) {
+        try {
+            Transaction tmp = transactionService.getDetail(id);
             return new ResponeDataDTO.Builder<Transaction>()
                     .withData(tmp)
                     .withCode(Constants.SUCCESS_CODE)

@@ -16,5 +16,7 @@ public interface TransactionService {
 
     Transaction deleteTransaction(int transactionId);
 
+    Transaction getDetail(int transactionId);
+
     Transaction updateStatus(TransactionUpdateStatusDTO updateStatusDTO);
 }

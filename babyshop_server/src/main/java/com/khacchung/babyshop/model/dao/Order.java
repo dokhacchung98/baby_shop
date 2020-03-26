@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "`order`")
-@JsonIgnoreProperties(value = {"transaction", "product"})
+@JsonIgnoreProperties(value = {"transaction"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

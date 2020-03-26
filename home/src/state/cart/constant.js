@@ -14,3 +14,7 @@ export const ALERT_ER_ADD = "Thêm vào giỏ hàng thất bại. Vui lòng đă
 export const ALERT_SS_ADD = "Thêm sản phẩm vào giỏ hàng thành công";
 export const ALERT_SS_REMOVE = "Xóa sản phẩm khỏi giỏ hàng thành công";
 export const ALERT_ER_REMOVE = "Xóa sản phẩm thất bại!";
+export const CHECKOUT_SS = "CHECKOUT_SS";
+export const CHECKOUT_ER = "CHECKOUT_ER";
+export const ALERT_CHECKOUT_SS = "Đơn hàng của bạn đã được gửi!"; 
+export const ALERT_CHECKOUT_ER = "Đơn hàng thất bại"; 
