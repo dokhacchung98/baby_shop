@@ -16,5 +16,7 @@ export const ALERT_SS_REMOVE = "Xóa sản phẩm khỏi giỏ hàng thành côn
 export const ALERT_ER_REMOVE = "Xóa sản phẩm thất bại!";
 export const CHECKOUT_SS = "CHECKOUT_SS";
 export const CHECKOUT_ER = "CHECKOUT_ER";
+export const CHECKOUT_DETAIL_SS = "CHECKOUT_DETAIL_SS";
 export const ALERT_CHECKOUT_SS = "Đơn hàng của bạn đã được gửi!"; 
 export const ALERT_CHECKOUT_ER = "Đơn hàng thất bại"; 
+export const ALERT_DETAIL_CHECKOUT_ER = "Lấy thông tin đơn hàng thất bại";

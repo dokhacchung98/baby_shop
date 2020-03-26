@@ -14,12 +14,12 @@ import Cart from '../pages/cart';
 import CheckOut from '../pages/checkout';
 import User from '../pages/user';
 import SearchDetail from '../pages/search';
+import TransactionDetail from '../pages/transaction_detail';
 
 class MyRouter extends Component {
     componentWillMount() {
         this.props.getInfoUserLogin();
     }
-
 
     render() {
         return (
@@ -29,6 +29,7 @@ class MyRouter extends Component {
                 <Route exact path="/san-pham-:slug.:id." component={ProductDetail}></Route>
                 <Route exact path="/bai-viet-:slug.:id." component={BlogDetail}></Route>
                 <Route exact path="/tim-kiem-:slug" component={SearchDetail}></Route>
+                <Route exact path="/chi-tiet-don-hang-:id" component={TransactionDetail}></Route>
                 <Route exact path="/blogs" component={Blogs}></Route>
                 <Route exact path="/contact" component={Contact}></Route>
                 <Route exact path="/search" component={Home}></Route>

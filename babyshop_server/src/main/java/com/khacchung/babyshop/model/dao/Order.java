@@ -135,4 +135,16 @@ public class Order {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    public long getPriceNumber() {
+        if (this.product != null)
+            return this.getPriceSale() * number;
+        return 0;
+    }
+
+    public long getPriceSale() {
+        if (this.product != null)
+            return ((long) (this.product.getPrice() * (100 - this.product.getDiscount()) / 100000)) * 1000;
+        return 0;
+    }
 }

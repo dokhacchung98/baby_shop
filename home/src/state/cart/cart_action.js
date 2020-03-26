@@ -92,6 +92,30 @@ export function checkout() {
     }
 }
 
+export function getDetailTransaction(id) {
+    return (dispatch) => {
+        return callApi(`user/get-detail-transaction?id=${id}`, Method.GET, null, true)
+            .then(res => {
+                if (res != undefined && res.data.code === 200) {
+                    dispatch(getDetailTransactionSS(res.data.data));
+                } else {
+                    dispatch(checkoutER());
+                    dispatch(showAlertError(Type.ALERT_DETAIL_CHECKOUT_ER))
+                }
+            }).catch(err => {
+                dispatch(checkoutER());
+                dispatch(showAlertError(Type.ALERT_DETAIL_CHECKOUT_ER))
+            })
+    }
+}
+
+export function getDetailTransactionSS(data) {
+    return {
+        type: Type.CHECKOUT_DETAIL_SS,
+        data: data
+    }
+}
+
 export function checkoutSS(data) {
     return {
         type: Type.CHECKOUT_SS,

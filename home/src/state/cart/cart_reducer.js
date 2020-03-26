@@ -3,7 +3,9 @@ import * as Type from './constant';
 const initialState = {
     isLoading: false,
     listCart: [],
-    error: null
+    error: null,
+    listTransaction: [],
+    currentTransaction: null
 }
 
 const cartReducer = (state = initialState, action) => {
@@ -32,6 +34,8 @@ const cartReducer = (state = initialState, action) => {
             return { ...state, isLoading: false }
         case Type.CHECKOUT_SS:
             return { ...state, isLoading: false, listCart: [] };
+        case Type.CHECKOUT_DETAIL_SS:
+            return { ...state, isLoading: false, currentTransaction: action.data };
         default: return state;
     }
 }
