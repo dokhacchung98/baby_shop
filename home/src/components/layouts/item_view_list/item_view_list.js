@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './item_view_list.css';
 import { convertMoneyDisplay } from './../../../utilities/convert_money'
 import { to_slug } from './../../../utilities/slug';
-import { addToCart, removeCart } from './../../../state/cart/cart_action';
+import { addToCart } from './../../../state/cart/cart_action';
 import { connect } from 'react-redux';
+import { addFavorite } from './../../../state/favorite/favorite_action'
 
 class ItemViewList extends Component {
     convertMoney = (price, discount) => {
@@ -11,12 +12,19 @@ class ItemViewList extends Component {
         return t;
     }
 
+    addToFavorite = () => {
+        const json = {
+            productId: this.props.valueData.id
+        }
+        this.props.addToFavorite(json);
+    }
+
     getLinkProduct = (name, id) => {
         const strSlug = to_slug(name);
         const path = `/san-pham-${strSlug}.${id}.`;
         return path;
     }
-    
+
     parseToJson = () => {
         const json = {
             transactionId: 0,
@@ -68,7 +76,10 @@ class ItemViewList extends Component {
                             </ul>
                     }
                     <ul className="pro__prize" id="nm">
-                        <li><a href="wishlist.html"><i className="icon-heart icons" /></a></li>
+                        <li><a href="/#" onClick={(e) => {
+                            e.preventDefault();
+                            this.addToFavorite();
+                        }}><i className="icon-heart icons" /></a></li>
                         <li><a href="#"><i className="icon-shuffle icons" /></a></li>
                     </ul>
                     <div className="fr__list__btn">
@@ -87,6 +98,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         addToCart: (json) => {
             dispatch(addToCart(json))
+        },
+        addToFavorite: (id) => {
+            dispatch(addFavorite(id))
         }
     }
 }

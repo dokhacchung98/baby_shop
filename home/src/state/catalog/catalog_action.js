@@ -8,7 +8,7 @@ export function getListCatalog() {
     return (dispatch) => {
         return callApi(`get-catalogs?page=0&size=20`, Method.GET, null, false)
             .then(res => {
-                if (res !== undefined && res.data.code === 200) {
+                if (res != undefined && res.data.code === 200) {
                     dispatch(loadingSuccess(res.data.data.content));
                 } else {
                     dispatch(loadingError(''));
@@ -25,7 +25,7 @@ export function getCurentCatalog(id) {
     return (dispatch) => {
         return callApi(`get-catalog-by-id?id=${id}`, Method.GET, null, false)
             .then(res => {
-                if (res !== undefined && res.data.code === 200) {
+                if (res != undefined && res.data.code === 200) {
                     dispatch(getSSCurentCatalog(res.data.data));
                 } else {
                     dispatch(loadingError(''));

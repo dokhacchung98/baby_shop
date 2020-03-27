@@ -8,7 +8,7 @@ export function getListCart() {
         dispatch(loadding());
         return callApi(`user/get-carts?page=0&size=${100}`, Method.GET, null, true)
             .then(res => {
-                if (res !== undefined && res.data.code === 200) {
+                if (res != undefined && res.data.code === 200) {
                     dispatch(getListCartSS(res.data.data.content));
                 } else {
                     dispatch(getListCartErr(Type.ALERT_ER_GET));
@@ -24,7 +24,7 @@ export function addToCart(data) {
         dispatch(loadding());
         return callApi("user/add-to-cart", Method.POST, data, true)
             .then(res => {
-                if (res !== undefined && res.data.code === 200) {
+                if (res != undefined && res.data.code === 200) {
                     dispatch(showAlertSuccess(Type.ALERT_SS_ADD));
                     dispatch(getListCart());
                 } else {
@@ -42,7 +42,7 @@ export function removeCart(id) {
         dispatch(loadding());
         return callApi(`user/remove-to-cart?id=${id}`, Method.GET, null, true)
             .then(res => {
-                if (res !== undefined && res.data.code === 200) {
+                if (res != undefined && res.data.code === 200) {
                     dispatch(showAlertSuccess(Type.ALERT_SS_REMOVE));
                     dispatch(getListCart());
                 } else {
@@ -60,7 +60,7 @@ export function updateCart(id, number) {
         dispatch(loadding());
         return callApi(`user/update-cart?idCart=${id}&number=${number}`, Method.GET, null, true)
             .then(res => {
-                if (res !== undefined && res.data.code === 200) {
+                if (res != undefined && res.data.code === 200) {
                     dispatch(showAlertSuccess(Type.ALERT_UPDATE_SS));
                     dispatch(updateSS(res.data.data));
                 } else {

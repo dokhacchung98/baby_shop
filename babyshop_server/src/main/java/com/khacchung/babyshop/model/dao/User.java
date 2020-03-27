@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "`user`")
-@JsonIgnoreProperties(value = {"role", "password", "carts", "transactions"})
+@JsonIgnoreProperties(value = {"role", "password", "carts", "transactions", "favorites"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,8 @@ public class User {
     private Collection<Cart> carts;
     @OneToMany(mappedBy = "user")
     private Collection<Transaction> transactions;
+    @OneToMany(mappedBy = "user")
+    private Collection<Favorite> favorites;
 
     public User() {
     }
@@ -141,5 +143,13 @@ public class User {
 
     public void setTransactions(Collection<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public Collection<Favorite> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Collection<Favorite> favorites) {
+        this.favorites = favorites;
     }
 }

@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "`product`")
-@JsonIgnoreProperties(value = {"carts", "orders"})
+@JsonIgnoreProperties(value = {"carts", "orders", "favorites"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,8 @@ public class Product {
     private Collection<Cart> carts;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Order> orders;
+    @OneToMany(mappedBy = "product")
+    private Collection<Favorite> favorites;
 
     @ManyToMany(targetEntity = Catalog.class, cascade = {CascadeType.ALL})
     @JoinTable(name = "product_catalog",
@@ -158,5 +160,13 @@ public class Product {
 
     public void setOrders(Collection<Order> orders) {
         this.orders = orders;
+    }
+
+    public Collection<Favorite> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Collection<Favorite> favorites) {
+        this.favorites = favorites;
     }
 }

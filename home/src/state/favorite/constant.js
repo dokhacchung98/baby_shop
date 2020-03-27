@@ -1,0 +1,13 @@
+export const ADD_FAVORITE_SS = "ADD_FAVORITE_SS";
+export const ADD_FAVORITE_ER = "ADD_FAVORITE_ER";
+export const GET_FAVORITE_SS = "GET_FAVORITE_SS";
+export const GET_FAVORITE_ER = "GET_FAVORITE_ER";
+export const REMOVE_FAVORITE_SS = "REMOVE_FAVORITE_SS";
+export const REMOVE_FAVORITE_ER = "REMOVE_FAVORITE_ER";
+export const LOADING_FAVORIE = "LOADING_FAVORIE";
+export const ALERT_GET_ERR = "Lỗi lấy dữ liệu yêu thích";
+export const ADD_SS = "Thêm vào danh sách yêu thích thành công";
+export const ADD_ER = "Thêm vào danh sách yêu thích thất bại";
+export const ADD_EXIST = "Đã có trong danh sách yêu thích";
+export const REMOVE_SS = "Xóa khỏi danh sách yêu thích thành công";
+export const REMOVE_ER = "Xóa khỏi danh sách yêu thích thất bại";

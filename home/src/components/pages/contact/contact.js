@@ -12,8 +12,8 @@ class Contact extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vName: this.props.userLogin !== null ? this.props.userLogin.name : '',
-            vEmail: this.props.userLogin !== null ? this.props.userLogin.email : '',
+            vName: this.props.userLogin != null ? this.props.userLogin.name : '',
+            vEmail: this.props.userLogin != null ? this.props.userLogin.email : '',
             vSubject: '',
             vValue: ''
         };
@@ -63,8 +63,8 @@ class Contact extends Component {
 
     componentDidMount() {
         this.setState({
-            vName: this.props.userLogin !== null ? this.props.userLogin.name : '',
-            vEmail: this.props.userLogin !== null ? this.props.userLogin.email : '',
+            vName: this.props.userLogin != null ? this.props.userLogin.name : '',
+            vEmail: this.props.userLogin != null ? this.props.userLogin.email : '',
         });
     }
 

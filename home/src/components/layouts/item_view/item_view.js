@@ -5,8 +5,16 @@ import { convertMoneyDisplay } from './../../../utilities/convert_money'
 import { to_slug } from './../../../utilities/slug';
 import { addToCart } from './../../../state/cart/cart_action';
 import { connect } from 'react-redux';
+import { addFavorite } from './../../../state/favorite/favorite_action'
 
 class ItemView extends Component {
+    addToFavorite = () => {
+        const json = {
+            productId: this.props.valueData.id
+        }
+        this.props.addToFavorite(json);
+    }
+
     convertMoney = (price, discount) => {
         const t = convertMoneyDisplay(price, discount);
         return t;
@@ -45,7 +53,10 @@ class ItemView extends Component {
                 </div>
                 <div className="fr__hover__info">
                     <ul className="product__action">
-                        <li><a href="wishlist.html"><i className="icon-heart icons" /></a></li>
+                        <li><a href="/#" onClick={(e) => {
+                            e.preventDefault();
+                            this.addToFavorite();
+                        }}><i className="icon-heart icons" /></a></li>
                         <li><a href="/#" onClick={(e) => {
                             e.preventDefault();
                             this.addToCart();
@@ -97,6 +108,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         addToCart: (json) => {
             dispatch(addToCart(json))
+        },
+        addToFavorite: (id) => {
+            dispatch(addFavorite(id))
         }
     }
 }
