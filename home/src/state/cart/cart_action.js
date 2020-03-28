@@ -109,6 +109,37 @@ export function getDetailTransaction(id) {
     }
 }
 
+export function getListTransaction() {
+    return (dispatch) => {
+        dispatch(loadding());
+        return callApi(`user/get-transactions?page=${0}&size=${100}`, Method.GET, null, true)
+            .then(res => {
+                if (res != undefined && res.data.code === 200) {
+                    dispatch(getListTransactionSS(res.data.data.content));
+                } else {
+                    dispatch(getListTransactionER());
+                    dispatch(showAlertError("Lỗi lấy danh sách giao dịch"))
+                }
+            }).catch(err => {
+                dispatch(getListTransactionER());
+                dispatch(showAlertError("Lỗi lấy danh sách giao dịch"))
+            });
+    }
+}
+
+export function getListTransactionSS(data) {
+    return {
+        type: Type.GET_TRANASCTION_SS,
+        data: data
+    }
+}
+
+export function getListTransactionER() {
+    return {
+        type: Type.GET_TRANASCTION_ER
+    }
+}
+
 export function getDetailTransactionSS(data) {
     return {
         type: Type.CHECKOUT_DETAIL_SS,

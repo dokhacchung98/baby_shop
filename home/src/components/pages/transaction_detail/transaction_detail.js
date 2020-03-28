@@ -54,17 +54,17 @@ class TransactionDetail extends Component {
                                                 :
                                                 this.props.currentDetail.status == 0
                                                     ?
-                                                    <span class="badge-primary">Đang Chờ Xử Lý</span>
+                                                    <span className="badge-primary">Đang Chờ Xử Lý</span>
                                                     : this.props.currentDetail.status == 1
                                                         ?
-                                                        <span class="badge-info">Đã Xác Nhận</span>
+                                                        <span className="badge-info">Đã Xác Nhận</span>
                                                         : this.props.currentDetail.status == 2
                                                             ?
-                                                            <span class="badge-warning">Đang Giao Hàng</span>
+                                                            <span className="badge-warning">Đang Giao Hàng</span>
                                                             : this.props.currentDetail.status == 3
-                                                                ? <span class="badge-success">Thành Công</span>
+                                                                ? <span className="badge-success">Thành Công</span>
                                                                 : this.props.currentDetail.status == 4
-                                                                    ? <span class="badge-danger">Đơn Hàng Không Bị Hủy</span>
+                                                                    ? <span className="badge-danger">Đơn Hàng Bị Hủy</span>
                                                                     : <div></div>
                                         }
                                     </div>
@@ -92,6 +92,19 @@ class TransactionDetail extends Component {
                                                             this.props.currentDetail.orders.map((item, key) => {
                                                                 return (<ItemOrder key={key} dataValue={item}></ItemOrder>)
                                                             })
+                                                    }
+                                                    {
+                                                        this.props.currentDetail == null
+                                                            ?
+                                                            <tr></tr>
+                                                            :
+                                                            <tr>
+                                                                <td colSpan="5">
+                                                                    <span className="amount">Tổng: {this.props.currentDetail.orders.reduce((s, t) => {
+                                                                        return s + t.priceNumber;
+                                                                    }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")} VND</span>
+                                                                </td>
+                                                            </tr>
                                                     }
                                                 </tbody>
                                                 <tfoot>

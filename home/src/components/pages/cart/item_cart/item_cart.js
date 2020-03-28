@@ -39,7 +39,7 @@ class ItemCart extends Component {
                         this.props.dataValue.product.discount === 0
                             ?
                             <ul className="pro__prize">
-                                <li className="old__prize">{this.convertMoney(this.props.dataValue.product.price, 0)}</li>
+                                <li className="old__prize">{this.convertMoney(this.props.dataValue.product.price, 0)} VND</li>
                             </ul>
                             :
                             <ul className="pro__prize">

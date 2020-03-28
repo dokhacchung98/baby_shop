@@ -9,7 +9,7 @@ export function getListFavorite() {
         return callApi(`user/get-favorite?page=0&size=100`, Method.GET, null, true)
             .then(res => {
                 if (res != undefined && res.data.code === 200) {
-                    dispatch(getListFavoriteSS(res.data.data));
+                    dispatch(getListFavoriteSS(res.data.data.content));
                 } else {
                     dispatch(getListFavoriteER(Type.GET_FAVORITE_ER));
                     dispatch(showAlertError(Type.ALERT_GET_ERR));
