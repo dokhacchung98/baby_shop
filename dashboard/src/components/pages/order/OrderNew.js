@@ -4,9 +4,9 @@ import LeftMenu from './../../layouts/left_menu';
 import BreadCrumb from './../../layouts/bread_crumb';
 import Footer from './../../layouts/footer';
 import { connect } from 'react-redux';
-import { getListTransactionType } from './../../../state/transaction/TransactionAction'
+import { getListNewTransaction, openUpdate, closeModal } from './../../../state/transaction/TransactionAction';
 import Popup from "reactjs-popup";
-import ItemDetail from './item_detail/ItemDetail';
+import ItemUpdate from './item_update';
 
 class OrderNew extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class OrderNew extends Component {
     }
 
     getListTransaction = (page) => {
-        this.props.getListData(page, 4);
+        this.props.getListData(page);
     }
 
     showDetail = (e, item) => {
@@ -34,13 +34,13 @@ class OrderNew extends Component {
                 <Header />
                 <LeftMenu />
                 <div className="hk-pg-wrapper" style={{ minHeight: '600px' }}>
-                    <BreadCrumb currentName="Đơn Hàng Bị Hủy" />
+                    <BreadCrumb currentName="Đơn Hàng Đang Xử Lý" />
                     <div className="container">
                         <div className="row">
                             <div className="col-xl-12">
                                 <div className="card card-lg">
                                     <h6 className="card-header">
-                                        DANH SÁCH ĐƠN HÀNG BỊ HỦY
+                                        DANH SÁCH ĐƠN HÀNG ĐANG XỬ LÝ
                                     </h6>
                                     <hr />
                                     <div className="card-body">
@@ -51,6 +51,7 @@ class OrderNew extends Component {
                                                         <th rowSpan={1} colSpan={4}>Mã Đơn</th>
                                                         <th rowSpan={1} colSpan={4}>Đơn Giá</th>
                                                         <th rowSpan={1} colSpan={4}>Ngày Tạo</th>
+                                                        <th rowSpan={1} colSpan={4}>Trạng Thái</th>
                                                         <th className="sorting" rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>Chức Năng</th>
                                                     </tr>
                                                 </thead>
@@ -72,6 +73,15 @@ class OrderNew extends Component {
                                                                 }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
                                                                 } VND</td>
                                                                 <td rowSpan={1} colSpan={4}>{new Date(item.createdDate).toLocaleString().replace("00:00:00, ", "")}</td>
+                                                                <td rowSpan={1} colSpan={4}><span className={`badge badge-${
+                                                                    item.status == 0 ? 'primary' :
+                                                                        item.status == 1 ? 'info' :
+                                                                            item.status == 2 ? 'warning' : ''
+                                                                    }`}>{
+                                                                        item.status == 0 ? 'Đang Chờ Xác Nhận' :
+                                                                            item.status == 1 ? 'Đã Xác Nhận' :
+                                                                                item.status == 2 ? 'Đang Giao Hàng' : ''
+                                                                    }</span></td>
                                                                 <td rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>
                                                                     <button className="btn btn-warning" style={{ marginRight: '14px' }} onClick={(e) => {
                                                                         e.preventDefault();
@@ -89,6 +99,7 @@ class OrderNew extends Component {
                                                         <th rowSpan={1} colSpan={4}>Mã Đơn</th>
                                                         <th rowSpan={1} colSpan={4}>Đơn Giá</th>
                                                         <th rowSpan={1} colSpan={4}>Ngày Tạo</th>
+                                                        <th rowSpan={1} colSpan={4}>Trạng Thái</th>
                                                         <th rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>Chức Năng</th>
                                                     </tr>
                                                 </tfoot>
@@ -146,7 +157,7 @@ class OrderNew extends Component {
                                             {
                                                 this.state.dataSelected != null
                                                     ?
-                                                    <ItemDetail dataValue={this.state.dataSelected}></ItemDetail>
+                                                    <ItemUpdate dataValue={this.state.dataSelected}></ItemUpdate>
                                                     : <div></div>
                                             }
                                         </Popup>
@@ -164,8 +175,14 @@ class OrderNew extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getListData: (page, type) => {
-            dispatch(getListTransactionType(page, type));
+        getListData: (page) => {
+            dispatch(getListNewTransaction(page));
+        },
+        closeModal: () => {
+            dispatch(closeModal());
+        },
+        openModal: () => {
+            dispatch(openUpdate());
         }
     }
 }
@@ -178,7 +195,7 @@ const mapStateToProps = (state, ownProps) => {
         isFirst: state.TransactionReducer.isFirst,
         isLast: state.TransactionReducer.isLast,
         currentPage: state.TransactionReducer.pageNumber,
-        openDetail: state.TransactionReducer.isOpenDetail,
+        openDetail: state.TransactionReducer.isOpenUpdate,
     }
 }
 

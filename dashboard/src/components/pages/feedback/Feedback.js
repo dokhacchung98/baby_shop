@@ -149,7 +149,7 @@ class Feedback extends Component {
                                                         <div className="modal-content">
                                                             <div className="modal-header">
                                                                 <h5 className="modal-title">Thông Tin Phản Hồi</h5>
-                                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => this.props.closeModel()}>
+                                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => this.props.closeModal()}>
                                                                     <span aria-hidden="true">×</span>
                                                                 </button>
                                                             </div>

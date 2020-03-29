@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { closeModal } from './../../../../state/transaction/TransactionAction';
+import { closeModal, updateStatus } from '../../../../state/transaction/TransactionAction';
 import { connect } from 'react-redux';
 
-class ItemDetail extends Component {
+class ItemUpdate extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        this.state = {
+            statusOr: props.dataValue.status,
+            statusOld: props.dataValue.status,
+        };
+    }
+
+    updateStatus = () => {
+        const j = {
+            id: this.props.dataValue.id,
+            status: this.state.statusOr
+        };
+        if (this.state.statusOld !== this.state.statusOr)
+            this.props.updateStatus(j);
     }
 
     render() {
@@ -22,7 +34,6 @@ class ItemDetail extends Component {
                         <div className="container">
                             <h2>Đơn Hàng: {this.props.dataValue.id}.{this.props.dataValue.userId}.{this.props.dataValue.createdDate}</h2>
                             <br />
-                            <br />
                             <span>Đặt Lúc: {new Date(this.props.dataValue.createdDate).toLocaleString().replace("00:00:00, ", "")}</span>
                             <br />
                             <span>Người Đặt: {this.props.dataValue.user.name}</span>
@@ -33,6 +44,18 @@ class ItemDetail extends Component {
                             <br />
                             <span>Địa Chỉ Nhận: {this.props.dataValue.user.address}</span>
                             <br />
+                            <span>Trạng Thái:</span>
+                            <select value={this.state.statusOr} style={{ marginBottom: '12px', marginLeft: '24px' }} onChange={(e) => {
+                                this.setState({
+                                    statusOr: e.target.value
+                                })
+                            }}>
+                                <option value="0" disabled={this.state.statusOr > 0}>Đang Chờ Xác Nhận</option>
+                                <option value="1" disabled={this.state.statusOr > 1}>Đã Xác Nhận</option>
+                                <option value="2" disabled={this.state.statusOr > 2}>Đang Giao Hàng</option>
+                                <option value="3" >Thành Công</option>
+                                <option value="4" >Thất Bại</option>
+                            </select>
                         </div>
                         <div className="row">
                             <div className="col-sm-12"><table id="datable_1" className="table table-hover w-100 display pb-30 dataTable dtr-inline" role="grid" aria-describedby="datable_1_info">
@@ -73,8 +96,12 @@ class ItemDetail extends Component {
                         </div>
 
                     </div>
+                    <div className="modal-footer">
+                        <button type="button" id="asd" className="btn btn-secondary" data-dismiss="modal" onClick={() => this.props.closeModel()}>Đóng</button>
+                        <button type="button" className="btn btn-primary" onClick={(e) => this.updateStatus()} >Cập Nhật Trạng Thái</button>
+                    </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
@@ -83,8 +110,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         closeModel: () => {
             dispatch(closeModal());
+        },
+        updateStatus: (d) => {
+            dispatch(updateStatus(d));
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(ItemDetail);
+export default connect(null, mapDispatchToProps)(ItemUpdate);

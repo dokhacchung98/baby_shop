@@ -23,7 +23,7 @@ class Header extends Component {
                                     </div>
                                 </div>
                                 <div className="media-body">
-                                    <span>Tên người dùng<i className="zmdi zmdi-chevron-down" /></span>
+                                    <span>Admin<i className="zmdi zmdi-chevron-down" /></span>
                                 </div>
                             </div>
                         </a>

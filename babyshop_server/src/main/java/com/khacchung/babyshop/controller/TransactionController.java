@@ -11,6 +11,7 @@ import com.khacchung.babyshop.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -73,7 +74,7 @@ public class TransactionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
-            Page<Transaction> tmp = transactionService.getTransactions(PageRequest.of(page, size), userDetails.getUser().getId());
+            Page<Transaction> tmp = transactionService.getTransactions(PageRequest.of(page, size, Sort.by("id").descending()), userDetails.getUser().getId());
             return new ResponeDataDTO.Builder<Page<Transaction>>()
                     .withData(tmp)
                     .withCode(Constants.SUCCESS_CODE)
@@ -101,7 +102,7 @@ public class TransactionController {
     public ResponeDataDTO<Page<Transaction>> getTransactionStatus(@Param("page") int page, @Param("size") int size, @Param("type") int type) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            Page<Transaction> tmp = transactionService.getTransactionByStatus(PageRequest.of(page, size), type);
+            Page<Transaction> tmp = transactionService.getTransactionByStatus(PageRequest.of(page, size, Sort.by("id").descending()), type);
             return new ResponeDataDTO.Builder<Page<Transaction>>()
                     .withData(tmp)
                     .withCode(Constants.SUCCESS_CODE)
@@ -115,7 +116,7 @@ public class TransactionController {
     public ResponeDataDTO<Page<Transaction>> getTransactionNews(@Param("page") int page, @Param("size") int size) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            Page<Transaction> tmp = transactionService.getNewTransaction(PageRequest.of(page, size));
+            Page<Transaction> tmp = transactionService.getNewTransaction(PageRequest.of(page, size, Sort.by("id").descending()));
             return new ResponeDataDTO.Builder<Page<Transaction>>()
                     .withData(tmp)
                     .withCode(Constants.SUCCESS_CODE)

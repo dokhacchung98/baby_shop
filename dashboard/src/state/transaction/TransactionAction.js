@@ -70,6 +70,36 @@ export function getListTransactionType(number, status) {
     }
 }
 
+export function updateStatus(data) {
+    return (dispath) => {
+        const parameter = `admin/update-transaction`;
+        dispath(loadding());
+        return callApi(parameter, Method.POST,
+            data, true).then(res => {
+                if (res == undefined) {
+                    dispath(showAlertError(Type.ALERT_GET_TRANSACTION_ER));
+                }
+                if (res.data.code === 200) {
+                    const tra = res.data.data;
+                    if (tra.status == 3) {
+                        dispath(closeModal());
+                        window.location.replace('/orders-success');
+                    } else if (tra.status == 4) {
+                        dispath(closeModal());
+                        window.location.replace('/orders-destroy');
+                    } else {
+                        dispath(closeModal());
+                        dispath(getListNewTransaction(0));
+                    }
+                } else {
+                    dispath(showAlertError(Type.ALERT_GET_TRANSACTION_ER));
+                }
+            }).catch(() => {
+                dispath(showAlertError(Type.ALERT_GET_TRANSACTION_ER));
+            });
+    }
+}
+
 export function loadding() {
     return {
         type: Type.LOADING_TRANSACTION
