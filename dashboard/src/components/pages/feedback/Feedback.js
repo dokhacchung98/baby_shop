@@ -3,28 +3,28 @@ import Header from './../../layouts/header';
 import LeftMenu from './../../layouts/left_menu';
 import BreadCrumb from './../../layouts/bread_crumb';
 import Footer from './../../layouts/footer';
-import { getListTransactionType, openDetail, closeModal } from './../../../state/transaction/TransactionAction'
 import { connect } from 'react-redux';
 import Popup from "reactjs-popup";
-import ItemDetail from './item_detail/ItemDetail';
+import { closeModal, openDetail, getListFB } from './../../../state/feedback/FeedbackAction'
 
-class OrderSuccess extends Component {
+class Feedback extends Component {
     constructor(props) {
         super(props);
         this.state = {
             dataSelected: null
         }
-        this.getListTransaction(0);
+        this.getListFB(0);
     }
 
-    getListTransaction = (page) => {
-        this.props.getListData(page, 3);
+    getListFB = (page) => {
+        this.props.getListData(page);
     }
 
     showDetail = (e, item) => {
         this.setState({
             dataSelected: item
         });
+        console.log(item);
         this.props.openModal();
     }
 
@@ -34,13 +34,13 @@ class OrderSuccess extends Component {
                 <Header />
                 <LeftMenu />
                 <div className="hk-pg-wrapper" style={{ minHeight: '600px' }}>
-                    <BreadCrumb currentName="Đơn Hàng Thành Công" />
+                    <BreadCrumb currentName="Phản Hồi" />
                     <div className="container">
                         <div className="row">
                             <div className="col-xl-12">
                                 <div className="card card-lg">
                                     <h6 className="card-header">
-                                        DANH SÁCH ĐƠN HÀNG THÀNH CÔNG
+                                        DANH SÁCH PHẢN HỒI
                                     </h6>
                                     <hr />
                                     <div className="card-body">
@@ -48,30 +48,27 @@ class OrderSuccess extends Component {
                                             <table id="datable_1" className="table table-hover w-100 display pb-30 dataTable dtr-inline" role="grid" aria-describedby="datable_1_info">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th rowSpan={1} colSpan={4}>Mã Đơn</th>
-                                                        <th rowSpan={1} colSpan={4}>Đơn Giá</th>
-                                                        <th rowSpan={1} colSpan={4}>Ngày Tạo</th>
+                                                        <th rowSpan={1} colSpan={4}>Id</th>
+                                                        <th rowSpan={1} colSpan={4}>Tiêu Đề</th>
+                                                        <th rowSpan={1} colSpan={4}>Người Gửi</th>
                                                         <th className="sorting" rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>Chức Năng</th>
                                                     </tr>
                                                 </thead>
-                                                {(this.props.listTranasction.length == 0)
+                                                {(this.props.listFeedback.length == 0)
                                                     ?
                                                     <tbody style={{ marginBottom: '14px' }}>
                                                         <tr>
-                                                            <td colSpan="4">Không có phần tử nào</td>
+                                                            <td colSpan={4}>Không có phần tử nào</td>
                                                         </tr>
                                                     </tbody>
                                                     :
                                                     <tbody>
 
-                                                        {this.props.listTranasction.map((item, index) =>
+                                                        {this.props.listFeedback.map((item, index) =>
                                                             <tr role="row" className="even" key={index}>
-                                                                <td rowSpan={1} colSpan={4}>{item.id}.{item.userId}.{item.createdDate}</td>
-                                                                <td rowSpan={1} colSpan={4}>{item.orders.reduce((s, t) => {
-                                                                    return s + t.priceNumber;
-                                                                }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
-                                                                } VND</td>
-                                                                <td rowSpan={1} colSpan={4}>{new Date(item.createdDate).toLocaleString().replace("00:00:00, ", "")}</td>
+                                                                <td rowSpan={1} colSpan={4}>{item.id}</td>
+                                                                <td rowSpan={1} colSpan={4}>{item.subject}</td>
+                                                                <td rowSpan={1} colSpan={4}>{item.name}</td>
                                                                 <td rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>
                                                                     <button className="btn btn-warning" style={{ marginRight: '14px' }} onClick={(e) => {
                                                                         e.preventDefault();
@@ -86,9 +83,9 @@ class OrderSuccess extends Component {
 
                                                 <tfoot>
                                                     <tr>
-                                                        <th rowSpan={1} colSpan={4}>Mã Đơn</th>
-                                                        <th rowSpan={1} colSpan={4}>Đơn Giá</th>
-                                                        <th rowSpan={1} colSpan={4}>Ngày Tạo</th>
+                                                        <th rowSpan={1} colSpan={4}>Id</th>
+                                                        <th rowSpan={1} colSpan={4}>Tiêu Đề</th>
+                                                        <th rowSpan={1} colSpan={4}>Người Gửi</th>
                                                         <th rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>Chức Năng</th>
                                                     </tr>
                                                 </tfoot>
@@ -144,11 +141,29 @@ class OrderSuccess extends Component {
                                             closeOnDocumentClick
                                             onClose={this.props.closeModal} modal>
                                             {
-                                                this.state.dataSelected != null
+                                                this.state.dataSelected == null
                                                     ?
-                                                    <ItemDetail dataValue={this.state.dataSelected}></ItemDetail>
-                                                    : <div></div>
+                                                    <div></div>
+                                                    :
+                                                    <div style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
+                                                        <div className="modal-content">
+                                                            <div className="modal-header">
+                                                                <h5 className="modal-title">Thông Tin Phản Hồi</h5>
+                                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => this.props.closeModel()}>
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div className="modal-body">
+                                                                <h4 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: '400' }}>Email: {this.state.dataSelected.email}</h4>
+                                                                <h2 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: '400' }}>Tên Người Gửi: {this.state.dataSelected.name}</h2>
+                                                                <h2 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: '400' }}>Tiêu Đề: {this.state.dataSelected.subject}</h2>
+                                                                <h2 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: '400' }}>Nội Dung</h2>
+                                                                <p> {this.state.dataSelected.value}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             }
+
                                         </Popup>
                                     </div>
                                 </div>
@@ -158,14 +173,14 @@ class OrderSuccess extends Component {
                     <Footer />
                 </div>
             </div>
-        );
+        )
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getListData: (page, type) => {
-            dispatch(getListTransactionType(page, type));
+        getListData: (page) => {
+            dispatch(getListFB(page));
         },
         closeModal: () => {
             dispatch(closeModal());
@@ -178,14 +193,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        listTranasction: state.TransactionReducer.listTransaction,
-        totalPage: state.TransactionReducer.totalPage,
-        totalSize: state.TransactionReducer.totalSize,
-        isFirst: state.TransactionReducer.isFirst,
-        isLast: state.TransactionReducer.isLast,
-        currentPage: state.TransactionReducer.pageNumber,
-        openDetail: state.TransactionReducer.isOpenDetail,
+        listFeedback: state.FeedbackReducer.listFeedback,
+        totalPage: state.FeedbackReducer.totalPage,
+        totalSize: state.FeedbackReducer.totalSize,
+        isFirst: state.FeedbackReducer.isFirst,
+        isLast: state.FeedbackReducer.isLast,
+        currentPage: state.FeedbackReducer.pageNumber,
+        openDetail: state.FeedbackReducer.isOpenDetail,
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderSuccess);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

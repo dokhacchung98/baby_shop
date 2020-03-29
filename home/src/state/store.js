@@ -10,6 +10,7 @@ import catalogReducer from './catalog';
 import blogReducer from './blog';
 import cartReducer from './cart';
 import favoriteReducer from './favorite';
+import homeReducer from './home';
 
 const mReducer = combineReducers({
     appReducer,
@@ -20,7 +21,8 @@ const mReducer = combineReducers({
     catalogReducer,
     blogReducer,
     cartReducer,
-    favoriteReducer
+    favoriteReducer,
+    homeReducer
 });
 
 const Store = createStore(mReducer,

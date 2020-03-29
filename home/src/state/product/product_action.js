@@ -2,7 +2,7 @@ import * as Type from './constant';
 import * as Method from './../../utilities';
 import Store from './../store';
 import callApi from './../../service/call_api';
-import { showAlertError, showAlertSuccess } from './../alert/alert_action';
+import { showAlertError } from './../alert/alert_action';
 
 export function getListProduct(number) {
     const pageSize = Store.getState().productReducer.pageSize;
@@ -39,6 +39,24 @@ export function getListProduct(number) {
     }
 }
 
+export function getNewProduct() {
+    return (dispath) => {
+        return callApi('get-new-products', Method.GET,
+            null, false).then(res => {
+                if (res == undefined) {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                } else
+                    if (res.data.code === 200) {
+                        dispath(getListNewProductSS(res.data.data));
+                    } else {
+                        dispath(showAlertError(Type.MSG_ERR_GET));
+                    }
+            }).catch(() => {
+                dispath(showAlertError(Type.MSG_ERR_GET));
+            });
+    }
+}
+
 export function searchProducts(keyword, number) {
     const pageSize = Store.getState().productReducer.pageSize;
     if (number < 0) {
@@ -69,6 +87,13 @@ export function searchProducts(keyword, number) {
             }).catch(() => {
                 dispath(showAlertError(Type.MSG_ERR_GET));
             });
+    }
+}
+
+export function getListNewProductSS(data){
+    return {
+        type: Type.GET_NEW_PRODUCT_SS,
+        data: data
     }
 }
 

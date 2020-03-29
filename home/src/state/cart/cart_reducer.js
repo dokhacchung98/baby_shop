@@ -6,7 +6,9 @@ const initialState = {
     error: null,
     listTransaction: [],
     currentTransaction: null,
-    listTransaction: []
+    listTransaction: [],
+    checkoutSS: false,
+    dataCheckout: null
 }
 
 const cartReducer = (state = initialState, action) => {
@@ -34,7 +36,7 @@ const cartReducer = (state = initialState, action) => {
         case Type.CHECKOUT_ER:
             return { ...state, isLoading: false }
         case Type.CHECKOUT_SS:
-            return { ...state, isLoading: false, listCart: [] };
+            return { ...state, isLoading: false, listCart: [], checkoutSS: true, dataCheckout: action.data };
         case Type.CHECKOUT_DETAIL_SS:
             return { ...state, isLoading: false, currentTransaction: action.data };
         case Type.GET_TRANASCTION_ER:

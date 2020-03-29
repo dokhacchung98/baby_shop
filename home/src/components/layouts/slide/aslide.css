@@ -1,0 +1,55 @@
+.owl-prev{
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #c43b68 !important;
+    left: 0px;
+    border-radius: 50% !important;
+    opacity: 0 !important;
+    transition: all 0.5s ease 0s;
+    outline: none !important;
+}
+
+ .owl-next{
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #c43b68 !important;
+    right: 0px;
+    border-radius: 50% !important;
+    opacity: 0 !important;
+    transition: all 0.5s ease 0s;
+    outline: none !important;
+}
+
+.owl-carousel:hover .owl-prev{
+    opacity: 1 !important;
+    transition: all 0.5s ease 0s;
+}
+
+.owl-carousel:hover .owl-next{
+    opacity: 1 !important;
+    transition: all 0.5s ease 0s;
+}
+
+.owl-prev span,.owl-next  span{
+    -webkit-tap-highlight-color: transparent;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'simple-line-icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}

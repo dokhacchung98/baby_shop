@@ -122,6 +122,32 @@ class LeftMenu extends Component {
                         </ul>
                         </li>
                     </ul>
+                                        
+                    <hr className="nav-separator" />
+                    <div className="nav-header">
+                        <span>Phản Hồi</span>
+                        <span>PH</span>
+                    </div>
+
+                    <ul className="navbar-nav flex-column">
+                        <li className="nav-item">
+                            <a className="nav-link collapsed" href="/#" data-toggle="collapse" data-target="#Bloc_drpq" aria-expanded="false">
+                                <span className="icon-pencil mr-3"></span>
+                                <span className="nav-link-text">Phản Hồi</span>
+                            </a>
+                            <ul id="Bloc_drpq" className="nav flex-column collapse collapse-level-1">
+                            <li className="nav-item">
+                            <ul className="nav flex-column">
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/feedback">
+                                        Danh Sách Phản Hồi
+                                    </Link>
+                                </li>
+                            </ul>
+                            </li>
+                        </ul>
+                        </li>
+                    </ul>
                                   
                     <hr className="nav-separator" />
                     <div className="nav-header">

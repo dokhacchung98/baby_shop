@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { removeCart, checkout } from './../../../state/cart/cart_action';
 import { to_slug } from './../../../utilities/slug';
 import { getDetailUser } from './../../../state/auth/auth_action';
+import { showAlertError } from './../../../state/alert/alert_action';
 
 class CheckOut extends Component {
     constructor(props) {
@@ -25,7 +26,12 @@ class CheckOut extends Component {
     dataLinkCheckOut = () => {
         return [
             { name: 'Trang Chủ', link: '/' },
+            { name: 'Giỏ Hàng', link: '/cart' },
         ];
+    }
+
+    showAlert = (mss) => {
+        this.props.showAlertError(mss);
     }
 
     removeCart = (e, id) => {
@@ -41,17 +47,22 @@ class CheckOut extends Component {
     checkoutCart = () => {
         if (this.props.listCart.length > 0)
             this.props.checkoutMyCart();
+        else
+            this.showAlert("Không có sản phẩm nào trong giỏ hàng");
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.userDetail != undefined) {
-
             this.setState({
                 fName: nextProps.userDetail.name == null ? '' : nextProps.userDetail.name,
                 fEmail: nextProps.userDetail.email == null ? '' : nextProps.userDetail.email,
                 fPhone: nextProps.userDetail.phone == null ? '' : nextProps.userDetail.phone,
                 fAddress: nextProps.userDetail.address == null ? '' : nextProps.userDetail.address
             })
+        }
+        if (nextProps.checkoutSS) {
+            const path = `/chi-tiet-don-hang-${nextProps.dataCheckout.id}`;
+            window.location.replace(path);
         }
     }
 
@@ -217,7 +228,9 @@ class CheckOut extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         listCart: state.cartReducer.listCart,
-        userDetail: state.authReducer.userInfo
+        userDetail: state.authReducer.userInfo,
+        checkoutSS: state.cartReducer.checkoutSS,
+        dataCheckout: state.cartReducer.dataCheckout,
     }
 }
 
@@ -231,6 +244,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         getDetailUser: () => {
             dispatch(getDetailUser());
+        },
+        showAlertError: (mss) => {
+            dispatch(showAlertError(mss));
         }
     }
 }

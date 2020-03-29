@@ -12,6 +12,7 @@ import User from '../pages/user/User';
 import OrderNew from '../pages/order/OrderNew';
 import OrderDestroy from '../pages/order/OrderDestroy';
 import OrderSuccess from '../pages/order/OrderSuccess';
+import Feedback from '../pages/feedback';
 
 class MyRouter extends Component {
     render() {
@@ -26,6 +27,7 @@ class MyRouter extends Component {
                 <PrivateRoute exact path="/orders-new" component={OrderNew} isLogin={this.props.isAuthenticated}></PrivateRoute>
                 <PrivateRoute exact path="/orders-destroy" component={OrderDestroy} isLogin={this.props.isAuthenticated}></PrivateRoute>
                 <PrivateRoute exact path="/orders-success" component={OrderSuccess} isLogin={this.props.isAuthenticated}></PrivateRoute>
+                <PrivateRoute exact path="/feedback" component={Feedback} isLogin={this.props.isAuthenticated}></PrivateRoute>
                 <Route path="*">
                     <NotFound />
                 </Route>

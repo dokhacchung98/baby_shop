@@ -123,4 +123,26 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return null;
     }
+
+    @Override
+    public Page<Transaction> getTransactionByStatus(Pageable pageable, int type) {
+        try {
+            Page<Transaction> tmp = transactionRepository.findTransactionByStatus(pageable, type);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Transaction> getNewTransaction(Pageable pageable) {
+        try {
+            Page<Transaction> tmp = transactionRepository.findNewTransaction(pageable);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

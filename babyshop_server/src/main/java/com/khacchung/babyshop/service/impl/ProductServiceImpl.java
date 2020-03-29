@@ -10,7 +10,9 @@ import com.khacchung.babyshop.service.ProductService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -126,6 +128,28 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> searchProduct(Pageable pageable, String keyword) {
         try {
             Page<Product> tmp = productRepository.searchProduct(pageable, keyword);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<Product> getNewProduct() {
+        try {
+            Page<Product> tmp = productRepository.getNewProduct(PageRequest.of(0, 5, Sort.by("id").descending()));
+            return tmp.getContent();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> getSellerProduct(int page, int size) {
+        try {
+            Page<Product> tmp = productRepository.getNewProduct(PageRequest.of(page, size, Sort.by("discount").descending()));
             return tmp;
         } catch (Exception e) {
             logger.error(e.getMessage());

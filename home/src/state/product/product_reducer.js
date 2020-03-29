@@ -14,6 +14,7 @@ const initialState = {
     idCatalog: 0,
     typeSort: 0,
     currentProduct: null,
+    listNewProduct: []
 };
 
 const productReducer = (state = initialState, action) => {
@@ -41,6 +42,8 @@ const productReducer = (state = initialState, action) => {
             return { ...state, typeSort: action.typeSort };
         case Type.FETCH_PRODUCT_DETAIL:
             return { ...state, currentProduct: action.currentProduct };
+        case Type.GET_NEW_PRODUCT_SS:
+            return {...state, listNewProduct: action.data};
         default: return state;
     }
 }

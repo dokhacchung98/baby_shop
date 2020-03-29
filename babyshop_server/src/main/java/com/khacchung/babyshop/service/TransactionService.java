@@ -19,4 +19,8 @@ public interface TransactionService {
     Transaction getDetail(int transactionId);
 
     Transaction updateStatus(TransactionUpdateStatusDTO updateStatusDTO);
+
+    Page<Transaction> getTransactionByStatus(Pageable pageable, int type);
+
+    Page<Transaction> getNewTransaction(Pageable pageable);
 }

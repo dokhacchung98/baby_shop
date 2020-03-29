@@ -23,4 +23,8 @@ public interface ProductService {
     Page<Product> getProductsByCatalog(Pageable pageable, int idCatalog);
 
     Page<Product> searchProduct(Pageable pageable, String keyword);
+
+    List<Product> getNewProduct();
+
+    Page<Product> getSellerProduct(int page, int size);
 }

@@ -18,4 +18,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     @Query(value = "SELECT p FROM Product p WHERE p.name LIKE  %:keyword%")
     Page<Product> searchProduct(Pageable pageable, @Param("keyword") String keyword);
+
+    @Query(value = "SELECT p FROM Product p")
+    Page<Product> getNewProduct(Pageable pageable);
 }

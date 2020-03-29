@@ -15,9 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -178,6 +180,34 @@ public class ProductController {
                                                               @Param("keyword") String keyword) {
         try {
             Page<Product> products = productService.searchProduct(PageRequest.of(page, size), keyword);
+            return new ResponeDataDTO.Builder<Page<Product>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(products)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/get-new-products", method = RequestMethod.GET)
+    public ResponeDataDTO<List<Product>> getFiveNewProduct() {
+        try {
+            List<Product> products = productService.getNewProduct();
+            return new ResponeDataDTO.Builder<List<Product>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(products)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/get-seller", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Product>> getSeller(@Param("page") int page, @Param("size") int size) {
+        try {
+            Page<Product> products = productService.getSellerProduct(page, size);
             return new ResponeDataDTO.Builder<Page<Product>>()
                     .withCode(Constants.SUCCESS_CODE)
                     .withMessage(Constants.SUCCESS_MSG)

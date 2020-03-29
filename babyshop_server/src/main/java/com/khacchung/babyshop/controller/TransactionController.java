@@ -84,7 +84,7 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/user/get-detail-transaction", method = RequestMethod.GET)
-    public ResponeDataDTO<Transaction> getDetailTransacation(@Param("id") int id) {
+    public ResponeDataDTO<Transaction> getDetailTransaction(@Param("id") int id) {
         try {
             Transaction tmp = transactionService.getDetail(id);
             return new ResponeDataDTO.Builder<Transaction>()
@@ -95,5 +95,33 @@ public class TransactionController {
         } catch (Exception e) {
             return new ResponeDataDTO<>(Result.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = "/admin/get-transactions-status", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Transaction>> getTransactionStatus(@Param("page") int page, @Param("size") int size, @Param("type") int type) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            Page<Transaction> tmp = transactionService.getTransactionByStatus(PageRequest.of(page, size), type);
+            return new ResponeDataDTO.Builder<Page<Transaction>>()
+                    .withData(tmp)
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .build();
+        }
+        return new ResponeDataDTO<>(Result.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/admin/get-new-transactions", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Transaction>> getTransactionNews(@Param("page") int page, @Param("size") int size) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            Page<Transaction> tmp = transactionService.getNewTransaction(PageRequest.of(page, size));
+            return new ResponeDataDTO.Builder<Page<Transaction>>()
+                    .withData(tmp)
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .build();
+        }
+        return new ResponeDataDTO<>(Result.FORBIDDEN);
     }
 }
