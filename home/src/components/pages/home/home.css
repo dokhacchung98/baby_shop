@@ -1,0 +1,12 @@
+.nameCatalog{
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    font-size: 38px;
+    color: #3e3e3e;
+}
+
+.catalogParent:hover .nameCatalog{
+    color: #c43b68 ;
+}

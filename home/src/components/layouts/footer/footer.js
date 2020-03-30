@@ -13,7 +13,7 @@ export default class Footer extends Component {
                                 <div className="footer">
                                     <h2 className="title__line--2">VỀ CHÚNG TÔI</h2>
                                     <div className="ft__details">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</p>
+                                        <p>Tôi là một sinh viên của trường học viện kỹ thuật quân sự. Luôn muốn cống hiến mình để tạo ra những sản phẩm tốt nhất</p>
                                         <div className="ft__social__link">
                                             <ul className="social__link">
                                                 <li><a href="/#"><i className="icon-social-twitter icons" /></a></li>

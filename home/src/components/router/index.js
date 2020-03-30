@@ -29,13 +29,13 @@ class MyRouter extends Component {
                 <Route exact path="/san-pham-:slug.:id." component={ProductDetail}></Route>
                 <Route exact path="/bai-viet-:slug.:id." component={BlogDetail}></Route>
                 <Route exact path="/tim-kiem-:slug" component={SearchDetail}></Route>
-                <Route exact path="/chi-tiet-don-hang-:id" component={TransactionDetail}></Route>
+                <PrivateRoute exact path="/chi-tiet-don-hang-:id" component={TransactionDetail} isLogin={this.props.isAuthenticated}></PrivateRoute>
                 <Route exact path="/blogs" component={Blogs}></Route>
                 <Route exact path="/contact" component={Contact}></Route>
                 <Route exact path="/search" component={Home}></Route>
-                <Route exact path="/user" component={User}></Route>
-                <Route exact path="/cart" component={Cart}></Route>
-                <Route exact path="/checkout" component={CheckOut}></Route>
+                <PrivateRoute exact path="/user" component={User} isLogin={this.props.isAuthenticated}></PrivateRoute>
+                <PrivateRoute exact path="/cart" component={Cart} isLogin={this.props.isAuthenticated}></PrivateRoute>
+                <PrivateRoute exact path="/checkout" component={CheckOut} isLogin={this.props.isAuthenticated}></PrivateRoute>
 
                 <Route path="*">
                     <NotFound />
