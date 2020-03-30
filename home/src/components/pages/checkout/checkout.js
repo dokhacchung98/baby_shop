@@ -45,8 +45,15 @@ class CheckOut extends Component {
     }
 
     checkoutCart = () => {
-        if (this.props.listCart.length > 0)
-            this.props.checkoutMyCart();
+        if (this.props.listCart.length > 0) {
+            const data = {
+                name: this.state.fName,
+                email: this.state.fEmail,
+                phone: this.state.fPhone,
+                address: this.state.fAddress
+            }
+            this.props.checkoutMyCart(data);
+        }
         else
             this.showAlert("Không có sản phẩm nào trong giỏ hàng");
     }
@@ -239,8 +246,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         removeCart: (id) => {
             dispatch(removeCart(id))
         },
-        checkoutMyCart: () => {
-            dispatch(checkout())
+        checkoutMyCart: (data) => {
+            dispatch(checkout(data))
         },
         getDetailUser: () => {
             dispatch(getDetailUser());

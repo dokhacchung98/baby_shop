@@ -36,13 +36,13 @@ class ItemUpdate extends Component {
                             <br />
                             <span>Đặt Lúc: {new Date(this.props.dataValue.createdDate).toLocaleString().replace("00:00:00, ", "")}</span>
                             <br />
-                            <span>Người Đặt: {this.props.dataValue.user.name}</span>
+                            <span>Người Đặt: {this.props.dataValue.name}</span>
                             <br />
-                            <span>Email: {this.props.dataValue.user.email}</span>
+                            <span>Email: {this.props.dataValue.email}</span>
                             <br />
-                            <span>Điện Thoại: {this.props.dataValue.user.phone}</span>
+                            <span>Điện Thoại: {this.props.dataValue.phone}</span>
                             <br />
-                            <span>Địa Chỉ Nhận: {this.props.dataValue.user.address}</span>
+                            <span>Địa Chỉ Nhận: {this.props.dataValue.address}</span>
                             <br />
                             <span>Trạng Thái:</span>
                             <select value={this.state.statusOr} style={{ marginBottom: '12px', marginLeft: '24px' }} onChange={(e) => {

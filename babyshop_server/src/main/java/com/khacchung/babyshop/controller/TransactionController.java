@@ -5,7 +5,7 @@ import com.khacchung.babyshop.common.utils.Result;
 import com.khacchung.babyshop.model.auth.CustomUserDetail;
 import com.khacchung.babyshop.model.dao.Transaction;
 import com.khacchung.babyshop.model.dto.ResponeDataDTO;
-import com.khacchung.babyshop.model.dto.TransactionDTO;
+import com.khacchung.babyshop.model.dto.TransactionAddressDTO;
 import com.khacchung.babyshop.model.dto.TransactionUpdateStatusDTO;
 import com.khacchung.babyshop.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -31,7 +32,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @RequestMapping(value = "/user/add-transaction", method = RequestMethod.POST)
-    public ResponeDataDTO<Transaction> createTransaction() {
+    public ResponeDataDTO<Transaction> createTransaction(@Valid @RequestBody TransactionAddressDTO addressDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             try {
@@ -39,6 +40,12 @@ public class TransactionController {
                 Transaction transaction = new Transaction();
                 transaction.setCreatedDate(new Date());
                 transaction.setUserId(userDetails.getUser().getId());
+
+                transaction.setName(addressDTO.getName());
+                transaction.setEmail(addressDTO.getEmail());
+                transaction.setPhone(addressDTO.getPhone());
+                transaction.setAddress(addressDTO.getAddress());
+
                 transaction.setStatus(0);
                 Transaction tmp = transactionService.createTransaction(transaction,
                         ((CustomUserDetail) auth.getPrincipal()).getUser().getId());

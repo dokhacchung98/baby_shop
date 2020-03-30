@@ -43,7 +43,7 @@ class TransactionDetail extends Component {
                             <div className="col-md-12 col-sm-12 col-xs-12">
                                 <div className="wishlist-content">
 
-                                    <div style={{ marginBottom: '24px' }}>
+                                    <div>
                                         <span style={{ fontSize: '22px' }}>Đơn Hàng: {this.props.currentDetail != undefined ?
                                             `${this.props.currentDetail.id}.${this.props.currentDetail.userId}.${this.props.currentDetail.createdDate}`
                                             : ''}
@@ -68,6 +68,25 @@ class TransactionDetail extends Component {
                                                                     : <div></div>
                                         }
                                     </div>
+                                    <br />
+                                    {
+                                        this.props.currentDetail == undefined
+                                            ?
+                                            <div></div>
+                                            :
+                                            <div style={{marginBottom: '24px'}}>
+                                                <span>Đặt Lúc: {new Date(this.props.currentDetail.createdDate).toLocaleString().replace("00:00:00, ", "")}</span>
+                                                <br />
+                                                <span>Người Đặt: {this.props.currentDetail.name}</span>
+                                                <br />
+                                                <span>Email: {this.props.currentDetail.email}</span>
+                                                <br />
+                                                <span>Điện Thoại: {this.props.currentDetail.phone}</span>
+                                                <br />
+                                                <span>Địa Chỉ Nhận: {this.props.currentDetail.address}</span>
+                                                <br />
+                                            </div>
+                                    }
 
                                     <form action="#">
                                         <div className="wishlist-table table-responsive">
