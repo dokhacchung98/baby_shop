@@ -10,7 +10,8 @@ var initState = {
     totalSize: 0,
     isFirst: true,
     isLast: false,
-    listData: []
+    listData: [],
+    dataAnalytic: null
 }
 
 const UserReducer = (state = initState, action) => {
@@ -36,6 +37,10 @@ const UserReducer = (state = initState, action) => {
                 isLast: action.isLast,
                 pageNumber: action.currentPage
             }
+        case Type.ER_ANALYTIC:
+            return state;
+        case Type.SS_ANALYTIC:
+            return {...state, dataAnalytic: action.data}
         default: return state;
     }
 }

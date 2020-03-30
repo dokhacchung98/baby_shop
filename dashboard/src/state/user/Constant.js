@@ -7,3 +7,6 @@ export const FETCH_DATA = 'FETCH_LIST_USER_OK';
 export const MSG_ERR_DELETE= 'Xóa người dùng thất bại';
 export const MSG_SS_DELETE= 'Xóa người dùng thành công';
 export const MSG_ERR_GET = 'Lỗi lấy danh sách';
+export const SS_ANALYTIC = "MSG_SS_ANALYTIC";
+export const ER_ANALYTIC = "MSG_ER_ANALYTIC";
+export const MSG_ER_ANALYTIC = "Lỗi, vui lòng thử lại";

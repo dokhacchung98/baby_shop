@@ -62,6 +62,39 @@ export function removeUser(id) {
     }
 }
 
+export function getDataAnalytic() {
+    return (dispath) => {
+        callApi(`admin/analytic`, Method.GET, null, true).then(res => {
+            if (res == undefined) {
+                dispath(getAnalyticER());
+                dispath(showAlertError(Type.MSG_ER_ANALYTIC));
+            } else
+                if (res.data.code === 200) {
+                    dispath(getAnalyticSS(res.data.data));
+                } else {
+                    dispath(getAnalyticER());
+                    dispath(showAlertError(Type.MSG_ER_ANALYTIC));
+                }
+        }).catch(() => {
+            dispath(getAnalyticER());
+            dispath(showAlertError(Type.MSG_ER_ANALYTIC));
+        });
+    }
+}
+
+export function getAnalyticSS(data) {
+    return {
+        type: Type.SS_ANALYTIC,
+        data: data
+    }
+}
+
+export function getAnalyticER() {
+    return {
+        type: Type.ER_ANALYTIC
+    }
+}
+
 export function fetchList(data, size, page, first, last, number) {
     return {
         type: Type.FETCH_DATA,
