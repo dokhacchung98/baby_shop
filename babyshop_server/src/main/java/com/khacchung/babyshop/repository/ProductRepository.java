@@ -21,4 +21,8 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     @Query(value = "SELECT p FROM Product p")
     Page<Product> getNewProduct(Pageable pageable);
+
+    @Query(value = "SELECT product.* FROM product, product_catalog where product.id <> :id AND catalog_id = :idCatalog  ORDER BY NEWID()",
+            nativeQuery = true)
+    Page<Product> randomProduct(Pageable pageable, @Param("id") int id, @Param("idCatalog") int idCatalog);
 }

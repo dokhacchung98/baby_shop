@@ -126,4 +126,18 @@ public class BlogController {
             return new ResponeDataDTO<>(Result.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(value = "/random-blog", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Blog>> randomBlog(@Param("id") int id) {
+        try {
+            Page<Blog> catalogs = blogService.getRandom(PageRequest.of(0, 3), id);
+            return new ResponeDataDTO.Builder<Page<Blog>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(catalogs)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
 }

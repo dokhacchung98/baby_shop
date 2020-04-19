@@ -13,6 +13,7 @@ import { convertMoneyDisplay } from './../../../utilities/convert_money';
 import renderComponent from './../../layouts/render_component';
 import './product_detail.css';
 import { to_slug } from './../../../utilities/slug';
+import ItemView from '../../layouts/item_view/item_view';
 
 class ProductDetail extends Component {
     constructor(props) {
@@ -263,6 +264,35 @@ class ProductDetail extends Component {
                     </div>
                 </section>
 
+                <section className="htc__category__area ptb--100">
+                    <div className="container">
+                    <h6 style={{marginBottom: '14px', color: '#c43b68', fontSize: '24px'}}>Các Sản Phẩm Liên Quan</h6>
+                        <div className="htc__product__container">
+                            <div className="row">
+                                <div className="product__list clearfix mt--30" style={{ position: 'relative', height: '0px' }}>
+                                    {/* Start Single Category */}
+                                    {
+                                         (this.props.listProduct === undefined)
+                                         ?
+                                         <div> Không có dữ liệu </div>
+                                         :
+                                         this.props.listProduct.map((item, key) => {
+                                             return (
+                                                 <div className="col-md-4 col-lg-3 col-sm-4 col-xs-12" key={key}>
+                                                     <ItemView valueData={item}></ItemView>
+                                                 </div>
+                                             );
+                                         })
+                                    }
+
+                                    {/* End Single Category */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
                 <Group></Group>
                 <Footer></Footer>
             </div >
@@ -272,7 +302,8 @@ class ProductDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        currentProduct: state.productReducer.currentProduct
+        currentProduct: state.productReducer.currentProduct,
+        listProduct: state.productReducer.listData,
     }
 }
 

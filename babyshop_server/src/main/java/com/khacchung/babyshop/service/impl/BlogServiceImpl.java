@@ -86,4 +86,15 @@ public class BlogServiceImpl implements BlogService {
         }
         return null;
     }
+
+    @Override
+    public Page<Blog> getRandom(Pageable pageable, int existBlog) {
+        try {
+            Page<Blog> tmp = blogRepository.randomBlog(pageable, existBlog);
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

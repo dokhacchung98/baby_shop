@@ -1,9 +1,12 @@
 package com.khacchung.babyshop.service;
 
+import com.khacchung.babyshop.model.dao.Blog;
 import com.khacchung.babyshop.model.dao.Product;
 import com.khacchung.babyshop.model.dto.FileUploadDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -27,4 +30,6 @@ public interface ProductService {
     List<Product> getNewProduct();
 
     Page<Product> getSellerProduct(int page, int size);
+
+    Page<Product> randomProduct(int id, int catalogId);
 }

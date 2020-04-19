@@ -47,15 +47,13 @@ class Blogs extends Component {
                                 </select>
 
                                 <div className="ht__pro__qun col-md-6 col-lg-6 col-sm-6 col-xs-12" style={{ textAlign: 'end', padding: '0px' }}>
-                                    <span>Tổng số {this.props.listData.length} sản phẩm</span>
+                                    <span>Tổng số {this.props.totalSize} bài viết</span>
                                 </div>
                             </div>
 
                         </div>
                     </div>
                 </section>
-
-
 
                 <section className="htc__blog__area bg__white">
                     <div className="container">

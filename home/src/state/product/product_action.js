@@ -90,7 +90,7 @@ export function searchProducts(keyword, number) {
     }
 }
 
-export function getListNewProductSS(data){
+export function getListNewProductSS(data) {
     return {
         type: Type.GET_NEW_PRODUCT_SS,
         data: data
@@ -108,6 +108,35 @@ export function getDetailProduct(id) {
                 }
                 if (res.data.code === 200) {
                     dispath(getDetailProductSuccess(res.data.data));
+                    dispath(randomProduct(id))
+                } else {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+            }).catch(() => {
+                dispath(showAlertError(Type.MSG_ERR_GET));
+            });
+    }
+}
+
+export function randomProduct(id) {
+    const catalog = Store.getState().productReducer.idCatalog;
+    const currentProduct = Store.getState().productReducer.currentProduct;
+    return (dispath) => {
+        const parameter = `random-product?id=${id}&catalogId=${catalog == 0 ? currentProduct.catalogs[0].id : catalog}`;
+        dispath(loadding());
+        return callApi(parameter, Method.GET,
+            null, false).then(res => {
+                if (res === undefined) {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+                if (res.data.code === 200) {
+                    dispath(fetchList(res.data.data.content,
+                        res.data.data.totalElements,
+                        res.data.data.totalPages,
+                        res.data.data.first,
+                        res.data.data.last,
+                        res.data.data.number
+                    ));
                 } else {
                     dispath(showAlertError(Type.MSG_ERR_GET));
                 }

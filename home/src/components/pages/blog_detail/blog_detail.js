@@ -10,6 +10,7 @@ import { to_slug } from './../../../utilities/slug';
 import { getDetailBlog } from './../../../state/blog/blog_action';
 import { connect } from 'react-redux';
 import './blog_detail.css';
+import ItemBlog from '../../layouts/item_blog/item_blog';
 
 class BlogDetail extends Component {
     constructor(props) {
@@ -54,6 +55,30 @@ class BlogDetail extends Component {
                     </div>
                 </section>
 
+                <section className="htc__blog__area bg__white">
+                    <div className="container">
+                        <h6 style={{marginBottom: '14px', color: '#c43b68', fontSize: '24px'}}>Các Bài Viết Liên Quan</h6>
+                        <div className="row">
+
+                            <div className="ht__blog__wrap blog--page clearfix">
+                                {/* Start Single Blog */}
+                                {
+                                    this.props.listData === null
+                                        ? <div></div>
+                                        :
+                                        this.props.listData.map((item, index) => {
+                                            return (
+                                                <div className="col-md-6 col-lg-4 col-sm-12 col-xs-12">
+                                                    <ItemBlog key={index} dataValue={item}></ItemBlog>
+                                                </div>
+                                            )
+                                        })
+                                }
+                                {/* End Single Blog */}
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <Group></Group>
                 <Footer></Footer>
             </div >
@@ -63,7 +88,8 @@ class BlogDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        currentBLOG: state.blogReducer.currentBLOG
+        currentBLOG: state.blogReducer.currentBLOG,
+        listData: state.blogReducer.listData
     }
 }
 

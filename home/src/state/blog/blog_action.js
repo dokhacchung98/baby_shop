@@ -83,6 +83,33 @@ export function getDetailBlog(id) {
                 }
                 if (res.data.code === 200) {
                     dispath(getDetailSS(res.data.data));
+                    dispath(randomBlog(id))
+                } else {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+            }).catch(() => {
+                dispath(showAlertError(Type.MSG_ERR_GET));
+            });
+    }
+}
+
+export function randomBlog(id) {
+    return (dispath) => {
+        const parameter = `random-blog?id=${id}`;
+        dispath(loadding());
+        return callApi(parameter, Method.GET,
+            null, false).then(res => {
+                if (res === undefined) {
+                    dispath(showAlertError(Type.MSG_ERR_GET));
+                }
+                if (res.data.code === 200) {
+                    dispath(fetchList(res.data.data.content,
+                        res.data.data.totalElements,
+                        res.data.data.totalPages,
+                        res.data.data.first,
+                        res.data.data.last,
+                        res.data.data.number
+                    ));
                 } else {
                     dispath(showAlertError(Type.MSG_ERR_GET));
                 }

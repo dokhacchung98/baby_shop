@@ -64,7 +64,7 @@ class Product extends Component {
                                         </select>
 
                                         <div className="ht__pro__qun col-md-4 col-lg-4 col-sm-4 col-xs-12" style={{ textAlign: 'end' }}>
-                                            <span>Tổng số {this.props.listProduct.length} sản phẩm</span>
+                                            <span>Tổng số {this.props.totalSize} sản phẩm</span>
                                         </div>
                                         {/* Start List And Grid View */}
                                         <ul className="view__mode col-md-4 col-lg-4 col-sm-4 col-xs-12" role="tablist" style={{ padding: '0px', justifyContent: 'flex-end' }}>

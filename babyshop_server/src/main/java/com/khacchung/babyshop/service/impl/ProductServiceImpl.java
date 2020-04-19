@@ -1,6 +1,7 @@
 package com.khacchung.babyshop.service.impl;
 
 import com.khacchung.babyshop.common.extension.FileExtension;
+import com.khacchung.babyshop.model.dao.Blog;
 import com.khacchung.babyshop.model.dao.Catalog;
 import com.khacchung.babyshop.model.dao.Product;
 import com.khacchung.babyshop.model.dto.FileUploadDTO;
@@ -150,6 +151,17 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getSellerProduct(int page, int size) {
         try {
             Page<Product> tmp = productRepository.getNewProduct(PageRequest.of(page, size, Sort.by("discount").descending()));
+            return tmp;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> randomProduct(int id, int catalogId) {
+        try {
+            Page<Product> tmp = productRepository.randomProduct(PageRequest.of(0, 4), id, catalogId);
             return tmp;
         } catch (Exception e) {
             logger.error(e.getMessage());

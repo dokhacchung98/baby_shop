@@ -16,4 +16,7 @@ public interface BlogRepository extends CrudRepository<Blog, Integer> {
 
     @Query("SELECT e FROM Blog e WHERE e.title LIKE %:keyword%")
     Page<Blog> searchBlog(Pageable pageable, @Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM blog where id <> :id ORDER BY NEWID()", nativeQuery = true)
+    Page<Blog> randomBlog(Pageable pageable, @Param("id") int id);
 }

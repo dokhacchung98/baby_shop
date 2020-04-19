@@ -217,4 +217,18 @@ public class ProductController {
             return new ResponeDataDTO<>(Result.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(value = "/random-product", method = RequestMethod.GET)
+    public ResponeDataDTO<Page<Product>> getRandomProduct(@Param("id") int id, @Param("catalogId") int catalogId) {
+        try {
+            Page<Product> products = productService.randomProduct(id, catalogId);
+            return new ResponeDataDTO.Builder<Page<Product>>()
+                    .withCode(Constants.SUCCESS_CODE)
+                    .withMessage(Constants.SUCCESS_MSG)
+                    .withData(products)
+                    .build();
+        } catch (Exception e) {
+            return new ResponeDataDTO<>(Result.BAD_REQUEST);
+        }
+    }
 }

@@ -16,4 +16,6 @@ public interface BlogService {
     Blog getBlogById(int blogId);
 
     Page<Blog> searchBlog(Pageable pageable, String keyword);
+
+    Page<Blog> getRandom(Pageable pageable, int existBlog);
 }

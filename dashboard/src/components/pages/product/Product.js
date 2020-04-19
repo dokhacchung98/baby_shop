@@ -82,7 +82,7 @@ class Product extends Component {
                                                             <tr role="row" className="even" key={index}>
                                                                 <td rowSpan={1} colSpan={4}>{item.id}</td>
                                                                 <td rowSpan={1} colSpan={4}>{item.name}</td>
-                                                                <td rowSpan={1} colSpan={2}>{item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")} VND</td>
+                                                                <td rowSpan={1} colSpan={2}>{item.price == undefined ? '' : item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")} VND</td>
                                                                 <td rowSpan={1} colSpan={1} style={{ textAlign: 'center' }}>{item.discount} %</td>
                                                                 <td rowSpan={1} colSpan={4} style={{ textAlign: 'center' }}>
                                                                     <button className="btn btn-warning btn-icon-style-1" style={{ marginRight: '14px' }} onClick={(e) => {
