@@ -3,6 +3,7 @@ package com.khacchung.babyshop.model.dao;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "`cart`")
@@ -27,6 +28,15 @@ public class Cart {
     @Column(name = "product_id")
     private int productId;
 
+    @Column(name = "create_at")
+    private Date createAt = new Date();
+
+    @Column(name = "update_at")
+    private Date updateAt = new Date();
+
+    @Column(name = "create_by")
+    private Integer createBy = 0;
+
     @ManyToOne
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
@@ -36,6 +46,9 @@ public class Cart {
 
     public Cart() {
         this.number = 1;
+        createAt = new Date();
+        updateAt = new Date();
+        createBy = 0;
     }
 
     public int getId() {
@@ -128,5 +141,29 @@ public class Cart {
         if (this.product != null)
             return ((long) (this.product.getPrice() * (100 - this.product.getDiscount()) / 100000)) * number * 1000;
         return 0;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 }

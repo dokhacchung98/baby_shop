@@ -1,6 +1,8 @@
 package com.khacchung.babyshop.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -8,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "`user`")
-@JsonIgnoreProperties(value = {"role", "password", "carts", "transactions", "favorites"})
+@JsonIgnoreProperties(value = {"password", "carts", "transactions", "favorites"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +30,17 @@ public class User {
     private Date createdDate;
     @Column(name = "phone")
     private String phone;
-    @Column(name = "role_id")
-    private int roleId;
-    @ManyToOne
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
-    private Role role;
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Cart> carts;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Transaction> transactions;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Favorite> favorites;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Collection<UserRole> userRoles;
 
     public User() {
     }
@@ -113,22 +115,6 @@ public class User {
         this.phone = phone;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
     public Collection<Cart> getCarts() {
         return carts;
     }
@@ -151,5 +137,13 @@ public class User {
 
     public void setFavorites(Collection<Favorite> favorites) {
         this.favorites = favorites;
+    }
+
+    public Collection<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Collection<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }

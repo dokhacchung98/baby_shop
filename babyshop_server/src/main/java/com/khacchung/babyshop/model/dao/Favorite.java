@@ -3,6 +3,7 @@ package com.khacchung.babyshop.model.dao;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "`favorite`")
@@ -23,7 +24,19 @@ public class Favorite {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
+    @Column(name = "create_at")
+    private Date createAt = new Date();
+
+    @Column(name = "update_at")
+    private Date updateAt = new Date();
+
+    @Column(name = "create_by")
+    private Integer createBy = 0;
+
     public Favorite() {
+        createAt = new Date();
+        updateAt = new Date();
+        createBy = 0;
     }
 
     public int getId() {
@@ -64,5 +77,29 @@ public class Favorite {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 }

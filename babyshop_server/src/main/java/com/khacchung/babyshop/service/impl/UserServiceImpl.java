@@ -2,8 +2,10 @@ package com.khacchung.babyshop.service.impl;
 
 import com.khacchung.babyshop.model.auth.CustomUserDetail;
 import com.khacchung.babyshop.model.dao.User;
+import com.khacchung.babyshop.model.dao.UserRole;
 import com.khacchung.babyshop.model.dto.UserInformationDTO;
 import com.khacchung.babyshop.repository.UserRepository;
+import com.khacchung.babyshop.repository.UserRoleRepository;
 import com.khacchung.babyshop.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -50,10 +54,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
-        user.setRoleId(1);
         user.setCreatedDate(new Date());
         try {
-            userRepository.save(user);
+            var tmp = userRepository.save(user);
+            UserRole userRole = new UserRole();
+            userRole.setIdRole(4);
+            userRole.setIdUser(tmp.getId());
+            userRoleRepository.save(userRole);
             return new CustomUserDetail(user);
         } catch (Exception e) {
             return null;
@@ -82,7 +89,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public Page<User> getUser(Pageable pageable, int currentId) {
         try {
             Page<User> users = userRepository.getAllUser(pageable, currentId);
-            return  users;
+            return users;
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -93,7 +100,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public User deleteUser(int id) {
         try {
             User users = userRepository.findById(id).get();
-            if(users != null){
+            if (users != null) {
                 userRepository.delete(users);
                 return users;
             }

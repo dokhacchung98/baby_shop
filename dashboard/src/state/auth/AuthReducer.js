@@ -12,11 +12,17 @@ var initialState = {
     errlogin: '',
     isLoading: false,
     email: email,
-    userId: userId
+    userId: userId,
+    isAdmin: false
 };
 
 const AuthReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'isadmin':
+            return {
+                ...state,
+                isAdmin: action.isAdmin
+            }
         case Type.LOGIN:
             console.log(action.token);
             localStorage.setItem(Type2.AUTH, action.token);

@@ -1,6 +1,7 @@
 package com.khacchung.babyshop.model.dao;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "`notification`")
@@ -18,7 +19,19 @@ public class Notification {
     @Column(name = "is_seen")
     private boolean isSeen;
 
+    @Column(name = "create_at")
+    private Date createAt = new Date();
+
+    @Column(name = "update_at")
+    private Date updateAt = new Date();
+
+    @Column(name = "create_by")
+    private Integer createBy = 0;
+
     public Notification() {
+        createAt = new Date();
+        updateAt = new Date();
+        createBy = 0;
     }
 
     public int getId() {
@@ -59,5 +72,29 @@ public class Notification {
 
     public void setSeen(boolean seen) {
         isSeen = seen;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 }

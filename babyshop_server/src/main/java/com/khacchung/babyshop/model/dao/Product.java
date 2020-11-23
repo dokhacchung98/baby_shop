@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "`product`")
@@ -34,12 +35,21 @@ public class Product {
     @Column(name = "size")
     private String sizeValue;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @Column(name = "create_by")
+    private int createBy;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Cart> carts;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Order> orders;
     @OneToMany(mappedBy = "product")
     private Collection<Favorite> favorites;
+
+    @Column(name = "create_at")
+    private Date createAt = new Date();
+
+    @Column(name = "update_at")
+    private Date updateAt = new Date();
 
     @ManyToMany(targetEntity = Catalog.class, cascade = {CascadeType.ALL})
     @JoinTable(name = "product_catalog",
@@ -48,6 +58,9 @@ public class Product {
     private Collection<Catalog> catalogs;
 
     public Product() {
+        createAt = new Date();
+        updateAt = new Date();
+        createBy = 0;
     }
 
     public int getId() {
@@ -168,5 +181,29 @@ public class Product {
 
     public void setFavorites(Collection<Favorite> favorites) {
         this.favorites = favorites;
+    }
+
+    public int getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(int createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 }

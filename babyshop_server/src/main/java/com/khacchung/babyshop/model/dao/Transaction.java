@@ -28,13 +28,24 @@ public class Transaction {
     private String phone;
     @Column(name = "address")
     private String address;
-    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Order> orders;
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+    @Column(name = "create_at")
+    private Date createAt = new Date();
+
+    @Column(name = "update_at")
+    private Date updateAt = new Date();
+
+    @Column(name = "create_by")
+    private Integer createBy = 0;
 
     public Transaction() {
+        createAt = new Date();
+        updateAt = new Date();
+        createBy = 0;
     }
 
     public int getId() {
@@ -115,5 +126,29 @@ public class Transaction {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 }

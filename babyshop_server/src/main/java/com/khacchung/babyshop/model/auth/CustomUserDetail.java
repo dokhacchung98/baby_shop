@@ -1,12 +1,13 @@
 package com.khacchung.babyshop.model.auth;
 
 import com.khacchung.babyshop.model.dao.User;
+import com.khacchung.babyshop.model.dao.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class CustomUserDetail implements UserDetails {
 
@@ -19,7 +20,12 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().getName()));
+        Collection<SimpleGrantedAuthority> tmp = new ArrayList<>();
+        var listRole = user.getUserRoles();
+        for (UserRole i : listRole) {
+            tmp.add(new SimpleGrantedAuthority(i.getRole().getName()));
+        }
+        return tmp;
     }
 
     @Override

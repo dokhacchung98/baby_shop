@@ -1,21 +1,28 @@
 package com.khacchung.babyshop.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Table(name = "`role`")
-@JsonIgnoreProperties(value = {"listUser"})
+@JsonIgnoreProperties(value = {"userRoles"})
 public class Role {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(mappedBy = "role")
-    private Collection<User> listUser;
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<UserRole> userRoles;
     @Column(name = "name")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Collection<RolePermission> rolePermissions;
 
     public Role() {
     }
@@ -41,11 +48,19 @@ public class Role {
         this.name = name;
     }
 
-    public Collection<User> getListUser() {
-        return listUser;
+    public Collection<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public void setListUser(Collection<User> listUser) {
-        this.listUser = listUser;
+    public void setUserRoles(Collection<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public Collection<RolePermission> getRolePermissions() {
+        return rolePermissions;
+    }
+
+    public void setRolePermissions(Collection<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
     }
 }

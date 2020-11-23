@@ -176,6 +176,30 @@ class LeftMenu extends Component {
                     </ul>
                     
                     <hr className="nav-separator" />
+                    <div className="nav-header">
+                        <span>Phân Quyền</span>
+                        <span>PQ</span>
+                    </div>
+
+                    <ul className="navbar-nav flex-column">
+                        <li className="nav-item">
+                            <a className="nav-link collapsed" href="/#" data-toggle="collapse" data-target="#User_drp" aria-expanded="false">
+                                <span className="icon-user mr-3"></span>
+                                <span className="nav-link-text">Phân Quyền</span>
+                            </a>
+                            <ul id="User_drp" className="nav flex-column collapse collapse-level-1">
+                            <li className="nav-item">
+                            <ul className="nav flex-column">
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/permission">
+                                        Danh Sách Quyền
+                                    </Link>
+                                </li>
+                            </ul>
+                            </li>
+                        </ul>
+                        </li>
+                    </ul>
 
                     </div>
                 </div><div className="slimScrollBar" tabIndex={-50} style={{background: 'rgb(214, 217, 218)', width: '6px', position: 'absolute', top: '168px', opacity: '0.8', display: 'none', borderRadius: '0px', zIndex: 99, right: '1px', height: '302.519px', outline: 'none'}} /><div className="slimScrollRail" style={{width: '6px', height: '100%', position: 'absolute', top: '0px', display: 'none', borderRadius: '7px', background: 'rgb(51, 51, 51)', opacity: '0.2', zIndex: 90, right: '1px'}} /></div>

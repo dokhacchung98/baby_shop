@@ -5,7 +5,9 @@ import com.khacchung.babyshop.common.utils.Constants;
 import com.khacchung.babyshop.common.utils.Result;
 import com.khacchung.babyshop.model.auth.CustomUserDetail;
 import com.khacchung.babyshop.model.dao.User;
+import com.khacchung.babyshop.model.dao.UserRole;
 import com.khacchung.babyshop.model.dto.*;
+import com.khacchung.babyshop.service.RoleService;
 import com.khacchung.babyshop.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +19,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -29,6 +34,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -70,15 +78,31 @@ public class AuthenticationController {
                     )
             );
             CustomUserDetail customUserDetail = (CustomUserDetail) authentication.getPrincipal();
-            if (!customUserDetail.getUser().getRole().getName().equals("ROLE_ADMIN")) {
+
+            var tmp = roleService.getRoleUser(customUserDetail.getUser().getId());
+            var check = false;
+            var isAdmin = false;
+            for (UserRole t :
+                    tmp) {
+                if (t.getIdRole() == 1 || t.getIdRole() == 2) {
+                    if (t.getIdRole() == 1) {
+                        isAdmin = true;
+                    }
+                    check = true;
+                    break;
+                }
+            }
+            if (!check) {
                 return new ResponeDataDTO<>(Result.BAD_REQUEST);
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String jwt = jwtTokenProvider.generateToken((CustomUserDetail) authentication.getPrincipal());
+            var result = new LoginResponeDTO(jwt);
+            result.setAdmin(isAdmin);
             return new ResponeDataDTO.Builder<LoginResponeDTO>()
                     .withCode(Constants.SUCCESS_CODE)
-                    .withData(new LoginResponeDTO(jwt))
+                    .withData(result)
                     .withMessage(Constants.SUCCESS_MSG)
                     .build();
         } catch (Exception e) {
@@ -122,17 +146,17 @@ public class AuthenticationController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
-                userInformationDTO.setId(userDetails.getUser().getId());
-                try {
-                    User user = userService.updateInformation(userInformationDTO);
-                    return new ResponeDataDTO.Builder<User>()
-                            .withMessage(Constants.SUCCESS_MSG)
-                            .withCode(Constants.SUCCESS_CODE)
-                            .withData(user)
-                            .build();
-                } catch (Exception e) {
-                    return new ResponeDataDTO<>(Result.BAD_REQUEST);
-                }
+            userInformationDTO.setId(userDetails.getUser().getId());
+            try {
+                User user = userService.updateInformation(userInformationDTO);
+                return new ResponeDataDTO.Builder<User>()
+                        .withMessage(Constants.SUCCESS_MSG)
+                        .withCode(Constants.SUCCESS_CODE)
+                        .withData(user)
+                        .build();
+            } catch (Exception e) {
+                return new ResponeDataDTO<>(Result.BAD_REQUEST);
+            }
         }
         return new ResponeDataDTO<>(Result.BAD_REQUEST);
     }
