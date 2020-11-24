@@ -1,5 +1,6 @@
 package com.khacchung.babyshop.service.impl;
 
+import com.khacchung.babyshop.model.dao.Role;
 import com.khacchung.babyshop.model.dao.UserRole;
 import com.khacchung.babyshop.repository.RoleRepository;
 import com.khacchung.babyshop.repository.UserRoleRepository;
@@ -23,5 +24,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<UserRole> getRoleUser(int id) {
         return userRoleRepository.getRoleUser(id);
+    }
+
+    @Override
+    public List<Role> getListRoleAdmin() {
+        return roleRepository.getListRoleAdmin();
     }
 }

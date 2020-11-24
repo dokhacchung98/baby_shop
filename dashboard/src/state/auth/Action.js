@@ -19,9 +19,9 @@ export function loginRequest(body) {
             if (res.data.code === 200) {
                 var token = res.data.data.token;
                 console.log(token);
-                dispatch({
+                dispath({
                     type: 'isadmin',
-                    isAdmin: res.data.data?.isAdmin || false
+                    isAdmin: res.data.data?.admin || false
                 });
                 dispath(login(token));
             } else {

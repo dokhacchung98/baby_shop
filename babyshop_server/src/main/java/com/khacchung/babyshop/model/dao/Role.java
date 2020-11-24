@@ -19,6 +19,8 @@ public class Role {
     private Collection<UserRole> userRoles;
     @Column(name = "name")
     private String name;
+    @Column(name = "display")
+    private String display;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -62,5 +64,13 @@ public class Role {
 
     public void setRolePermissions(Collection<RolePermission> rolePermissions) {
         this.rolePermissions = rolePermissions;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 }

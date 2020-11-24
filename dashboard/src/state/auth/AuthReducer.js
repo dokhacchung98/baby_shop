@@ -19,6 +19,7 @@ var initialState = {
 const AuthReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'isadmin':
+            localStorage.setItem("isadmin", action.isAdmin);
             return {
                 ...state,
                 isAdmin: action.isAdmin
