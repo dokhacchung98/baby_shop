@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "`role`")
-@JsonIgnoreProperties(value = {"userRoles"})
+@JsonIgnoreProperties(value = {"rolePermissions", "userRoles"})
 public class Role {
     @Id
     @Column(name = "id")

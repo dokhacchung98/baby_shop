@@ -74,15 +74,6 @@ const Permission = (props) => {
                     onClose={closeModalCreate} modal>
                     <CreatePer closeModal={closeModalCreate} fetchList={fetchList} />
                 </Popup>
-
-                {/*                    <Popup open={props.openEdit}
-                                            closeOnDocumentClick
-                                            onClose={this.closeModal} modal><EditCatalog></EditCatalog></Popup>
-
-                                        <Popup open={props.openDelete}
-                                            closeOnDocumentClick
-                                            onClose={this.closeModal} modal><DeleteCatalog></DeleteCatalog></Popup> */}
-
                 <Footer />
             </div>
         </div>
@@ -91,6 +82,16 @@ const Permission = (props) => {
 
 
 const ItemModulePer = ({ item, index, listRole }) => {
+
+    const togglePermission = async (e, p, isCheck) => {
+        await callApi(`admin/toggle-permission?role=${e.id}&per=${p.id}`, 'get', {}, true)
+            .then(res => {
+                // console.log('object ssss,', res?.data)
+            }, err => {
+                console.log('error', err)
+            })
+    }
+
     return (
         <div className="container">
             <div className="row">
@@ -108,7 +109,6 @@ const ItemModulePer = ({ item, index, listRole }) => {
                                             <th className="sorting" rowSpan={1} colSpan={4}>Tên quyền</th>
                                             {
                                                 listRole.map((e, i) => {
-                                                    console.log('sssss', e)
                                                     return (
                                                         <th className="sorting" rowSpan={1} colSpan={4}>{e?.display}</th>
                                                     )
@@ -127,13 +127,13 @@ const ItemModulePer = ({ item, index, listRole }) => {
                                         <tbody>
 
                                             {(item?.permissions.map((e, i) =>
-                                                <tr role="row" className="even" key={index}>
+                                                <tr role="row" className="even" key={`index_${i}`}>
                                                     <td rowSpan={1} colSpan={4}>{e.name}</td>
                                                     {
                                                         listRole.map((e1, i1) => {
                                                             return (
-                                                                <td rowSpan={1} colSpan={4} >
-                                                                    <button
+                                                                <td rowSpan={1} colSpan={4} key={`ii_${i1}`}>
+                                                                    {/* <button
                                                                         className="btn btn-social btn-warning btn-icon-style-1"
                                                                         onClick={(e) => {
 
@@ -144,7 +144,12 @@ const ItemModulePer = ({ item, index, listRole }) => {
                                                                             )
                                                                         }
 
-                                                                    </button>
+                                                                    </button> */}
+                                                                    <input type="checkbox"
+                                                                        style={{ marginLeft: 40 }}
+                                                                        // defaultChecked={true}
+                                                                        defaultChecked={e.rolePermissions.some(t => t?.idPermission == e?.id && t?.idRole == e1.id)}
+                                                                        onChange={(t) => togglePermission(e1, e, t.target.checked)} />
                                                                 </td>
                                                             )
                                                         })

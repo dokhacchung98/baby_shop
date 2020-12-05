@@ -203,4 +203,23 @@ public class AuthenticationController {
                 .withMessage(Constants.SUCCESS_MSG)
                 .build();
     }
+
+    @RequestMapping(value = "/user/set-token", method = RequestMethod.POST)
+    public ResponeDataDTO<User> setToken(@RequestBody TokenDTo token) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
+            try {
+                User user = userService.updateTokenFB(token.getToken(), userDetails.getUser().getId());
+                return new ResponeDataDTO.Builder<User>()
+                        .withMessage(Constants.SUCCESS_MSG)
+                        .withCode(Constants.SUCCESS_CODE)
+                        .withData(user)
+                        .build();
+            } catch (Exception e) {
+                return new ResponeDataDTO<>(Result.BAD_REQUEST);
+            }
+        }
+        return new ResponeDataDTO<>(Result.BAD_REQUEST);
+    }
 }

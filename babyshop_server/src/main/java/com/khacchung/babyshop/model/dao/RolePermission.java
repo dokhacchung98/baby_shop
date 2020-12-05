@@ -1,10 +1,13 @@
 package com.khacchung.babyshop.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "`role_permission`")
+@JsonIgnoreProperties(value = {"permission", "role"})
 public class RolePermission {
     @ManyToOne
     @JoinColumn(name = "id_role", insertable = false, updatable = false)

@@ -15,7 +15,35 @@ import OrderSuccess from '../pages/order/OrderSuccess';
 import Feedback from '../pages/feedback';
 import Permission from '../pages/permission/Permission';
 
+import firebase from './../../firebase'
+
 class MyRouter extends Component {
+    componentDidMount() {
+        if (this.props.isAuthenticated) {
+            this.updateTokenFirebase();
+        }
+    }
+
+    updateTokenFirebase = () => {
+        // const msg = firebase.messaging();
+        // Notification.requestPermission().then((permission) => {
+            // firebase.messaging().getToken()
+            //     .then((data) => {
+            //         console.log('tokennnn', data)
+            //     })
+        // });
+
+        
+
+        // msg.requestPermission()
+        // .then(() => {
+        //     return msg.getToken();
+        // })
+        // .then((data) => {
+        //     console.log('tokennnn', data)
+        // })
+    }
+
     render() {
         return (
             <Switch>

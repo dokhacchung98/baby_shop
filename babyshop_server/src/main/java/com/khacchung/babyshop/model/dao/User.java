@@ -31,6 +31,9 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "token", nullable = true)
+    private String token;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<Cart> carts;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -145,5 +148,13 @@ public class User {
 
     public void setUserRoles(Collection<UserRole> userRoles) {
         this.userRoles = userRoles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

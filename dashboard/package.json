@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "ckeditor4-react": "^1.1.0",
+    "firebase": "^8.1.1",
     "multiselect-react-dropdown": "^1.4.7",
     "react": "^16.13.0",
     "react-alert": "^7.0.0",
@@ -21,7 +22,8 @@
     "reactjs-popup": "^1.5.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "register-service-worker": "^1.7.1"
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",

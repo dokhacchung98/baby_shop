@@ -109,4 +109,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
         return null;
     }
+
+    @Override
+    public User updateTokenFB(String token, int id) {
+        try {
+            User user = userRepository.findById(id).get();
+            if (user != null) {
+                user.setToken(token);
+                userRepository.save(user);
+                return user;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
 }

@@ -17,7 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT  u FROM  User  u WHERE  u.id <> :id")
     Page<User> getAllUser(Pageable pageable,@Param(value = "id")int id);
 
-
 //    @Query(value = "SELECT u FROM User u WHERE u.username = ?1")
 //    User getUserByUserName(/*@Param("username") */String userName);
 }

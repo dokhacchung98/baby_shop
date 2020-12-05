@@ -16,4 +16,6 @@ public interface UserService {
     Page<User> getUser(Pageable pageable, int currentId);
 
     User deleteUser(int id);
+
+    User updateTokenFB(String token, int id);
 }

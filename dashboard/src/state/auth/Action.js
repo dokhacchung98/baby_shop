@@ -16,8 +16,8 @@ export function loginRequest(body) {
             body,
             false
         ).then(res => {
-            if (res.data.code === 200) {
-                var token = res.data.data.token;
+            if (res?.data?.code === 200) {
+                var token = res?.data?.data?.token;
                 console.log(token);
                 dispath({
                     type: 'isadmin',

@@ -3,7 +3,9 @@ import * as Type from './../utilities';
 
 export default function callApi(pathUrl, method = 'GET', body, isAuthenticated) {
     const urlRequest = `${Type.BASE_URL}/${pathUrl}`;
-    if (isAuthenticated) {
+    console.log('<<<<<<<<<<<<<<<<<<<<')
+    if (1) {
+        console.log('da dang nhap rpo >>>>>>>>>>>>>>>>>>>>>>')
         var token = 'Bearer ' + localStorage.getItem(Type.AUTH);
         return axios({
             method: method,

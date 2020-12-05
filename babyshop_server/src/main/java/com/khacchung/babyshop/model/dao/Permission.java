@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "`permission`")
-@JsonIgnoreProperties(value = {"rolePermissions", "modulePer"})
+@JsonIgnoreProperties(value = {"modulePer"})
 public class Permission {
     @Column(name = "name")
     private String name;
